@@ -1,0 +1,6 @@
+TODO
+
+• Transformer /engine en lib pour éviter de recompiler 2 fois tous les fichiers
+• Remplacer tinyxml2 par Qt et virer le dossier /cmake
+• Virer la dépendance à la SFML pour le serveur
+
