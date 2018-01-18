@@ -1,6 +1,173 @@
 TODO
 
-• Transformer /engine en lib pour éviter de recompiler 2 fois tous les fichiers
-• Remplacer tinyxml2 par Qt et virer le dossier /cmake
-• Virer la dépendance à la SFML pour le serveur
+# Improvements
 
+• TODO: Transformer /engine en lib pour éviter de recompiler 2 fois tous les fichiers
+• TODO: Remplacer tinyxml2 par Qt et virer le dossier /cmake
+• TODO: Virer la dépendance à la SFML pour le serveur
+   → Mettre la partie affichage dans une bibliothèque séparée inclue uniquement dans le client
+
+# Documentation
+
+• TODO: Binary protocol (RFC, ascii format, printed)
+• TODO: UML class + sequence diagram (printed)
+• TODO: Doxygen (optional)
+
+# Game
+
+• TODO: Network
+   ◦ TODO: Client
+      ◦ TODO: `Server` class and `Packet` struct
+   ◦ TODO: Server
+      ◦ TODO: `Client` and `Server` classes
+      ◦ TODO: Handle multiple games at the same time (lobby system)
+      ◦ TODO: Handle client crash
+      ◦ TODO: Handle up to 4 players
+• TODO: Player spaceship implementation (blue, red, yellow, green)
+   ◦ TODO: Add movement
+   ◦ TODO: Add the ability to shoot
+   ◦ TODO: Handle collisions with screen borders
+• TODO: Enemy implementation
+   ◦ TODO: Add a dynamic library loader for enemy factories/movement/behaviours
+   ◦ TODO: Add a menu to add libs in runtime
+   ◦ TODO: Add movement
+   ◦ TODO: Add the ability to shoot
+   ◦ TODO: Handle collisions with ally bullets (same for allies but for enemy bullets)
+   ◦ TODO: Handle random spawn on the right of the screen
+   ◦ TODO: Add notification for each client when a mob spawns, is killed, shoots, kills a player...
+• TODO: Background
+   ◦ TODO: Slow horizontal scrolling background
+• TODO: GUI → Dylan
+   ◦ TODO: Button class
+   ◦ TODO: Text Box class
+   ◦ TODO: Title screen
+   ◦ TODO: Pause menu
+      ◦ TODO: “Add enemy...” entry
+   ◦ TODO: Lobby screen
+   ◦ TODO: Victory/Game over screen
+• TODO: Check if game compiles and works on Windows
+
+# Common
+```cpp
+struct UdpPacket {
+   const u16 magic = 0xABCD; // Detect the beginning of a package
+   size_t size;              // Packet size
+   size_t checksum;          // Allows to check if the package is valid
+   size_t timestamp;         // Allows to check if the package is not obsolete
+   const char *message;      // Package content
+};
+
+struct TcpPacket {
+   const u16 magic = 0xDCBA;
+   size_t size;
+   const char *message;
+};
+```
+# Client
+```cpp
+class UdpClient {
+   public:
+      UdpClient(); // Create socket
+
+      void send(const UdpPacket &packet);
+      UdpPacket receive();
+
+   private:
+      int m_fd; // Socket fd
+};
+
+class TcpClient {
+   public:
+      TcpClient(); // Create socket
+
+      void send(const TcpPacket &packet);
+      TcpPacket receive();
+
+   private:
+      int m_fd;
+};
+
+class Network {
+   public:
+      void syncWithServer(); // Sync Scene with server in a dedicated thread
+};
+```
+# Server
+```cpp
+class UdpServer {
+   public:
+      UdpServer(); // Create socket
+
+      void send(const UdpPacket &packet);
+      UdpPacket receive();
+
+   private:
+      int m_fd; // Socket fd
+};
+
+class TcpServer {
+   public:
+      TcpServer(); // Create socket
+
+      void send(const TcpPacket &packet);
+      TcpPacket receive();
+
+   private:
+      int m_fd; // Socket fd
+};
+
+class GameServer {
+   public:
+      void run(); // Run game main loop in a dedicated thread
+                  // At the end of the loop, sync with clients
+                  // I'll do this function
+
+      void addClient(const GameClient &client) { m_clients.emplace(std::make_pair(client.uuid(), client)); }
+
+   private:
+      void syncWithClients(); // Sync Scene with client
+
+      std::map<size_t, GameClient> m_clients; // Store client indexed by their uuid (only if needed)
+
+      UdpServer m_server;
+};
+
+class GameClient {
+   private:
+      bool m_isReady = false;
+      bool m_isPlaying = false;
+
+      size_t m_uuid;
+};
+
+class Lobby {
+   public:
+      void waitForPlayers(); // Wait all players in a dedicated thread and run the game
+                             // Should continue waiting even after the game has started
+                             // this will allow entering in a lobby where a game has already begun
+
+      bool addClient(); // Add a new client and return true on success
+
+   private:
+      void launchGameServer(); // Bind a port for UDP and create a GameServer on this port
+                               // Send port to clients
+
+      std::vector<GameClient> m_clients;
+
+      GameServer m_gameServer;
+      TcpServer m_lobbyServer;
+};
+
+class Application {
+   public:
+      void run(); // Listens to any incoming TCP connection in a dedicated thread
+
+   private:
+      void createLobby(); // Create a new lobby for a client
+      void joinLobby(size_t id); // Add client to existing lobby
+
+      std::vector<Lobby> m_lobbies;
+
+      TcpServer m_server;
+};
+```

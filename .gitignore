@@ -31,3 +31,7 @@ doc/latex
 rtype_client
 rtype_server
 
+# Misc
+test_udp/client/client
+test_udp/server/server
+
