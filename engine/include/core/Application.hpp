@@ -16,17 +16,19 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "ApplicationStateStack.hpp"
 #include "GameClock.hpp"
 #include "KeyboardHandler.hpp"
 #include "ResourceHandler.hpp"
 
 class Application {
 	public:
-		Application();
+		void init();
 
 		void handleEvents();
 
-		void run();
+		int run();
+		void mainLoop();
 
 		static bool quit;
 
@@ -35,6 +37,8 @@ class Application {
 
 	private:
 		sf::RenderWindow m_window;
+
+		ApplicationStateStack m_stateStack;
 
 		GameClock m_clock;
 

@@ -12,21 +12,24 @@
  * =====================================================================================
  */
 #include "Application.hpp"
-#include "ApplicationStateStack.hpp"
 #include "GamePad.hpp"
 #include "Mouse.hpp"
+#include "TextureLoader.hpp"
+
+#include "GameState.hpp"
 
 bool Application::quit = false;
 
-Application::Application() {
-	m_window.create(sf::VideoMode(screenWidth, screenHeight), "CubeLand", sf::Style::Close);
+void Application::init() {
+	m_window.create(sf::VideoMode(screenWidth, screenHeight), "R-Type", sf::Style::Close);
 	m_window.setKeyRepeatEnabled(false);
 
 	Mouse::setWindow(m_window);
 
+	ApplicationStateStack::setInstance(m_stateStack);
 	ResourceHandler::setInstance(m_resourceHandler);
 
-	// m_resourceHandler.loadConfigFile<TextureLoader>("data/config/textures.xml");
+	m_resourceHandler.loadConfigFile<TextureLoader>("data/config/textures.xml");
 	// m_resourceHandler.loadConfigFile<TilesetLoader>("data/config/tilesets.xml");
 	// m_resourceHandler.loadConfigFile<LevelLoader>("data/config/levels.xml");
 
@@ -38,6 +41,7 @@ Application::Application() {
 	// ApplicationStateStack::getInstance().push<TitleScreenState>();
 	// ApplicationStateStack::getInstance().push<LevelListState>();
 	// ApplicationStateStack::getInstance().push<LevelState>(0);
+	ApplicationStateStack::getInstance().push<GameState>();
 }
 
 void Application::handleEvents() {
@@ -54,7 +58,24 @@ void Application::handleEvents() {
 	}
 }
 
-void Application::run() {
+int Application::run() {
+	try {
+		init();
+		mainLoop();
+	}
+	catch(const Exception &e) {
+		std::cerr << "Fatal error " << e.what() << std::endl;
+		return 1;
+	}
+	catch(const std::exception &e) {
+		std::cerr << "Exception caught: " << e.what() << std::endl;
+		return 1;
+	}
+
+	return 0;
+}
+
+void Application::mainLoop() {
 	while(m_window.isOpen()) {
 		handleEvents();
 

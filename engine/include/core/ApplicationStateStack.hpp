@@ -25,7 +25,7 @@ class ApplicationStateStack {
 		T &push(Args &&...args) {
 			m_states.emplace(std::make_shared<T>(std::forward<Args>(args)...));
 			m_states.top()->setStateStack(this);
-			return *static_cast<T*>(top());
+			return static_cast<T&>(top());
 		}
 
 		void pop();
@@ -42,8 +42,8 @@ class ApplicationStateStack {
 			return *s_instance;
 		}
 
-		static void setInstance(ApplicationStateStack *instance) {
-			s_instance = instance;
+		static void setInstance(ApplicationStateStack &instance) {
+			s_instance = &instance;
 		}
 
 	private:

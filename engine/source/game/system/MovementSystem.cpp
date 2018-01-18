@@ -20,19 +20,26 @@ void MovementSystem::process(SceneObject &object) {
 	if(object.has<MovementComponent>()) {
 		auto &movement = object.get<MovementComponent>();
 
-		movement.movement->process(object);
-
-		movement.isBlocked.x = false;
-		movement.isBlocked.y = false;
-
-		if((movement.v.x || movement.v.y)
-		&& object.has<CollisionComponent>()) {
-			object.get<CollisionComponent>().checkCollisions(object);
+		if(movement.movements.size() != 0 && movement.movements.top()) {
+			movement.movements.top()->process(object);
 		}
 
-		movement.isMoving = movement.v.x || movement.v.y;
+		movement.isBlocked = false;
+	}
 
-		object.move(movement.v);
+	if(object.has<CollisionComponent>()) {
+		object.get<CollisionComponent>().checkCollisions(object);
+	}
+
+	if(object.has<MovementComponent>()) {
+		auto &movement = object.get<MovementComponent>();
+
+		movement.isMoving = (movement.v.x || movement.v.y) ? true : false;
+
+		object.move(movement.v * movement.speed);
+
+		movement.v.x = 0;
+		movement.v.y = 0;
 	}
 }
 
