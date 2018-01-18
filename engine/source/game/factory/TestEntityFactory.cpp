@@ -12,13 +12,13 @@
  * =====================================================================================
  */
 #include "GamePadMovement.hpp"
-#include "Image.hpp"
+#include "Sprite.hpp"
 #include "MovementComponent.hpp"
 #include "TestEntityFactory.hpp"
 
 SceneObject TestEntityFactory::create(u16 x, u16 y) {
 	SceneObject object{"TestEntity", "Test"};
-	object.set<Image>("test-entity");
+	object.set<Sprite>("characters-players", 34, 18).setCurrentFrame(0);
 	object.set<MovementComponent>(new GamePadMovement);
 	object.setPosition(x, y);
 

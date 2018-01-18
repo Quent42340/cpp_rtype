@@ -1,3 +1,4 @@
 <textures>
-	<texture folder="test" name="entity"/>
+	<texture folder="characters" name="players"/>
+	<texture folder="backgrounds" name="space"/>
 </textures>
