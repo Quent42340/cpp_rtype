@@ -9,6 +9,10 @@ TODO
    → Mettre la partie affichage dans une bibliothèque séparée inclue uniquement dans le client
 • TODO: Mettre le jeu dans une bibliothèque séparée (càd les Factory/Movement/Behaviour)
 
+# Fixme
+
+• TODO: Faster bullets when spamming shoot button instead of holding it, wtf?
+
 # Review
 
 • TODO: Mettre en avant les features de l’engine
