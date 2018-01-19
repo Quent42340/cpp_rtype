@@ -12,6 +12,7 @@ TODO
 # Fixme
 
 • TODO: Faster bullets when spamming shoot button instead of holding it, wtf?
+• TODO: Enemy bullets disappear when enemy is killed
 
 # Review
 
@@ -44,16 +45,16 @@ TODO
       ◦ TODO: Handle multiple games at the same time (lobby system)
       ◦ TODO: Handle client crash
       ◦ TODO: Handle up to 4 players
-• TODO: Player spaceship implementation (blue, red, yellow, green)
+• WIP: Player spaceship implementation (blue, red, yellow, green)
+   ◦ DONE: Add the ability to shoot
    ◦ TODO: Handle movement animation
-   ◦ TODO: Add the ability to shoot
    ◦ TODO: Handle collisions with screen borders
    ◦ TODO: Add network-based movement
-• TODO: Enemy implementation
+• WIP: Enemy implementation
+   ◦ DONE: Add movement
+   ◦ DONE: Add the ability to shoot
    ◦ TODO: Add a dynamic library loader for enemy factories/movement/behaviours
    ◦ TODO: Add a menu to add libs in runtime
-   ◦ TODO: Add movement
-   ◦ TODO: Add the ability to shoot
    ◦ TODO: Handle collisions with ally bullets (same for allies but for enemy bullets)
    ◦ TODO: Handle random spawn on the right of the screen
    ◦ TODO: Send notification to each client when a mob spawns, is killed, shoots, kills a player...

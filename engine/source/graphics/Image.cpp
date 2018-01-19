@@ -14,9 +14,8 @@
 #include "Image.hpp"
 #include "ResourceHandler.hpp"
 
-Image::Image(const char *textureName)
-	: m_textureName(textureName),
-	  m_texture(ResourceHandler::getInstance().get<sf::Texture>(textureName))
+Image::Image(const std::string &textureName)
+	: m_textureName(textureName), m_texture(ResourceHandler::getInstance().get<sf::Texture>(textureName))
 {
 	m_vertices.setPrimitiveType(sf::Triangles);
 

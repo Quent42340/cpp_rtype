@@ -21,15 +21,14 @@
 #include "MovementComponent.hpp"
 #include "TestBulletFactory.hpp"
 
-// TODO: Add a lifetime component and kill object if it went out of map
-SceneObject TestBulletFactory::create(const sf::Vector2f &pos, const sf::Vector2f &v) {
+SceneObject TestBulletFactory::create(const std::string &textureName, const sf::Vector2f &pos, const sf::Vector2f &v) {
 	SceneObject object{"BasicBullet", "Bullet"};
 	object.set<LifetimeComponent>(&TestBulletFactory::checkOutOfMap);
 	object.set<MovementComponent>(new EasyMovement([v] (SceneObject &object) {
 		object.get<MovementComponent>().v = v;
 	})).speed = 3.0f;
 
-	auto &image = object.set<Image>("bullets-basic");
+	auto &image = object.set<Image>(textureName);
 	object.set<HitboxComponent>(0, 0, image.width(), image.height());
 
 	object.setPosition(pos);

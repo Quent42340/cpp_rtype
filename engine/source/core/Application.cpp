@@ -21,6 +21,8 @@
 bool Application::quit = false;
 
 void Application::init() {
+	std::srand(std::time(nullptr));
+
 	m_window.create(sf::VideoMode(screenWidth, screenHeight), "R-Type", sf::Style::Close);
 	m_window.setKeyRepeatEnabled(false);
 

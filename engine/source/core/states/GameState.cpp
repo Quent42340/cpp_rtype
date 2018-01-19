@@ -28,9 +28,18 @@ GameState::GameState() {
 
 	m_scene.addObject(TestEnemyFactory::create({220, 50}));
 	m_scene.addObject(TestEntityFactory::create(20, 50));
+
+	m_spawnTimer.start();
 }
 
 void GameState::update() {
+	if (m_spawnTimer.time() > 2000) {
+		m_spawnTimer.reset();
+		m_spawnTimer.start();
+
+		m_scene.addObject(TestEnemyFactory::create({Application::screenWidth + 20, static_cast<float>(std::rand() % (Application::screenHeight - 40))}));
+	}
+
 	m_scene.update();
 }
 

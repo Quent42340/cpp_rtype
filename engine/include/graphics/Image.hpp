@@ -20,7 +20,7 @@
 
 class Image : public sf::Drawable, public sf::Transformable {
 	public:
-		Image(const char *textureName);
+		Image(const std::string &textureName);
 
 		void setTile(u16 id, float x, float y, u16 width, u16 height, float clipX, float clipY, u16 clipWidth, u16 clipHeight, sf::Color color = sf::Color::White);
 		void setTilePosRect(u16 id, float x, float y, u16 width, u16 height);
@@ -37,14 +37,13 @@ class Image : public sf::Drawable, public sf::Transformable {
 		u16 width() const { return m_texture.getSize().x; }
 		u16 height() const { return m_texture.getSize().y; }
 
-		const char *textureName() const { return m_textureName; }
 		const sf::Texture &texture() const { return m_texture; }
 
 	protected:
 		virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
 	private:
-		const char *m_textureName = nullptr;
+		std::string m_textureName;
 		sf::Texture &m_texture;
 
 		sf::VertexArray m_vertices;

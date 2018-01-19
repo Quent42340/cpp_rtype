@@ -30,10 +30,11 @@ SceneObject TestEntityFactory::create(u16 x, u16 y) {
 
 	auto &behaviourComponent = object.set<BehaviourComponent>();
 	behaviourComponent.addBehaviour<EasyBehaviour>("Update", [] (SceneObject &object) {
-		if (GamePad::isKeyPressedWithDelay(GameKey::Start, 250)) {
+		// if (GamePad::isKeyPressedWithDelay(GameKey::Start, 250)) {
+		if (GamePad::isKeyPressedWithDelay(GameKey::Start, 200)) {
 			// FIXME: WARNING HARDCODED SIZE
 			sf::Vector2f bulletPosition = object.getPosition() + sf::Vector2f{34, 18 / 2 - 4};
-			object.get<SceneObjectList>().addObject(TestBulletFactory::create(bulletPosition, {1, 0}));
+			object.get<SceneObjectList>().addObject(TestBulletFactory::create("bullets-basic", bulletPosition, {1, 0}));
 		}
 	});
 

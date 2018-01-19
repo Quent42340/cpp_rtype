@@ -18,6 +18,7 @@
 
 #include "ApplicationState.hpp"
 #include "Scene.hpp"
+#include "Timer.hpp"
 
 class GameState : public ApplicationState {
 	public:
@@ -31,6 +32,7 @@ class GameState : public ApplicationState {
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 		Scene m_scene;
+		Timer m_spawnTimer;
 };
 
 #endif // GAMESTATE_HPP_
