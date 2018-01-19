@@ -36,11 +36,10 @@ SceneObject TestBulletFactory::create(const std::string &textureName, const sf::
 	return object;
 }
 
-// FIXME: WARNING USING IMAGE HERE
 bool TestBulletFactory::checkOutOfMap(SceneObject &object) {
-	return (object.getPosition().x + object.get<Image>().width() < 0 ||
+	return (object.getPosition().x + object.get<HitboxComponent>().currentHitbox()->width < 0 ||
 	        object.getPosition().x > Application::screenWidth ||
-	        object.getPosition().y + object.get<Image>().height() < 0 ||
+	        object.getPosition().y + object.get<HitboxComponent>().currentHitbox()->height < 0 ||
 	        object.getPosition().y > Application::screenHeight);
 }
 

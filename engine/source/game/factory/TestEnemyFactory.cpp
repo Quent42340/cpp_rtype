@@ -11,6 +11,7 @@
  *
  * =====================================================================================
  */
+#include "Application.hpp"
 #include "BehaviourComponent.hpp"
 #include "EasyBehaviour.hpp"
 #include "EasyMovement.hpp"
@@ -30,7 +31,7 @@ SceneObject TestEnemyFactory::create(const sf::Vector2f &pos) {
 	object.set<Timer>().start();
 	object.set<HealthComponent>(500);
 	object.set<LifetimeComponent>([&] (SceneObject &object) {
-		return object.get<HealthComponent>().life() == 0;
+		return checkOutOfMap(object) || object.get<HealthComponent>().life() == 0;
 	});
 
 	object.set<MovementComponent>(new EasyMovement([] (SceneObject &object) {
@@ -68,5 +69,10 @@ void TestEnemyFactory::enemyCollisionAction(SceneObject &enemy, SceneObject &obj
 		enemy.get<HealthComponent>().removeLife(100);
 		object.get<LifetimeComponent>().kill();
 	}
+}
+
+bool TestEnemyFactory::checkOutOfMap(SceneObject &object) {
+	return (object.getPosition().x + object.get<HitboxComponent>().currentHitbox()->width < 0 ||
+	        object.getPosition().y + object.get<HitboxComponent>().currentHitbox()->height < 0);
 }
 

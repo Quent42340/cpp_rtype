@@ -21,7 +21,10 @@ class TestEnemyFactory {
 	public:
 		static SceneObject create(const sf::Vector2f &pos);
 
+	private:
 		static void enemyCollisionAction(SceneObject &enemy, SceneObject &object, bool inCollision);
+
+		static bool checkOutOfMap(SceneObject &object);
 };
 
 #endif // TESTENEMYFACTORY_HPP_
