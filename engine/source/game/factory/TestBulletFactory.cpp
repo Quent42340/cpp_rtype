@@ -15,6 +15,7 @@
 
 #include "Application.hpp"
 #include "EasyMovement.hpp"
+#include "HitboxComponent.hpp"
 #include "Image.hpp"
 #include "LifetimeComponent.hpp"
 #include "MovementComponent.hpp"
@@ -24,10 +25,12 @@
 SceneObject TestBulletFactory::create(const sf::Vector2f &pos, const sf::Vector2f &v) {
 	SceneObject object{"BasicBullet", "Bullet"};
 	object.set<LifetimeComponent>(&TestBulletFactory::checkOutOfMap);
-	object.set<Image>("bullets-basic");
 	object.set<MovementComponent>(new EasyMovement([v] (SceneObject &object) {
 		object.get<MovementComponent>().v = v;
 	})).speed = 3.0f;
+
+	auto &image = object.set<Image>("bullets-basic");
+	object.set<HitboxComponent>(0, 0, image.width(), image.height());
 
 	object.setPosition(pos);
 

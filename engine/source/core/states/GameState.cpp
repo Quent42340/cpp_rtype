@@ -16,7 +16,7 @@
 #include "ResourceHandler.hpp"
 #include "Scene.hpp"
 
-#include "TestBulletFactory.hpp"
+#include "TestEnemyFactory.hpp"
 #include "TestEntityFactory.hpp"
 
 sf::View GameState::view{sf::FloatRect(0, 0, Application::screenWidth, Application::screenHeight)};
@@ -26,6 +26,7 @@ GameState::GameState() {
 
 	// Scene::player = &m_player;
 
+	m_scene.addObject(TestEnemyFactory::create({220, 50}));
 	m_scene.addObject(TestEntityFactory::create(20, 50));
 }
 
