@@ -21,7 +21,7 @@ class TestBulletFactory {
 		static SceneObject create(const std::string &textureName, const sf::Vector2f &pos, const sf::Vector2f &v);
 
 	private:
-		static bool checkOutOfMap(SceneObject &object);
+		static bool checkOutOfMap(const SceneObject &object);
 };
 
 #endif // TESTBULLETFACTORY_HPP_

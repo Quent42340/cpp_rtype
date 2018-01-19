@@ -11,8 +11,10 @@ TODO
 
 # Fixme
 
+• DONE: Enemy bullets disappear when enemy is killed
+   → Potential solution: Add subentities to Scene if the entity dies
+   → Alternative solution: Wait subentities are dead before killing main entity
 • TODO: Faster bullets when spamming shoot button instead of holding it, wtf?
-• TODO: Enemy bullets disappear when enemy is killed
 
 # Review
 
@@ -50,6 +52,7 @@ TODO
    ◦ TODO: Handle movement animation
    ◦ TODO: Handle collisions with screen borders
    ◦ TODO: Add network-based movement
+   ◦ TODO: Die animation
 • WIP: Enemy implementation
    ◦ DONE: Add movement
    ◦ DONE: Add the ability to shoot
@@ -58,6 +61,7 @@ TODO
    ◦ TODO: Handle collisions with ally bullets (same for allies but for enemy bullets)
    ◦ TODO: Handle random spawn on the right of the screen
    ◦ TODO: Send notification to each client when a mob spawns, is killed, shoots, kills a player...
+   ◦ TODO: Die animation
 • TODO: Background
    ◦ TODO: Slow horizontal scrolling background
 • TODO: GUI → Dylan

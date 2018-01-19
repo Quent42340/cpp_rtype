@@ -24,7 +24,7 @@ class TestEnemyFactory {
 	private:
 		static void enemyCollisionAction(SceneObject &enemy, SceneObject &object, bool inCollision);
 
-		static bool checkOutOfMap(SceneObject &object);
+		static bool checkOutOfMap(const SceneObject &object);
 };
 
 #endif // TESTENEMYFACTORY_HPP_

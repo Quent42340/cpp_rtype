@@ -30,7 +30,7 @@ SceneObject TestEnemyFactory::create(const sf::Vector2f &pos) {
 	object.set<SceneObjectList>();
 	object.set<Timer>().start();
 	object.set<HealthComponent>(500);
-	object.set<LifetimeComponent>([&] (SceneObject &object) {
+	object.set<LifetimeComponent>([&] (const SceneObject &object) {
 		return checkOutOfMap(object) || object.get<HealthComponent>().life() == 0;
 	});
 
@@ -71,7 +71,7 @@ void TestEnemyFactory::enemyCollisionAction(SceneObject &enemy, SceneObject &obj
 	}
 }
 
-bool TestEnemyFactory::checkOutOfMap(SceneObject &object) {
+bool TestEnemyFactory::checkOutOfMap(const SceneObject &object) {
 	return (object.getPosition().x + object.get<HitboxComponent>().currentHitbox()->width < 0 ||
 	        object.getPosition().y + object.get<HitboxComponent>().currentHitbox()->height < 0);
 }

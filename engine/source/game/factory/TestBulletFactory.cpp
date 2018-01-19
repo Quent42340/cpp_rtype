@@ -24,7 +24,7 @@
 SceneObject TestBulletFactory::create(const std::string &textureName, const sf::Vector2f &pos, const sf::Vector2f &v) {
 	SceneObject object{"BasicBullet", "Bullet"};
 	object.set<LifetimeComponent>(&TestBulletFactory::checkOutOfMap);
-	object.set<MovementComponent>(new EasyMovement([v] (SceneObject &object) {
+	object.set<MovementComponent>(new EasyMovement([v] (const SceneObject &object) {
 		object.get<MovementComponent>().v = v;
 	})).speed = 3.0f;
 
@@ -36,7 +36,7 @@ SceneObject TestBulletFactory::create(const std::string &textureName, const sf::
 	return object;
 }
 
-bool TestBulletFactory::checkOutOfMap(SceneObject &object) {
+bool TestBulletFactory::checkOutOfMap(const SceneObject &object) {
 	return (object.getPosition().x + object.get<HitboxComponent>().currentHitbox()->width < 0 ||
 	        object.getPosition().x > Application::screenWidth ||
 	        object.getPosition().y + object.get<HitboxComponent>().currentHitbox()->height < 0 ||
