@@ -11,16 +11,29 @@
  *
  * =====================================================================================
  */
+#include "BehaviourComponent.hpp"
+#include "EasyBehaviour.hpp"
+#include "GamePad.hpp"
 #include "GamePadMovement.hpp"
-#include "Sprite.hpp"
 #include "MovementComponent.hpp"
+#include "SceneObjectList.hpp"
+#include "Sprite.hpp"
+#include "TestBulletFactory.hpp"
 #include "TestEntityFactory.hpp"
 
 SceneObject TestEntityFactory::create(u16 x, u16 y) {
-	SceneObject object{"TestEntity", "Test"};
+	SceneObject object{"Player1", "Player"};
+	object.set<SceneObjectList>();
 	object.set<Sprite>("characters-players", 34, 18).setCurrentFrame(0);
 	object.set<MovementComponent>(new GamePadMovement);
 	object.setPosition(x, y);
+
+	auto &behaviourComponent = object.set<BehaviourComponent>();
+	behaviourComponent.addBehaviour<EasyBehaviour>("Update", [] (SceneObject &object) {
+		if (GamePad::isKeyPressedWithDelay(GameKey::Start, 250)) {
+			object.get<SceneObjectList>().addObject(TestBulletFactory::create(object.getPosition(), {1, 0}));
+		}
+	});
 
 	return object;
 }

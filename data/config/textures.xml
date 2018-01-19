@@ -1,4 +1,7 @@
 <textures>
-	<texture folder="characters" name="players"/>
 	<texture folder="backgrounds" name="space"/>
+
+	<texture folder="bullets" name="basic"/>
+
+	<texture folder="characters" name="players"/>
 </textures>

@@ -14,26 +14,27 @@
 #ifndef BEHAVIOURCOMPONENT_HPP_
 #define BEHAVIOURCOMPONENT_HPP_
 
-#include <functional>
-#include <map>
+#include <unordered_map>
 
-#include "SceneObject.hpp"
+#include "Behaviour.hpp"
 
 class BehaviourComponent {
-	using Action = std::function<void(SceneObject&)>;
-
 	public:
-		void addAction(const char *name, Action action) { m_actions.emplace(name, action); }
-		void removeAction(const char *name) { m_actions.erase(name); }
+		template<typename T, typename... Args>
+		T &addBehaviour(const char *name, Args &&...args) {
+			T *t = new T(std::forward<Args>(args)...);
+			m_behaviours.emplace(name, t);
+			return *t;
+		}
 
 		void update(SceneObject &object) {
-			for(auto &it : m_actions) {
-				it.second(object);
+			for (auto &it : m_behaviours) {
+				it.second->update(object);
 			}
 		}
 
 	private:
-		std::map<std::string, Action> m_actions;
+		std::unordered_map<std::string, std::unique_ptr<Behaviour>> m_behaviours;
 };
 
 #endif // BEHAVIOURCOMPONENT_HPP_

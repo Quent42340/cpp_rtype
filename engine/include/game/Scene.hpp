@@ -22,37 +22,19 @@
 #include "SceneObjectList.hpp"
 
 class Scene : public sf::Drawable {
-		using SceneHandler = std::function<void(SceneObject &)>;
-		using SceneDrawHandler = std::function<void(const SceneObject &, sf::RenderTarget &, sf::RenderStates states)>;
-
 	public:
-		SceneObject &addObject(SceneObject &&object);
-
 		void reset();
 		void update();
 
-		SceneObjectList &objects() { return m_objects; }
+		SceneObject &addObject(SceneObject &&object);
 
-		void setResetHandler(const SceneHandler &resetHandler) { m_resetHandler = resetHandler; }
-		void setUpdateHandler(const SceneHandler &updateHandler) { m_updateHandler = updateHandler; }
-		void setDrawHandler(const SceneDrawHandler &drawHandler) { m_drawHandler = drawHandler; }
+		void addCollisionChecker(std::function<void(SceneObject &)> checker);
+		void checkCollisionsFor(SceneObject &object);
 
-		static bool isPlayer(const SceneObject &object) { return player == &object; }
-
-		static Scene *currentScene;
-
-		static SceneObject *player;
+		const SceneObjectList &objects() { return m_objects; }
 
 	private:
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
-
-		void resetObject(SceneObject &object);
-		void updateObject(SceneObject &object);
-		void drawObject(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states) const;
-
-		SceneHandler m_resetHandler;
-		SceneHandler m_updateHandler;
-		SceneDrawHandler m_drawHandler;
 
 		SceneObjectList m_objects;
 };

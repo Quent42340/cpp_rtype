@@ -11,72 +11,57 @@
  *
  * =====================================================================================
  */
+#include "CollisionComponent.hpp"
+#include "CollisionSystem.hpp"
 #include "Scene.hpp"
-
-#include "BehaviourSystem.hpp"
-#include "DrawingSystem.hpp"
-#include "MovementSystem.hpp"
-
-Scene *Scene::currentScene = nullptr;
-
-SceneObject *Scene::player = nullptr;
-
-SceneObject &Scene::addObject(SceneObject &&object) {
-	return m_objects.addObject(std::move(object));
-}
+#include "SceneSystem.hpp"
 
 void Scene::reset() {
-	if (player) {
-		resetObject(*player);
-	}
-
-	for(auto &object : m_objects) resetObject(object);
+	SceneSystem::reset(m_objects);
 }
 
 void Scene::update() {
-	if (player) {
-		updateObject(*player);
-	}
-
-	for(auto &object : m_objects) updateObject(object);
+	SceneSystem::update(m_objects);
 }
 
 void Scene::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-	if (player) {
-		drawObject(*player, target, states);
+	SceneSystem::draw(m_objects, target, states);
+}
+
+SceneObject &Scene::addObject(SceneObject &&object) {
+	SceneObject &obj = m_objects.addObject(std::move(object));
+
+	if(obj.has<CollisionComponent>()) {
+		obj.get<CollisionComponent>().addChecker([&](SceneObject &object) {
+			checkCollisionsFor(object);
+		});
 	}
 
-	for(const auto &object : m_objects) drawObject(object, target, states);
+	return obj;
 }
 
-void Scene::resetObject(SceneObject &object) {
-	if(m_resetHandler) m_resetHandler(object);
-}
-
-void Scene::updateObject(SceneObject &object) {
-	MovementSystem::process(object);
-	BehaviourSystem::process(object);
-
-	if(object.has<SceneObjectList>()) {
-		SceneObjectList &objects = object.get<SceneObjectList>();
-		for(auto &object : objects) {
-			updateObject(object);
+void Scene::addCollisionChecker(std::function<void(SceneObject &)> checker) {
+	for (SceneObject &object : m_objects) {
+		if (object.has<CollisionComponent>()) {
+			object.get<CollisionComponent>().addChecker(checker);
 		}
 	}
-
-	if(m_updateHandler) m_updateHandler(object);
 }
 
-void Scene::drawObject(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states) const {
-	if(object.has<SceneObjectList>()) {
-		const SceneObjectList &objects = object.get<SceneObjectList>();
-		for(auto &object : objects) {
-			DrawingSystem::draw(object, target, states);
+void Scene::checkCollisionsFor(SceneObject &object) {
+	for(SceneObject &object2 : m_objects) {
+		if(&object != &object2) {
+			CollisionSystem::checkCollision(object, object2);
+
+			if (object.has<SceneObjectList>())
+				for (SceneObject &child : object.get<SceneObjectList>())
+					CollisionSystem::checkCollision(child, object2);
+
+			if (object2.has<SceneObjectList>())
+				for (SceneObject &child : object2.get<SceneObjectList>())
+					CollisionSystem::checkCollision(object, child);
 		}
 	}
-
-	DrawingSystem::draw(object, target, states);
-
-	if(m_drawHandler) m_drawHandler(object, target, states);
 }
+
 

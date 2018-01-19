@@ -16,6 +16,7 @@
 #include "ResourceHandler.hpp"
 #include "Scene.hpp"
 
+#include "TestBulletFactory.hpp"
 #include "TestEntityFactory.hpp"
 
 sf::View GameState::view{sf::FloatRect(0, 0, Application::screenWidth, Application::screenHeight)};
@@ -26,18 +27,16 @@ GameState::GameState() {
 	// Scene::player = &m_player;
 
 	m_scene.addObject(TestEntityFactory::create(20, 50));
-
-	Scene::currentScene = &m_scene;
 }
 
 void GameState::update() {
-	Scene::currentScene->update();
+	m_scene.update();
 }
 
 void GameState::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	target.setView(view);
 
-	target.draw(*Scene::currentScene, states);
+	target.draw(m_scene, states);
 
 	target.setView(target.getDefaultView());
 }
