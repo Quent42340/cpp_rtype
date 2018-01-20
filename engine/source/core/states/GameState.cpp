@@ -26,7 +26,6 @@ GameState::GameState() {
 
 	// Scene::player = &m_player;
 
-	m_scene.addObject(TestEnemyFactory::create({220, 50}));
 	m_scene.addObject(TestEntityFactory::create(20, 50));
 
 	m_spawnTimer.start();
