@@ -34,6 +34,7 @@ include_directories(${SFML_INCLUDE_DIRS})
 #------------------------------------------------------------------------------
 # Subdirectories
 #------------------------------------------------------------------------------
+add_subdirectory(engine)
 add_subdirectory(client)
 add_subdirectory(server)
 

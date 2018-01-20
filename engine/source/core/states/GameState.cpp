@@ -19,10 +19,10 @@
 #include "TestEnemyFactory.hpp"
 #include "TestEntityFactory.hpp"
 
-sf::View GameState::view{sf::FloatRect(0, 0, Application::screenWidth, Application::screenHeight)};
+// sf::View GameState::view{sf::FloatRect(0, 0, Application::screenWidth, Application::screenHeight)};
 
 GameState::GameState() {
-	view.reset(sf::FloatRect(0, 0, Application::screenWidth, Application::screenHeight));
+	// view.reset(sf::FloatRect(0, 0, Application::screenWidth, Application::screenHeight));
 
 	// Scene::player = &m_player;
 
@@ -43,10 +43,11 @@ void GameState::update() {
 }
 
 void GameState::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-	target.setView(view);
+	// target.setView(view);
 
+	target.draw(m_background, states);
 	target.draw(m_scene, states);
 
-	target.setView(target.getDefaultView());
+	// target.setView(target.getDefaultView());
 }
 

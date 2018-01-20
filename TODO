@@ -2,8 +2,8 @@ TODO
 
 # Improvements
 
+• DONE: Transformer /engine en lib pour éviter de recompiler 2 fois tous les fichiers
 • TODO: Renommer /graphics/characters en /graphics/spaceship et /graphics/bullets en /graphics/bullet
-• TODO: Transformer /engine en lib pour éviter de recompiler 2 fois tous les fichiers
 • TODO: Remplacer tinyxml2 par Qt et virer le dossier /cmake
 • TODO: Virer la dépendance à la SFML pour le serveur
    → Mettre la partie affichage dans une bibliothèque séparée inclue uniquement dans le client
