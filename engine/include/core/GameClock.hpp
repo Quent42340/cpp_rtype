@@ -30,6 +30,10 @@ class GameClock {
 
 		void drawGame(std::function<void(void)> drawFunc);
 
+		void waitForNextFrame();
+
+		void setTimestep(u8 timestep) { m_timestep = timestep; }
+
 	private:
 		static sf::Clock clock;
 		static u32 ticks;

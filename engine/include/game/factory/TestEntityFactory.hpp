@@ -19,6 +19,8 @@
 class TestEntityFactory {
 	public:
 		static SceneObject create(u16 x, u16 y);
+
+		static SceneObject createServer(u16 x, u16 y);
 };
 
 #endif // TESTENTITYFACTORY_HPP_

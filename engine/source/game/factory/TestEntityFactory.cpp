@@ -11,6 +11,8 @@
  *
  * =====================================================================================
  */
+#include <SFML/Network.hpp>
+
 #include "BehaviourComponent.hpp"
 #include "EasyBehaviour.hpp"
 #include "GamePad.hpp"
@@ -27,6 +29,7 @@ SceneObject TestEntityFactory::create(u16 x, u16 y) {
 	object.set<Sprite>("characters-players", 34, 18).setCurrentFrame(0);
 	object.set<MovementComponent>(new GamePadMovement);
 	object.setPosition(x, y);
+	object.set<sf::UdpSocket>().bind(0);
 
 	auto &behaviourComponent = object.set<BehaviourComponent>();
 	behaviourComponent.addBehaviour<EasyBehaviour>("Update", [] (SceneObject &object) {
@@ -36,6 +39,25 @@ SceneObject TestEntityFactory::create(u16 x, u16 y) {
 			object.get<SceneObjectList>().addObject(TestBulletFactory::create("bullets-basic", bulletPosition, {1, 0}));
 		}
 	});
+
+	return object;
+}
+
+SceneObject TestEntityFactory::createServer(u16 x, u16 y) {
+	SceneObject object{"Player1", "Player"};
+	object.set<SceneObjectList>();
+	object.set<MovementComponent>(new GamePadMovement);
+	object.setPosition(x, y);
+	object.set<sf::UdpSocket>().bind(0);
+
+	// auto &behaviourComponent = object.set<BehaviourComponent>();
+	// behaviourComponent.addBehaviour<EasyBehaviour>("Update", [] (SceneObject &object) {
+	// 	if (GamePad::isKeyPressedWithDelay(GameKey::Start, 200)) {
+	// 		Sprite &sprite = object.get<Sprite>();
+	// 		sf::Vector2f bulletPosition = object.getPosition() + sf::Vector2f{(float)sprite.frameWidth(), (float)sprite.frameHeight() / 2 - 4};
+	// 		object.get<SceneObjectList>().addObject(TestBulletFactory::create("bullets-basic", bulletPosition, {1, 0}));
+	// 	}
+	// });
 
 	return object;
 }

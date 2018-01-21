@@ -26,7 +26,7 @@ void ClientApplication::init() {
 	m_window.create(sf::VideoMode(screenWidth, screenHeight), "R-Type", sf::Style::Close);
 	m_window.setKeyRepeatEnabled(false);
 
-	m_socket.bind(4243);
+	m_socket.bind(0);
 
 	Mouse::setWindow(m_window);
 
@@ -47,6 +47,10 @@ void ClientApplication::handleEvents() {
 	while(m_window.pollEvent(event)) {
 		if((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
 		 || event.type == sf::Event::Closed) {
+			sf::Packet packet;
+			packet << "ClientClose";
+			m_socket.send(packet, sf::IpAddress::Broadcast, 4242);
+
 			m_window.close();
 		}
 
@@ -54,7 +58,12 @@ void ClientApplication::handleEvents() {
 
 		if (event.type == sf::Event::KeyPressed) {
 			sf::Packet packet;
-			packet << "Key pressed! Code: " << event.key.code;
+			packet << "KeyPressed" << event.key.code;
+			m_socket.send(packet, sf::IpAddress::Broadcast, 4242);
+		}
+		else if (event.type == sf::Event::KeyReleased) {
+			sf::Packet packet;
+			packet << "KeyReleased" << event.key.code;
 			m_socket.send(packet, sf::IpAddress::Broadcast, 4242);
 		}
 	}

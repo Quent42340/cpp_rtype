@@ -14,8 +14,6 @@
 #ifndef KEYBOARDHANDLER_HPP_
 #define KEYBOARDHANDLER_HPP_
 
-#include <map>
-
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 

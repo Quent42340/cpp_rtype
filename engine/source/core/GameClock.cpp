@@ -56,6 +56,10 @@ void GameClock::drawGame(std::function<void(void)> drawFunc) {
 		drawFunc();
 	}
 
+	waitForNextFrame();
+}
+
+void GameClock::waitForNextFrame() {
 	u32 lastFrameDuration = getTicks(true) - m_timeDropped - m_lastFrameDate;
 
 	if(lastFrameDuration < m_timestep) {

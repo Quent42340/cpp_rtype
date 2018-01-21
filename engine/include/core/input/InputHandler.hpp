@@ -23,7 +23,7 @@ class InputHandler {
 	public:
 		virtual ~InputHandler() = default;
 
-		virtual bool isKeyPressed(GameKey key) = 0;
+		virtual bool isKeyPressed(GameKey key) { return m_keysPressed[key]; }
 		virtual bool isKeyPressedOnce(GameKey key);
 		virtual bool isKeyPressedWithDelay(GameKey key, u16 delay);
 

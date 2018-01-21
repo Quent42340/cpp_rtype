@@ -16,14 +16,28 @@
 
 #include <SFML/Network.hpp>
 
+#include "GameClock.hpp"
+#include "NetworkInputHandler.hpp"
+#include "Scene.hpp"
+
 class ServerApplication {
 	public:
 		ServerApplication();
 
+		void handleNetworkEvents();
+
 		void run();
 
 	private:
+		bool m_isRunning = true;
+
+		GameClock m_clock;
+
+		NetworkInputHandler m_inputHandler;
+
 		sf::UdpSocket m_socket;
+
+		Scene m_scene;
 };
 
 #endif // SERVERAPPLICATION_HPP_
