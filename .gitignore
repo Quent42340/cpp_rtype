@@ -34,4 +34,5 @@ rtype_server
 # Misc
 test_udp/client/client
 test_udp/server/server
+Notes
 

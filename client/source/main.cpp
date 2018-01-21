@@ -11,10 +11,10 @@
  *
  * =====================================================================================
  */
-#include "Application.hpp"
+#include "ClientApplication.hpp"
 
 int main() {
-	Application app;
+	ClientApplication app;
 	app.run();
 
 	return 0;

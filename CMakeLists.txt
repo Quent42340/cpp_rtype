@@ -24,7 +24,7 @@ link_directories(${TINYXML2_LIBRARY_DIRS})
 #------------------------------------------------------------------------------
 # - SFML
 #------------------------------------------------------------------------------
-find_package(SFML COMPONENTS audio graphics system window)
+find_package(SFML COMPONENTS audio graphics network system window)
 if(NOT SFML_FOUND)
 	message(FATAL_ERROR "SFML is needed to build the project. Please install it correctly.")
 endif()

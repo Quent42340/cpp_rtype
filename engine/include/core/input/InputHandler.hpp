@@ -16,8 +16,6 @@
 
 #include <map>
 
-#include <SFML/Window/Event.hpp>
-
 #include "GameKey.hpp"
 #include "IntTypes.hpp"
 

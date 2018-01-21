@@ -24,6 +24,10 @@ void KeyboardHandler::updateState(const sf::Event &event) {
 		if(event.type == sf::Event::KeyPressed && event.key.code == it.second) {
 			m_keysPressed[it.first] = true;
 		}
+
+		if (event.type == sf::Event::KeyReleased && event.key.code == it.second) {
+			m_keysPressed[it.first] = false;
+		}
 	}
 }
 

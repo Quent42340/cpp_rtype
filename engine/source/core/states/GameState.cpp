@@ -21,6 +21,8 @@
 
 // sf::View GameState::view{sf::FloatRect(0, 0, Application::screenWidth, Application::screenHeight)};
 
+#include <SFML/Network.hpp>
+
 GameState::GameState() {
 	// view.reset(sf::FloatRect(0, 0, Application::screenWidth, Application::screenHeight));
 

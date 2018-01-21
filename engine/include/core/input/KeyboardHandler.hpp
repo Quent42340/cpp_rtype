@@ -16,6 +16,7 @@
 
 #include <map>
 
+#include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
 #include "InputHandler.hpp"
