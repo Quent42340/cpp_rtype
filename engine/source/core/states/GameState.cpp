@@ -16,6 +16,7 @@
 #include "ResourceHandler.hpp"
 #include "Scene.hpp"
 
+#include "TestBulletFactory.hpp"
 #include "TestEnemyFactory.hpp"
 #include "TestEntityFactory.hpp"
 
@@ -29,7 +30,7 @@ GameState::GameState() {
 	m_socket.bind(4243);
 	m_socket.setBlocking(false);
 
-	m_player = &m_scene.addObject(TestEntityFactory::create(20, 50));
+	// m_player = &m_scene.addObject(TestEntityFactory::create(20, 50));
 
 	m_spawnTimer.start();
 }
@@ -45,22 +46,48 @@ void GameState::update() {
 	sf::Packet packet;
 	sf::IpAddress senderAddress;
 	u16 senderPort;
-	m_socket.receive(packet, senderAddress, senderPort);
+	if (m_socket.receive(packet, senderAddress, senderPort) == sf::Socket::Done) {
+		std::string packetType;
+		packet >> packetType;
+		std::cout << "Message of type '" << packetType << "' received from: " << senderAddress << ":" << senderPort << std::endl;
 
-	std::string packetType;
-	packet >> packetType;
+		if (packetType == "EntityMove") {
+			std::string entityName;
+			sf::Vector2f pos;
+			// float speed;
+			// packet >> entityName >> velocity.x >> velocity.y >> speed;
+			packet >> entityName >> pos.x >> pos.y;
 
-	if (packetType == "EntityMove") {
-		std::string entityName;
-		sf::Vector2f pos;
-		// float speed;
-		// packet >> entityName >> velocity.x >> velocity.y >> speed;
-		packet >> entityName >> pos.x >> pos.y;
+			// std::cout << "Entity '" << entityName << "' moved with velocity (" << velocity.x << ";" << velocity.y << ") at " << speed << " speed." << std::endl;
 
-		// std::cout << "Entity '" << entityName << "' moved with velocity (" << velocity.x << ";" << velocity.y << ") at " << speed << " speed." << std::endl;
+			// m_player->move(velocity * speed);
+			// if (m_player)
+			// 	m_player->setPosition(pos);
+			SceneObject *object = m_scene.objects().findByName(entityName);
+			if (object)
+				object->setPosition(pos);
+		}
+		else if (packetType == "EntitySpawn") {
+			std::string entityName;
+			std::string entityType;
+			u16 port;
+			sf::Vector2f pos;
+			packet >> entityName >> entityType >> port >> pos.x >> pos.y;
 
-		// m_player->move(velocity * speed);
-		m_player->setPosition(pos);
+			SceneObject &entity = m_scene.addObject(TestEntityFactory::createClient(entityName, entityType, port, pos.x, pos.y));
+			if (!m_player)
+				m_player = &entity;
+		}
+		else if (packetType == "BulletSpawn") {
+			std::string entityName;
+			std::string entityType;
+			u16 port;
+			std::string textureName;
+			sf::Vector2f pos;
+			packet >> entityName >> entityType >> port >> textureName >> pos.x >> pos.y;
+
+			m_scene.addObject(TestBulletFactory::createClient(entityName, textureName, pos));
+		}
 	}
 
 	// m_scene.update();

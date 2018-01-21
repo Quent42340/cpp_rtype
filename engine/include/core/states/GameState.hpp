@@ -37,7 +37,7 @@ class GameState : public ApplicationState {
 		Timer m_spawnTimer;
 
 		Scene m_scene;
-		SceneObject *m_player;
+		SceneObject *m_player = nullptr;
 
 		sf::UdpSocket m_socket;
 };

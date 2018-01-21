@@ -28,6 +28,13 @@ class SceneObjectList {
 			return m_objects.back();
 		}
 
+		SceneObject *findByName(const std::string &name) {
+			for (auto &it : m_objects)
+				if (it.name() == name)
+					return &it;
+			return nullptr;
+		}
+
 		void pop() { m_objects.pop_back(); }
 
 		SceneObject &operator[](size_t n) { return m_objects[n]; }

@@ -31,7 +31,8 @@ class Scene : public sf::Drawable {
 		void addCollisionChecker(std::function<void(SceneObject &)> checker);
 		void checkCollisionsFor(SceneObject &object);
 
-		const SceneObjectList &objects() { return m_objects; }
+		SceneObjectList &objects() { return m_objects; }
+		const SceneObjectList &objects() const { return m_objects; }
 
 	private:
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;

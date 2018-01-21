@@ -11,6 +11,8 @@
  *
  * =====================================================================================
  */
+#include <SFML/Network.hpp>
+
 #include "CollisionComponent.hpp"
 #include "CollisionSystem.hpp"
 #include "Scene.hpp"
