@@ -17,40 +17,39 @@
 #include "ServerApplication.hpp"
 #include "TestEntityFactory.hpp"
 
-ServerApplication::ServerApplication() {
+ServerApplication::ServerApplication() : m_network(4242, false) {
 	std::srand(std::time(nullptr));
 
 	GamePad::init(m_inputHandler);
 
 	// m_clock.setTimestep(50);
 
-	m_socket.bind(4242);
-	m_socket.setBlocking(false);
+	Network::setInstance(m_network);
 }
 
 void ServerApplication::handleNetworkEvents() {
 	sf::Packet packet;
 	sf::IpAddress senderAddress;
 	u16 senderPort;
-	while (m_socket.receive(packet, senderAddress, senderPort) == sf::Socket::Status::Done) {
-		std::string type;
-		packet >> type;
-		std::cout << "Message of type '" << type << "' received from: " << senderAddress << ":" << senderPort << std::endl;
+	while (m_network.socket().receive(packet, senderAddress, senderPort) == sf::Socket::Status::Done) {
+		NetworkCommand command;
+		packet >> command;
+		std::cout << "Message of type '" << Network::commandToString(command) << "' received from: " << senderAddress << ":" << senderPort << std::endl;
 
-		if (type == "KeyPressed") {
+		if (command == NetworkCommand::KeyPressed) {
 			u32 keyCode;
 			packet >> keyCode;
 			m_inputHandler.setKeyPressed(keyCode, true);
 		}
-		else if (type == "KeyReleased") {
+		else if (command == NetworkCommand::KeyReleased) {
 			u32 keyCode;
 			packet >> keyCode;
 			m_inputHandler.setKeyPressed(keyCode, false);
 		}
-		else if (type == "ClientConnect") {
+		else if (command == NetworkCommand::ClientConnect) {
 			m_scene.addObject(TestEntityFactory::createServer(20, 50, senderPort));
 		}
-		else if (type == "ClientClose") {
+		else if (command == NetworkCommand::ClientDisconnect) {
 			m_isRunning = false;
 		}
 	}

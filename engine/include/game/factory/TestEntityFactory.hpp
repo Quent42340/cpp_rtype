@@ -20,7 +20,7 @@ class TestEntityFactory {
 	public:
 		static SceneObject create(u16 x, u16 y);
 
-		static SceneObject createClient(const std::string &name, const std::string &type, u16 port, u16 x, u16 y);
+		static SceneObject createClient(const std::string &name, const std::string &type, u16 x, u16 y);
 		static SceneObject createServer(u16 x, u16 y, u16 senderPort);
 };
 

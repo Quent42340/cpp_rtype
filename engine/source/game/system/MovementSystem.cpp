@@ -12,6 +12,7 @@
  * =====================================================================================
  */
 #include "MovementSystem.hpp"
+#include "Network.hpp"
 
 #include "CollisionComponent.hpp"
 #include "MovementComponent.hpp"
@@ -40,10 +41,9 @@ void MovementSystem::process(SceneObject &object) {
 		object.move(movement.v * movement.speed);
 
 		if (object.has<NetworkComponent>() && movement.isMoving) {
-			auto &networkComponent = object.get<NetworkComponent>();
 			sf::Packet packet;
-			packet << "EntityMove" << (sf::Uint64)std::time(nullptr) << object.name() << object.getPosition().x << object.getPosition().y;
-			networkComponent.socket.send(packet, sf::IpAddress::Broadcast, 4243);
+			packet << NetworkCommand::EntityMove << (sf::Uint64)std::time(nullptr) << object.name() << object.getPosition().x << object.getPosition().y;
+			Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, 4243);
 		}
 
 		movement.v.x = 0;

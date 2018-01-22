@@ -43,7 +43,7 @@ class ClientApplication {
 
 		KeyboardHandler m_keyboardHandler;
 
-		Network m_network;
+		Network m_network{4243};
 
 		ResourceHandler m_resourceHandler;
 };

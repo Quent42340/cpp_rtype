@@ -11,14 +11,13 @@
  *
  * =====================================================================================
  */
-#include <SFML/Network.hpp>
-
 #include "BehaviourComponent.hpp"
 #include "EasyBehaviour.hpp"
 #include "GamePad.hpp"
 #include "GamePadMovement.hpp"
 #include "HitboxComponent.hpp"
 #include "MovementComponent.hpp"
+#include "Network.hpp"
 #include "NetworkComponent.hpp"
 #include "SceneObjectList.hpp"
 #include "Sprite.hpp"
@@ -45,7 +44,7 @@ SceneObject TestEntityFactory::create(u16 x, u16 y) {
 	return object;
 }
 
-SceneObject TestEntityFactory::createClient(const std::string &name, const std::string &type, u16 port, u16 x, u16 y) {
+SceneObject TestEntityFactory::createClient(const std::string &name, const std::string &type, u16 x, u16 y) {
 	SceneObject object{name, type};
 	object.set<SceneObjectList>();
 	object.set<Sprite>("characters-players", 34, 18).setCurrentFrame(0);
@@ -60,17 +59,15 @@ SceneObject TestEntityFactory::createServer(u16 x, u16 y, u16 senderPort) {
 	SceneObject object{"Player" + std::to_string(playerCount++), "Player"};
 	object.set<SceneObjectList>();
 	object.set<MovementComponent>(new GamePadMovement);
+	object.set<NetworkComponent>();
 	object.setPosition(x, y);
 
 	// FIXME: WARNING HARDCODED SIZE
 	object.set<HitboxComponent>(0, 0, 34, 18);
 
-	sf::UdpSocket &socket = object.set<NetworkComponent>().socket;
-	socket.bind(0);
-
 	sf::Packet packet;
-	packet << "EntitySpawn" << object.name() << object.type() << socket.getLocalPort() << object.getPosition().x << object.getPosition().y;
-	socket.send(packet, sf::IpAddress::Broadcast, 4243);
+	packet << NetworkCommand::EntitySpawn << object.name() << object.type() << object.getPosition().x << object.getPosition().y;
+	Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, 4243);
 
 	auto &behaviourComponent = object.set<BehaviourComponent>();
 	behaviourComponent.addBehaviour<EasyBehaviour>("Update", [] (SceneObject &object) {

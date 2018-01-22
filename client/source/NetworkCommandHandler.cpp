@@ -58,19 +58,17 @@ void NetworkCommandHandler::update(Scene &scene) {
 		else if (command == NetworkCommand::EntitySpawn) {
 			std::string entityName;
 			std::string entityType;
-			u16 port;
 			sf::Vector2f pos;
-			packet >> entityName >> entityType >> port >> pos.x >> pos.y;
+			packet >> entityName >> entityType >> pos.x >> pos.y;
 
-			scene.addObject(TestEntityFactory::createClient(entityName, entityType, port, pos.x, pos.y));
+			scene.addObject(TestEntityFactory::createClient(entityName, entityType, pos.x, pos.y));
 		}
 		else if (command == NetworkCommand::BulletSpawn) {
 			std::string entityName;
 			std::string entityType;
-			u16 port;
 			std::string textureName;
 			sf::Vector2f pos;
-			packet >> entityName >> entityType >> port >> textureName >> pos.x >> pos.y;
+			packet >> entityName >> entityType >> textureName >> pos.x >> pos.y;
 
 			scene.addObject(TestBulletFactory::createClient(entityName, textureName, pos));
 		}

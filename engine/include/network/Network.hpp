@@ -29,8 +29,8 @@ enum class NetworkCommand {
 
 	// Game commands
 	EntityMove,        // [NetworkCommand][std::string name][float x][float y]
-	EntitySpawn,       // [NetworkCommand][std::string name][float x][float y]
-	BulletSpawn        // [NetworkCommand][std::string name][std::string texture][float x][float y]
+	EntitySpawn,       // [NetworkCommand][std::string name][std::string type][float x][float y]
+	BulletSpawn        // [NetworkCommand][std::string name][std::string type][std::string texture][float x][float y]
 };
 
 class Network {

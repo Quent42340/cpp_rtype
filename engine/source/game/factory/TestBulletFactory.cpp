@@ -13,14 +13,13 @@
  */
 #include <cmath>
 
-#include <SFML/Network.hpp>
-
 #include "Application.hpp"
 #include "EasyMovement.hpp"
 #include "HitboxComponent.hpp"
 #include "Image.hpp"
 #include "LifetimeComponent.hpp"
 #include "MovementComponent.hpp"
+#include "Network.hpp"
 #include "NetworkComponent.hpp"
 #include "TestBulletFactory.hpp"
 
@@ -50,17 +49,15 @@ SceneObject TestBulletFactory::createClient(const std::string &name, const std::
 SceneObject TestBulletFactory::createServer(const std::string &textureName, const sf::Vector2f &pos, const sf::Vector2f &v) {
 	static size_t bulletCount = 0;
 	SceneObject object{"BasicBullet" + std::to_string(bulletCount++), "Bullet"};
+	object.set<NetworkComponent>();
 	object.set<LifetimeComponent>(&TestBulletFactory::checkOutOfMap);
 	object.set<MovementComponent>(new EasyMovement([v] (const SceneObject &object) {
 		object.get<MovementComponent>().v = v;
 	})).speed = 3.0f;
 
-	sf::UdpSocket &socket = object.set<NetworkComponent>().socket;
-	socket.bind(0);
-
 	sf::Packet packet;
-	packet << "BulletSpawn" << object.name() << object.type() << socket.getLocalPort() << textureName << object.getPosition().x << object.getPosition().y;
-	socket.send(packet, sf::IpAddress::Any, 4243);
+	packet << NetworkCommand::EntitySpawn << object.name() << object.type() << textureName << object.getPosition().x << object.getPosition().y;
+	Network::getInstance().socket().send(packet, sf::IpAddress::Any, 4243);
 
 	// auto &image = object.set<Image>(textureName);
 	// object.set<HitboxComponent>(0, 0, image.width(), image.height());

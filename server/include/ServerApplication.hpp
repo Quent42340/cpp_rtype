@@ -14,9 +14,8 @@
 #ifndef SERVERAPPLICATION_HPP_
 #define SERVERAPPLICATION_HPP_
 
-#include <SFML/Network.hpp>
-
 #include "GameClock.hpp"
+#include "Network.hpp"
 #include "NetworkInputHandler.hpp"
 #include "Scene.hpp"
 
@@ -35,7 +34,7 @@ class ServerApplication {
 
 		NetworkInputHandler m_inputHandler;
 
-		sf::UdpSocket m_socket;
+		Network m_network;
 
 		Scene m_scene;
 };
