@@ -23,8 +23,6 @@
 ServerApplication::ServerApplication() : m_network(4242, false) {
 	std::srand(std::time(nullptr));
 
-	GamePad::init(m_inputHandler);
-
 	Network::setInstance(m_network);
 
 	// m_clock.setTimestep(50);
@@ -51,19 +49,21 @@ void ServerApplication::handleNetworkEvents() {
 		if (command == NetworkCommand::KeyPressed) {
 			u32 keyCode;
 			packet >> keyCode;
-			m_inputHandler.setKeyPressed(keyCode, true);
+			ServerInfo::getInstance().getClient(senderPort).inputHandler.setKeyPressed(keyCode, true);
 		}
 		else if (command == NetworkCommand::KeyReleased) {
 			u32 keyCode;
 			packet >> keyCode;
-			m_inputHandler.setKeyPressed(keyCode, false);
+			ServerInfo::getInstance().getClient(senderPort).inputHandler.setKeyPressed(keyCode, false);
 		}
 		else if (command == NetworkCommand::ClientConnect) {
 			ServerInfo::getInstance().addClient(senderPort);
-			m_scene.addObject(TestEntityFactory::create(20, 50));
+			m_scene.addObject(TestEntityFactory::create(20, 50, senderPort));
 		}
 		else if (command == NetworkCommand::ClientDisconnect) {
-			m_isRunning = false;
+			ServerInfo::getInstance().removeClient(senderPort);
+			if (ServerInfo::getInstance().clients().size() == 0)
+				m_isRunning = false;
 		}
 	}
 }

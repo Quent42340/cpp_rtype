@@ -19,15 +19,17 @@
 #include "MovementComponent.hpp"
 #include "Network.hpp"
 #include "NetworkComponent.hpp"
+#include "PlayerComponent.hpp"
 #include "SceneObjectList.hpp"
 #include "SpriteComponent.hpp"
 #include "TestBulletFactory.hpp"
 #include "TestEntityFactory.hpp"
 
-SceneObject TestEntityFactory::create(u16 x, u16 y) {
+SceneObject TestEntityFactory::create(u16 x, u16 y, u16 clientPort) {
 	static size_t playerCount = 0;
 	SceneObject object{"Player" + std::to_string(playerCount++), "Player"};
 	object.set<SceneObjectList>();
+	object.set<PlayerComponent>(clientPort);
 	object.set<MovementComponent>(new GamePadMovement);
 	object.set<NetworkComponent>();
 	object.setPosition(x, y);

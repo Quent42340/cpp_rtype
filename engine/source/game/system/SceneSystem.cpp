@@ -11,6 +11,10 @@
  *
  * =====================================================================================
  */
+#include "GamePad.hpp"
+#include "PlayerComponent.hpp"
+#include "ServerInfo.hpp"
+
 #include "BehaviourSystem.hpp"
 #include "DrawingSystem.hpp"
 #include "LifetimeSystem.hpp"
@@ -41,6 +45,9 @@ void SceneSystem::resetObject(SceneObject &object) {
 }
 
 void SceneSystem::updateObject(SceneObject &object) {
+	if (object.has<PlayerComponent>())
+		GamePad::init(ServerInfo::getInstance().getClient(object.get<PlayerComponent>().clientPort()).inputHandler);
+
 	BehaviourSystem::process(object);
 	MovementSystem::process(object);
 	NetworkSystem::process(object);

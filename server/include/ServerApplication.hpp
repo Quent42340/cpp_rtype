@@ -16,7 +16,6 @@
 
 #include "GameClock.hpp"
 #include "Network.hpp"
-#include "NetworkInputHandler.hpp"
 #include "Scene.hpp"
 #include "Timer.hpp"
 
@@ -33,8 +32,6 @@ class ServerApplication {
 		bool m_isRunning = true;
 
 		GameClock m_clock;
-
-		NetworkInputHandler m_inputHandler;
 
 		Network m_network;
 
