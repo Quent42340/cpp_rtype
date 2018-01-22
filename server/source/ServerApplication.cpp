@@ -48,7 +48,7 @@ void ServerApplication::handleNetworkEvents() {
 			m_inputHandler.setKeyPressed(keyCode, false);
 		}
 		else if (type == "ClientConnect") {
-			m_scene.addObject(TestEntityFactory::createServer(20, 50));
+			m_scene.addObject(TestEntityFactory::createServer(20, 50, senderPort));
 		}
 		else if (type == "ClientClose") {
 			m_isRunning = false;

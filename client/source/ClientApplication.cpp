@@ -14,6 +14,7 @@
 #include "ClientApplication.hpp"
 #include "GamePad.hpp"
 #include "Mouse.hpp"
+#include "NetworkCommandHandler.hpp"
 #include "TextureLoader.hpp"
 
 #include "GameState.hpp"
@@ -24,11 +25,10 @@ void ClientApplication::init() {
 	m_window.create(sf::VideoMode(screenWidth, screenHeight), "R-Type", sf::Style::Close);
 	m_window.setKeyRepeatEnabled(false);
 
-	m_socket.bind(0);
-
 	Mouse::setWindow(m_window);
 
 	ApplicationStateStack::setInstance(m_stateStack);
+	Network::setInstance(m_network);
 	ResourceHandler::setInstance(m_resourceHandler);
 
 	m_resourceHandler.loadConfigFile<TextureLoader>("data/config/textures.xml");
@@ -45,9 +45,7 @@ void ClientApplication::handleEvents() {
 	while(m_window.pollEvent(event)) {
 		if((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
 		 || event.type == sf::Event::Closed) {
-			sf::Packet packet;
-			packet << "ClientClose";
-			m_socket.send(packet, sf::IpAddress::Broadcast, 4242);
+			NetworkCommandHandler::disconnect();
 
 			m_window.close();
 		}
@@ -55,14 +53,10 @@ void ClientApplication::handleEvents() {
 		m_keyboardHandler.updateState(event);
 
 		if (event.type == sf::Event::KeyPressed) {
-			sf::Packet packet;
-			packet << "KeyPressed" << event.key.code;
-			m_socket.send(packet, sf::IpAddress::Broadcast, 4242);
+			NetworkCommandHandler::sendKey(event.key.code, true);
 		}
 		else if (event.type == sf::Event::KeyReleased) {
-			sf::Packet packet;
-			packet << "KeyReleased" << event.key.code;
-			m_socket.send(packet, sf::IpAddress::Broadcast, 4242);
+			NetworkCommandHandler::sendKey(event.key.code, false);
 		}
 	}
 }

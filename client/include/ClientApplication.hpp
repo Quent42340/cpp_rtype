@@ -15,11 +15,11 @@
 #define CLIENTAPPLICATION_HPP_
 
 #include <SFML/Graphics.hpp>
-#include <SFML/Network.hpp>
 
 #include "ApplicationStateStack.hpp"
 #include "GameClock.hpp"
 #include "KeyboardHandler.hpp"
+#include "Network.hpp"
 #include "ResourceHandler.hpp"
 
 class ClientApplication {
@@ -43,9 +43,9 @@ class ClientApplication {
 
 		KeyboardHandler m_keyboardHandler;
 
-		ResourceHandler m_resourceHandler;
+		Network m_network;
 
-		sf::UdpSocket m_socket;
+		ResourceHandler m_resourceHandler;
 };
 
 #endif // CLIENTAPPLICATION_HPP_

@@ -55,7 +55,7 @@ SceneObject TestEntityFactory::createClient(const std::string &name, const std::
 	return object;
 }
 
-SceneObject TestEntityFactory::createServer(u16 x, u16 y) {
+SceneObject TestEntityFactory::createServer(u16 x, u16 y, u16 senderPort) {
 	static size_t playerCount = 0;
 	SceneObject object{"Player" + std::to_string(playerCount++), "Player"};
 	object.set<SceneObjectList>();

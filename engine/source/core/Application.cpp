@@ -16,7 +16,7 @@
 #include "Mouse.hpp"
 #include "TextureLoader.hpp"
 
-#include "GameState.hpp"
+// #include "GameState.hpp"
 
 bool Application::quit = false;
 
@@ -43,7 +43,7 @@ void Application::init() {
 	// ApplicationStateStack::getInstance().push<TitleScreenState>();
 	// ApplicationStateStack::getInstance().push<LevelListState>();
 	// ApplicationStateStack::getInstance().push<LevelState>(0);
-	ApplicationStateStack::getInstance().push<GameState>();
+	// ApplicationStateStack::getInstance().push<GameState>();
 }
 
 void Application::handleEvents() {

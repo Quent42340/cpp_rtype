@@ -14,9 +14,6 @@
 #ifndef GAMESTATE_HPP_
 #define GAMESTATE_HPP_
 
-// #include <SFML/Graphics/View.hpp>
-#include <SFML/Network.hpp>
-
 #include "ApplicationState.hpp"
 #include "Image.hpp"
 #include "Scene.hpp"
@@ -35,8 +32,6 @@ class GameState : public ApplicationState {
 		Timer m_spawnTimer;
 
 		Scene m_scene;
-
-		sf::UdpSocket m_socket;
 };
 
 #endif // GAMESTATE_HPP_
