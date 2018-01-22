@@ -26,8 +26,6 @@ ServerApplication::ServerApplication() {
 
 	m_socket.bind(4242);
 	m_socket.setBlocking(false);
-
-	m_scene.addObject(TestEntityFactory::createServer(20, 50));
 }
 
 void ServerApplication::handleNetworkEvents() {
@@ -49,17 +47,12 @@ void ServerApplication::handleNetworkEvents() {
 			packet >> keyCode;
 			m_inputHandler.setKeyPressed(keyCode, false);
 		}
+		else if (type == "ClientConnect") {
+			m_scene.addObject(TestEntityFactory::createServer(20, 50));
+		}
 		else if (type == "ClientClose") {
 			m_isRunning = false;
 		}
-		// else if (type == "EntityMove") {
-		// 	std::string entityName;
-		// 	sf::Vector2f pos;
-		// 	// float speed;
-		// 	packet >> entityName >> pos.x >> pos.y; // >> speed;
-        //
-		// 	// std::cout << "Entity '" << entityName << "' moved with velocity (" << velocity.x << ";" << velocity.y << ") at " << speed << " speed." << std::endl;
-		// }
 	}
 }
 

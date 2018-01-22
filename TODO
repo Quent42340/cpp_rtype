@@ -50,9 +50,9 @@ TODO
       ◦ TODO: Handle up to 4 players
 • WIP: Player spaceship implementation (blue, red, yellow, green)
    ◦ DONE: Add the ability to shoot
+   ◦ DONE: Add network-based movement
    ◦ TODO: Handle movement animation
    ◦ TODO: Handle collisions with screen borders
-   ◦ TODO: Add network-based movement
    ◦ TODO: Die animation
 • WIP: Enemy implementation
    ◦ DONE: Add movement
@@ -65,14 +65,14 @@ TODO
    ◦ TODO: Die animation
 • TODO: Background
    ◦ TODO: Slow horizontal scrolling background
-• TODO: GUI → Dylan
-   ◦ TODO: Button class
+• WIP: GUI → Dylan
+   ◦ DONE: Button class
+   ◦ DONE: Title screen
    ◦ TODO: Text Box class
-   ◦ TODO: Title screen
    ◦ TODO: Pause menu
       ◦ TODO: “Add enemy...” entry
-   ◦ TODO: Lobby screen
    ◦ TODO: Victory/Game over screen
+   ◦ TODO: Lobby screen
 • TODO: Check if game compiles and works on Windows
 
 # Common

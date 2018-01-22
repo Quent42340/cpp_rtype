@@ -70,7 +70,7 @@ SceneObject TestEntityFactory::createServer(u16 x, u16 y) {
 
 	sf::Packet packet;
 	packet << "EntitySpawn" << object.name() << object.type() << socket.getLocalPort() << object.getPosition().x << object.getPosition().y;
-	socket.send(packet, sf::IpAddress::Any, 4243);
+	socket.send(packet, sf::IpAddress::Broadcast, 4243);
 
 	auto &behaviourComponent = object.set<BehaviourComponent>();
 	behaviourComponent.addBehaviour<EasyBehaviour>("Update", [] (SceneObject &object) {

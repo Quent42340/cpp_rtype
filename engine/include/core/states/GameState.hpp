@@ -28,8 +28,6 @@ class GameState : public ApplicationState {
 
 		void update() override;
 
-		// static sf::View view;
-
 	private:
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 

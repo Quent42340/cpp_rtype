@@ -20,19 +20,15 @@
 #include "TestEnemyFactory.hpp"
 #include "TestEntityFactory.hpp"
 
-// sf::View GameState::view{sf::FloatRect(0, 0, Application::screenWidth, Application::screenHeight)};
-
 GameState::GameState() {
-	// view.reset(sf::FloatRect(0, 0, Application::screenWidth, Application::screenHeight));
-
-	// Scene::player = &m_player;
-
 	m_socket.bind(4243);
 	m_socket.setBlocking(false);
 
-	// m_player = &m_scene.addObject(TestEntityFactory::create(20, 50));
+	sf::Packet packet;
+	packet << "ClientConnect";
+	m_socket.send(packet, sf::IpAddress::Broadcast, 4242);
 
-	m_spawnTimer.start();
+	// m_spawnTimer.start();
 }
 
 void GameState::update() {
@@ -55,15 +51,8 @@ void GameState::update() {
 			std::string entityName;
 			sf::Uint64 timestamp;
 			sf::Vector2f pos;
-			// float speed;
-			// packet >> entityName >> velocity.x >> velocity.y >> speed;
 			packet >> timestamp >> entityName >> pos.x >> pos.y;
 
-			std::cout << timestamp << "/" << std::time(nullptr) << ": Entity '" << entityName << "' moved to position (" << pos.x << ";" << pos.y << ")." << std::endl;
-
-			// m_player->move(velocity * speed);
-			// if (m_player)
-			// 	m_player->setPosition(pos);
 			SceneObject *object = m_scene.objects().findByName(entityName);
 			if (object)
 				object->setPosition(pos);
@@ -88,6 +77,8 @@ void GameState::update() {
 			m_scene.addObject(TestBulletFactory::createClient(entityName, textureName, pos));
 		}
 	}
+
+	m_background.move(-0.03, 0);
 
 	// m_scene.update();
 }
