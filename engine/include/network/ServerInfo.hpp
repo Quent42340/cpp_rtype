@@ -42,7 +42,7 @@ class ServerInfo {
 		Client &getClient(u16 port) {
 			auto it = std::find_if(m_clients.begin(), m_clients.end(), [port] (Client &client) { return client.port == port; });
 			if (it == m_clients.end())
-				throw EXCEPTION("No client connected on port ", port);
+				throw EXCEPTION("No client connected on port", port);
 
 			return *it;
 		}

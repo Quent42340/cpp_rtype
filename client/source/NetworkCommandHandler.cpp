@@ -58,7 +58,13 @@ void NetworkCommandHandler::update(Scene &scene) {
 			if (object)
 				object->setPosition(pos);
 		}
-		else if (command == NetworkCommand::EntityDie) {
+	}
+
+	while (Network::getInstance().tcpSocket().receive(packet) == sf::Socket::Done) {
+		NetworkCommand command;
+		packet >> command;
+
+		if (command == NetworkCommand::EntityDie) {
 			std::string entityName;
 			packet >> entityName;
 

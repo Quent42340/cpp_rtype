@@ -32,7 +32,7 @@ void NetworkSystem::process(SceneObject &object) {
 			packet << spriteComponent.textureName() << spriteComponent.frameWidth() << spriteComponent.frameHeight() << spriteComponent.initialFrame();
 
 			for (const Client &client : ServerInfo::getInstance().clients()) {
-				Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, client.port);
+				Network::getInstance().tcpSocket().send(packet);
 			}
 
 			networkComponent.hasSpawned = true;
@@ -58,7 +58,7 @@ void NetworkSystem::process(SceneObject &object) {
 				sf::Packet packet;
 				packet << NetworkCommand::EntityDie << object.name();
 				for (const Client &client : ServerInfo::getInstance().clients()) {
-					Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, client.port);
+					Network::getInstance().tcpSocket().send(packet);
 				}
 			}
 		}

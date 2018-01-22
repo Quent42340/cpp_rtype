@@ -20,7 +20,7 @@
 #include "TestEnemyFactory.hpp"
 #include "TestEntityFactory.hpp"
 
-ServerApplication::ServerApplication() : m_network(4242, false) {
+ServerApplication::ServerApplication() : m_network(4242) {
 	std::srand(std::time(nullptr));
 
 	Network::setInstance(m_network);

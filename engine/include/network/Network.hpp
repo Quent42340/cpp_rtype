@@ -35,11 +35,15 @@ enum class NetworkCommand {
 
 class Network {
 	public:
-		Network(u16 port = 0, bool isBlocking = false);
+		Network() = default;
+		Network(u16 udpPort);
+
+		void connect(sf::IpAddress serverAddress, u16 serverPort);
 
 		template<typename... Args>
 		void send(sf::IpAddress address, u16 port, NetworkCommand command, Args &&...args);
 
+		sf::TcpSocket &tcpSocket() { return m_tcpSocket; }
 		sf::UdpSocket &socket() { return m_socket; }
 
 		static std::string commandToString(NetworkCommand command);
@@ -49,6 +53,10 @@ class Network {
 
 	private:
 		static Network *s_instance;
+
+		sf::TcpSocket m_tcpSocket;
+		sf::TcpListener m_tcpListener;
+		sf::SocketSelector m_selector;
 
 		sf::UdpSocket m_socket;
 };
