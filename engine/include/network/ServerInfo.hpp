@@ -14,8 +14,9 @@
 #ifndef SERVERINFO_HPP_
 #define SERVERINFO_HPP_
 
-#include <array>
+#include <algorithm>
 #include <string>
+#include <vector>
 
 #include "IntTypes.hpp"
 
@@ -25,10 +26,24 @@ struct Client {
 
 class ServerInfo {
 	public:
-		void addClient(u8 id, u16 port) { m_clients[id] = {port}; }
+		void addClient(u16 port) {
+			auto it = std::find_if(m_clients.begin(), m_clients.end(), [port] (Client &client) { return client.port == port; });
+			if (it == m_clients.end()) {
+				m_clients.emplace_back(Client{port});
+			}
+		}
+
+		const std::vector<Client> &clients() const { return m_clients; }
+
+		static ServerInfo &getInstance() {
+			static ServerInfo instance;
+			return instance;
+		}
 
 	private:
-		std::array<Client, 4> m_clients;
+		ServerInfo() = default;
+
+		std::vector<Client> m_clients;
 };
 
 #endif // SERVERINFO_HPP_

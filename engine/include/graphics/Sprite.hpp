@@ -18,7 +18,7 @@
 
 class Sprite : public Image {
 	public:
-		Sprite(const char *textureName, u16 frameWidth, u16 frameHeight);
+		Sprite(const std::string &textureName, u16 frameWidth, u16 frameHeight);
 
 		u16 currentFrame() const { return m_currentFrame; }
 

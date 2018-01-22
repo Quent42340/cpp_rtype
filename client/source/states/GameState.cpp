@@ -18,7 +18,6 @@
 #include "Scene.hpp"
 
 GameState::GameState() {
-	NetworkCommandHandler::connect();
 }
 
 void GameState::update() {

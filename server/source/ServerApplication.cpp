@@ -16,6 +16,7 @@
 #include "Application.hpp"
 #include "GamePad.hpp"
 #include "ServerApplication.hpp"
+#include "ServerInfo.hpp"
 #include "TestEnemyFactory.hpp"
 #include "TestEntityFactory.hpp"
 
@@ -24,9 +25,9 @@ ServerApplication::ServerApplication() : m_network(4242, false) {
 
 	GamePad::init(m_inputHandler);
 
-	// m_clock.setTimestep(50);
-
 	Network::setInstance(m_network);
+
+	// m_clock.setTimestep(50);
 
 	m_spawnTimer.start();
 }
@@ -36,7 +37,7 @@ void ServerApplication::handleNetworkEvents() {
 		m_spawnTimer.reset();
 		m_spawnTimer.start();
 
-		m_scene.addObject(TestEnemyFactory::createServer({Application::screenWidth + 20, static_cast<float>(std::rand() % (Application::screenHeight - 40))}));
+		m_scene.addObject(TestEnemyFactory::create({Application::screenWidth + 20, static_cast<float>(std::rand() % (Application::screenHeight - 40))}));
 	}
 
 	sf::Packet packet;
@@ -58,7 +59,8 @@ void ServerApplication::handleNetworkEvents() {
 			m_inputHandler.setKeyPressed(keyCode, false);
 		}
 		else if (command == NetworkCommand::ClientConnect) {
-			m_scene.addObject(TestEntityFactory::createServer(20, 50));
+			ServerInfo::getInstance().addClient(senderPort);
+			m_scene.addObject(TestEntityFactory::create(20, 50));
 		}
 		else if (command == NetworkCommand::ClientDisconnect) {
 			m_isRunning = false;

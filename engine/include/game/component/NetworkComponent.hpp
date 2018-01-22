@@ -27,6 +27,7 @@ class NetworkComponent {
 		sf::UdpSocket socket;
 
 		Timer timer{true};
+		bool hasSpawned = false;
 };
 
 #endif // NETWORKCOMPONENT_HPP_

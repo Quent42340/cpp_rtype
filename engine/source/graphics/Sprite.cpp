@@ -13,7 +13,7 @@
  */
 #include "Sprite.hpp"
 
-Sprite::Sprite(const char *textureName, u16 frameWidth, u16 frameHeight) : Image(textureName) {
+Sprite::Sprite(const std::string &textureName, u16 frameWidth, u16 frameHeight) : Image(textureName) {
 	m_frameWidth = frameWidth;
 	m_frameHeight = frameHeight;
 

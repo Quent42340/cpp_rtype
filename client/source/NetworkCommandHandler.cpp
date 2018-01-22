@@ -11,8 +11,10 @@
  *
  * =====================================================================================
  */
+#include "Image.hpp"
 #include "Network.hpp"
 #include "NetworkCommandHandler.hpp"
+#include "Sprite.hpp"
 
 #include "TestBulletFactory.hpp"
 #include "TestEnemyFactory.hpp"
@@ -66,21 +68,20 @@ void NetworkCommandHandler::update(Scene &scene) {
 			std::string entityName;
 			std::string entityType;
 			sf::Vector2f pos;
-			packet >> entityName >> entityType >> pos.x >> pos.y;
-
-			if (entityType == "Player")
-				scene.addObject(TestEntityFactory::createClient(entityName, entityType, pos.x, pos.y));
-			else if (entityType == "Enemy")
-				scene.addObject(TestEnemyFactory::createClient(entityName, pos));
-		}
-		else if (command == NetworkCommand::BulletSpawn) {
-			std::string entityName;
-			std::string entityType;
 			std::string textureName;
-			sf::Vector2f pos;
-			packet >> entityName >> entityType >> textureName >> pos.x >> pos.y;
+			sf::Vector2<u16> frameSize;
+			u16 initialFrame;
+			packet >> entityName >> entityType >> pos.x >> pos.y;
+			packet >> textureName >> frameSize.x >> frameSize.y >> initialFrame;
 
-			scene.addObject(TestBulletFactory::createClient(entityName, textureName, pos));
+			SceneObject object{entityName, entityType};
+			object.setPosition(pos);
+			if (frameSize.x == 0 && frameSize.y == 0)
+				object.set<Image>(textureName);
+			else
+				object.set<Sprite>(textureName, frameSize.x, frameSize.y).setCurrentFrame(0);
+
+			scene.addObject(std::move(object));
 		}
 	}
 }

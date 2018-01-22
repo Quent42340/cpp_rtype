@@ -19,10 +19,7 @@
 
 class TestEnemyFactory {
 	public:
-		// static SceneObject create(const sf::Vector2f &pos);
-
-		static SceneObject createClient(const std::string &name, const sf::Vector2f &pos);
-		static SceneObject createServer(const sf::Vector2f &pos);
+		static SceneObject create(const sf::Vector2f &pos);
 
 	private:
 		static void enemyCollisionAction(SceneObject &enemy, SceneObject &object, bool inCollision);

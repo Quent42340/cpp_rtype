@@ -13,20 +13,39 @@
  */
 #include "Network.hpp"
 #include "NetworkSystem.hpp"
+#include "ServerInfo.hpp"
 
 #include "LifetimeComponent.hpp"
 #include "MovementComponent.hpp"
 #include "NetworkComponent.hpp"
+#include "SpriteComponent.hpp"
 
 void NetworkSystem::process(SceneObject &object) {
 	if (object.has<NetworkComponent>()) {
 		auto &networkComponent = object.get<NetworkComponent>();
+		if (!networkComponent.hasSpawned) {
+			sf::Packet packet;
+			packet << NetworkCommand::EntitySpawn;
+			packet << object.name() << object.type() << object.getPosition().x << object.getPosition().y;
+
+			auto &spriteComponent = object.get<SpriteComponent>();
+			packet << spriteComponent.textureName() << spriteComponent.frameWidth() << spriteComponent.frameHeight() << spriteComponent.initialFrame();
+
+			for (const Client &client : ServerInfo::getInstance().clients()) {
+				Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, client.port);
+			}
+
+			networkComponent.hasSpawned = true;
+		}
+
 		if (object.has<MovementComponent>()) {
 			auto &movementComponent = object.get<MovementComponent>();
 			if (movementComponent.isMoving && networkComponent.timer.time() > 20) {
 				sf::Packet packet;
 				packet << NetworkCommand::EntityMove << object.name() << object.getPosition().x << object.getPosition().y;
-				Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, 4243);
+				for (const Client &client : ServerInfo::getInstance().clients()) {
+					Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, client.port);
+				}
 
 				networkComponent.timer.reset();
 				networkComponent.timer.start();
@@ -38,7 +57,9 @@ void NetworkSystem::process(SceneObject &object) {
 			if (lifetimeComponent.dead(object)) {
 				sf::Packet packet;
 				packet << NetworkCommand::EntityDie << object.name();
-				Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, 4243);
+				for (const Client &client : ServerInfo::getInstance().clients()) {
+					Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, client.port);
+				}
 			}
 		}
 	}
