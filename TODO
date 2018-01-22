@@ -10,6 +10,7 @@ TODO
    → Il sera probablement nécessaire de remplacer `sf::Vector2<T>` par ma classe `Vector2<T>`
 • TODO: Mettre le jeu dans une bibliothèque séparée (càd les Factory/Movement/Behaviour)
 • TODO: Le réseau n’a rien à faire dans le `MovementSystem`, le déplacer vers un autre système
+• TODO: Virer `Application`
 
 # Fixme
 

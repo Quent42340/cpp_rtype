@@ -25,7 +25,8 @@ class ServerApplication {
 
 		void handleNetworkEvents();
 
-		void run();
+		int run();
+		void mainLoop();
 
 	private:
 		bool m_isRunning = true;

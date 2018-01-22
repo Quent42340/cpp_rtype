@@ -56,7 +56,7 @@ SceneObject TestBulletFactory::createServer(const std::string &textureName, cons
 	})).speed = 3.0f;
 
 	sf::Packet packet;
-	packet << NetworkCommand::EntitySpawn << object.name() << object.type() << textureName << object.getPosition().x << object.getPosition().y;
+	packet << NetworkCommand::BulletSpawn << object.name() << object.type() << textureName << object.getPosition().x << object.getPosition().y;
 	Network::getInstance().socket().send(packet, sf::IpAddress::Any, 4243);
 
 	// auto &image = object.set<Image>(textureName);

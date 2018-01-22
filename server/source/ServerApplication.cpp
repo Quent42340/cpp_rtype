@@ -55,7 +55,23 @@ void ServerApplication::handleNetworkEvents() {
 	}
 }
 
-void ServerApplication::run() {
+int ServerApplication::run() {
+	try {
+		mainLoop();
+	}
+	catch(const Exception &e) {
+		std::cerr << "Fatal error " << e.what() << std::endl;
+		return 1;
+	}
+	catch(const std::exception &e) {
+		std::cerr << "Exception caught: " << e.what() << std::endl;
+		return 1;
+	}
+
+	return 0;
+}
+
+void ServerApplication::mainLoop() {
 	while (m_isRunning) {
 		m_clock.updateGame([&] {
 			handleNetworkEvents();
