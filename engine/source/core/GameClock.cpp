@@ -63,7 +63,7 @@ void GameClock::waitForNextFrame() {
 	u32 lastFrameDuration = getTicks(true) - m_timeDropped - m_lastFrameDate;
 
 	if(lastFrameDuration < m_timestep) {
-		sf::sleep(sf::milliseconds(m_timestep - lastFrameDuration));
+		 sf::sleep(sf::milliseconds(m_timestep - lastFrameDuration));
 	}
 
 	measureLastFrameDuration();

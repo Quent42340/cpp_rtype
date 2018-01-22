@@ -15,8 +15,7 @@
 
 #include "CollisionComponent.hpp"
 #include "MovementComponent.hpp"
-
-#include <SFML/Network.hpp>
+#include "NetworkComponent.hpp"
 
 void MovementSystem::process(SceneObject &object) {
 	if(object.has<MovementComponent>()) {
@@ -40,10 +39,11 @@ void MovementSystem::process(SceneObject &object) {
 
 		object.move(movement.v * movement.speed);
 
-		if (object.has<sf::UdpSocket>() && movement.isMoving) {
+		if (object.has<NetworkComponent>() && movement.isMoving) {
+			auto &networkComponent = object.get<NetworkComponent>();
 			sf::Packet packet;
-			packet << "EntityMove" << object.name() << object.getPosition().x << object.getPosition().y;
-			object.get<sf::UdpSocket>().send(packet, sf::IpAddress::Broadcast, 4243);
+			packet << "EntityMove" << (sf::Uint64)std::time(nullptr) << object.name() << object.getPosition().x << object.getPosition().y;
+			networkComponent.socket.send(packet, sf::IpAddress::Broadcast, 4243);
 		}
 
 		movement.v.x = 0;

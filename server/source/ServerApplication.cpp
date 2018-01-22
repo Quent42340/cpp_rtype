@@ -22,6 +22,8 @@ ServerApplication::ServerApplication() {
 
 	GamePad::init(m_inputHandler);
 
+	// m_clock.setTimestep(50);
+
 	m_socket.bind(4242);
 	m_socket.setBlocking(false);
 
@@ -32,7 +34,7 @@ void ServerApplication::handleNetworkEvents() {
 	sf::Packet packet;
 	sf::IpAddress senderAddress;
 	u16 senderPort;
-	if (m_socket.receive(packet, senderAddress, senderPort) == sf::Socket::Status::Done) {
+	while (m_socket.receive(packet, senderAddress, senderPort) == sf::Socket::Status::Done) {
 		std::string type;
 		packet >> type;
 		std::cout << "Message of type '" << type << "' received from: " << senderAddress << ":" << senderPort << std::endl;

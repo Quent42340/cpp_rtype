@@ -31,8 +31,6 @@ class ClientApplication {
 		int run();
 		void mainLoop();
 
-		static bool quit;
-
 		const static u16 screenWidth = 864;
 		const static u16 screenHeight = 486;
 

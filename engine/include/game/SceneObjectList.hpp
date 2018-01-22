@@ -29,17 +29,18 @@ class SceneObjectList {
 		}
 
 		SceneObject *findByName(const std::string &name) {
-			for (auto &it : m_objects)
-				if (it.name() == name)
-					return &it;
-			return nullptr;
+			auto it = std::find_if(m_objects.begin(), m_objects.end(), [name] (SceneObject &object) { return object.name() == name; });
+			if (it == m_objects.end())
+				return nullptr;
+			else
+				return &*it;
 		}
 
 		void pop() { m_objects.pop_back(); }
 
 		SceneObject &operator[](size_t n) { return m_objects[n]; }
 
-		void remove(const size_t n) { m_objects.erase(m_objects.begin() + n); }
+		void remove(size_t n) { m_objects.erase(m_objects.begin() + n); }
 
 		iterator begin() noexcept { return m_objects.begin(); }
 		iterator end() noexcept { return m_objects.end(); }

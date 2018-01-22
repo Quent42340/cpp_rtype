@@ -18,8 +18,6 @@
 
 #include "GameState.hpp"
 
-bool ClientApplication::quit = false;
-
 void ClientApplication::init() {
 	std::srand(std::time(nullptr));
 
@@ -91,9 +89,9 @@ void ClientApplication::mainLoop() {
 		handleEvents();
 
 		m_clock.updateGame([&] {
-			if(quit) m_window.close();
-
-			ApplicationStateStack::getInstance().top().update();
+			if (m_stateStack.size() == 0)
+				m_window.close();
+			m_stateStack.top().update();
 		});
 
 		m_clock.drawGame([&] {

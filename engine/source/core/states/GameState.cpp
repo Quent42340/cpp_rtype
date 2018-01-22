@@ -36,29 +36,30 @@ GameState::GameState() {
 }
 
 void GameState::update() {
-	if (m_spawnTimer.time() > 2000) {
-		m_spawnTimer.reset();
-		m_spawnTimer.start();
-
-		m_scene.addObject(TestEnemyFactory::create({Application::screenWidth + 20, static_cast<float>(std::rand() % (Application::screenHeight - 40))}));
-	}
+	// if (m_spawnTimer.time() > 2000) {
+	// 	m_spawnTimer.reset();
+	// 	m_spawnTimer.start();
+    //
+	// 	m_scene.addObject(TestEnemyFactory::create({Application::screenWidth + 20, static_cast<float>(std::rand() % (Application::screenHeight - 40))}));
+	// }
 
 	sf::Packet packet;
 	sf::IpAddress senderAddress;
 	u16 senderPort;
-	if (m_socket.receive(packet, senderAddress, senderPort) == sf::Socket::Done) {
+	while (m_socket.receive(packet, senderAddress, senderPort) == sf::Socket::Done) {
 		std::string packetType;
 		packet >> packetType;
 		std::cout << "Message of type '" << packetType << "' received from: " << senderAddress << ":" << senderPort << std::endl;
 
 		if (packetType == "EntityMove") {
 			std::string entityName;
+			sf::Uint64 timestamp;
 			sf::Vector2f pos;
 			// float speed;
 			// packet >> entityName >> velocity.x >> velocity.y >> speed;
-			packet >> entityName >> pos.x >> pos.y;
+			packet >> timestamp >> entityName >> pos.x >> pos.y;
 
-			// std::cout << "Entity '" << entityName << "' moved with velocity (" << velocity.x << ";" << velocity.y << ") at " << speed << " speed." << std::endl;
+			std::cout << timestamp << "/" << std::time(nullptr) << ": Entity '" << entityName << "' moved to position (" << pos.x << ";" << pos.y << ")." << std::endl;
 
 			// m_player->move(velocity * speed);
 			// if (m_player)
@@ -74,9 +75,7 @@ void GameState::update() {
 			sf::Vector2f pos;
 			packet >> entityName >> entityType >> port >> pos.x >> pos.y;
 
-			SceneObject &entity = m_scene.addObject(TestEntityFactory::createClient(entityName, entityType, port, pos.x, pos.y));
-			if (!m_player)
-				m_player = &entity;
+			m_scene.addObject(TestEntityFactory::createClient(entityName, entityType, port, pos.x, pos.y));
 		}
 		else if (packetType == "BulletSpawn") {
 			std::string entityName;

@@ -19,6 +19,7 @@
 #include "GamePadMovement.hpp"
 #include "HitboxComponent.hpp"
 #include "MovementComponent.hpp"
+#include "NetworkComponent.hpp"
 #include "SceneObjectList.hpp"
 #include "Sprite.hpp"
 #include "TestBulletFactory.hpp"
@@ -64,7 +65,7 @@ SceneObject TestEntityFactory::createServer(u16 x, u16 y) {
 	// FIXME: WARNING HARDCODED SIZE
 	object.set<HitboxComponent>(0, 0, 34, 18);
 
-	sf::UdpSocket &socket = object.set<sf::UdpSocket>();
+	sf::UdpSocket &socket = object.set<NetworkComponent>().socket;
 	socket.bind(0);
 
 	sf::Packet packet;

@@ -21,6 +21,7 @@
 #include "Image.hpp"
 #include "LifetimeComponent.hpp"
 #include "MovementComponent.hpp"
+#include "NetworkComponent.hpp"
 #include "TestBulletFactory.hpp"
 
 SceneObject TestBulletFactory::create(const std::string &textureName, const sf::Vector2f &pos, const sf::Vector2f &v) {
@@ -54,7 +55,7 @@ SceneObject TestBulletFactory::createServer(const std::string &textureName, cons
 		object.get<MovementComponent>().v = v;
 	})).speed = 3.0f;
 
-	sf::UdpSocket &socket = object.set<sf::UdpSocket>();
+	sf::UdpSocket &socket = object.set<NetworkComponent>().socket;
 	socket.bind(0);
 
 	sf::Packet packet;
