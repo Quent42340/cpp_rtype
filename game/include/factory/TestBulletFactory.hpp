@@ -18,7 +18,7 @@
 
 class TestBulletFactory {
 	public:
-		static SceneObject create(const std::string &textureName, const sf::Vector2f &pos, const sf::Vector2f &v);
+		// static SceneObject create(const std::string &textureName, const sf::Vector2f &pos, const sf::Vector2f &v);
 
 		static SceneObject createClient(const std::string &name, const std::string &textureName, const sf::Vector2f &pos);
 		static SceneObject createServer(const std::string &type, const std::string &textureName, const sf::Vector2f &pos, const sf::Vector2f &v);

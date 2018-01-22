@@ -23,20 +23,20 @@
 #include "NetworkComponent.hpp"
 #include "TestBulletFactory.hpp"
 
-SceneObject TestBulletFactory::create(const std::string &textureName, const sf::Vector2f &pos, const sf::Vector2f &v) {
-	SceneObject object{"BasicBullet", "Bullet"};
-	object.set<LifetimeComponent>(&TestBulletFactory::checkOutOfMap);
-	object.set<MovementComponent>(new EasyMovement([v] (const SceneObject &object) {
-		object.get<MovementComponent>().v = v;
-	})).speed = 3.0f;
-
-	auto &image = object.set<Image>(textureName);
-	object.set<HitboxComponent>(0, 0, image.width(), image.height());
-
-	object.setPosition(pos);
-
-	return object;
-}
+// SceneObject TestBulletFactory::create(const std::string &textureName, const sf::Vector2f &pos, const sf::Vector2f &v) {
+// 	SceneObject object{"BasicBullet", "Bullet"};
+// 	object.set<LifetimeComponent>(&TestBulletFactory::checkOutOfMap);
+// 	object.set<MovementComponent>(new EasyMovement([v] (const SceneObject &object) {
+// 		object.get<MovementComponent>().v = v;
+// 	})).speed = 3.0f;
+//
+// 	auto &image = object.set<Image>(textureName);
+// 	object.set<HitboxComponent>(0, 0, image.width(), image.height());
+//
+// 	object.setPosition(pos);
+//
+// 	return object;
+// }
 
 SceneObject TestBulletFactory::createClient(const std::string &name, const std::string &textureName, const sf::Vector2f &pos) {
 	SceneObject object{name, "Bullet"};
