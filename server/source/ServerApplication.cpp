@@ -45,7 +45,7 @@ void ServerApplication::handleNetworkEvents() {
 	while (m_network.socket().receive(packet, senderAddress, senderPort) == sf::Socket::Status::Done) {
 		NetworkCommand command;
 		packet >> command;
-		std::cout << "Message of type '" << Network::commandToString(command) << "' received from: " << senderAddress << ":" << senderPort << std::endl;
+		// std::cout << "Message of type '" << Network::commandToString(command) << "' received from: " << senderAddress << ":" << senderPort << std::endl;
 
 		if (command == NetworkCommand::KeyPressed) {
 			u32 keyCode;

@@ -61,7 +61,7 @@ SceneObject TestEnemyFactory::createServer(const sf::Vector2f &pos) {
 		Timer &timer = object.get<Timer>();
 		if (timer.time() > 1000) {
 			sf::Vector2f bulletPosition = object.getPosition() + sf::Vector2f{0, (float)object.get<HitboxComponent>().currentHitbox()->height / 2 - 4};
-			object.get<SceneObjectList>().addObject(TestBulletFactory::createServer("bullets-small", bulletPosition, {-1, 0}));
+			object.get<SceneObjectList>().addObject(TestBulletFactory::createServer("EnemyBullet", "bullets-small", bulletPosition, {-1, 0}));
 
 			timer.reset();
 			timer.start();
@@ -77,7 +77,7 @@ SceneObject TestEnemyFactory::createServer(const sf::Vector2f &pos) {
 
 void TestEnemyFactory::enemyCollisionAction(SceneObject &enemy, SceneObject &object, bool inCollision) {
 	// FIXME: WARNING NAME CHECK
-	if (inCollision && object.name() == "BasicBullet"
+	if (inCollision && object.type() == "PlayerBullet"
 	 && !enemy.get<LifetimeComponent>().dead(enemy)
 	 && !object.get<LifetimeComponent>().dead(object)) {
 		// TODO: Create BulletComponent with damage

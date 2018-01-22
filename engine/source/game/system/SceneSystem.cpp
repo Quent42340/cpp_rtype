@@ -23,9 +23,9 @@ void SceneSystem::reset(SceneObjectList &objectList) {
 }
 
 void SceneSystem::update(SceneObjectList &objectList) {
-	LifetimeSystem::process(objectList);
-
 	for(auto &object : objectList) updateObject(object);
+
+	LifetimeSystem::process(objectList);
 }
 
 void SceneSystem::draw(const SceneObjectList &objectList, sf::RenderTarget &target, sf::RenderStates states) {

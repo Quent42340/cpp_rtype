@@ -43,14 +43,14 @@ void NetworkCommandHandler::update(Scene &scene) {
 	while (Network::getInstance().socket().receive(packet, senderAddress, senderPort) == sf::Socket::Done) {
 		NetworkCommand command;
 		packet >> command;
-		std::cout << "Message of type '" << Network::commandToString(command) << "' received from: " << senderAddress << ":" << senderPort << std::endl;
+		// std::cout << "Message of type '" << Network::commandToString(command) << "' received from: " << senderAddress << ":" << senderPort << std::endl;
 
 		if (command == NetworkCommand::EntityMove) {
 			std::string entityName;
 			sf::Vector2f pos;
 			packet >> entityName >> pos.x >> pos.y;
 
-			std::cout << "Movement: " << entityName << " (" << pos.x << ";" << pos.y << ")" << std::endl;
+			// std::cout << "Movement: " << entityName << " (" << pos.x << ";" << pos.y << ")" << std::endl;
 
 			SceneObject *object = scene.objects().findByName(entityName);
 			if (object)

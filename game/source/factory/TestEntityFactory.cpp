@@ -75,7 +75,7 @@ SceneObject TestEntityFactory::createServer(u16 x, u16 y) {
 			auto &hitboxComponent = object.get<HitboxComponent>();
 			sf::Vector2f bulletPosition = object.getPosition() + sf::Vector2f{(float)hitboxComponent.currentHitbox()->width, (float)hitboxComponent.currentHitbox()->height / 2 - 4};
 			// object.get<SceneObjectList>().addObject(TestBulletFactory::create("bullets-basic", bulletPosition, {1, 0}));
-			object.get<SceneObjectList>().addObject(TestBulletFactory::createServer("bullets-basic", bulletPosition, {1, 0}));
+			object.get<SceneObjectList>().addObject(TestBulletFactory::createServer("PlayerBullet", "bullets-basic", bulletPosition, {1, 0}));
 		}
 	});
 
