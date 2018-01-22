@@ -49,6 +49,7 @@ SceneObject TestBulletFactory::createClient(const std::string &name, const std::
 SceneObject TestBulletFactory::createServer(const std::string &type, const std::string &textureName, const sf::Vector2f &pos, const sf::Vector2f &v) {
 	static size_t bulletCount = 0;
 	SceneObject object{"BasicBullet" + std::to_string(bulletCount++), type};
+	object.setPosition(pos);
 	object.set<NetworkComponent>();
 	object.set<LifetimeComponent>(&TestBulletFactory::checkOutOfMap);
 	object.set<MovementComponent>(new EasyMovement([v] (const SceneObject &object) {
@@ -64,8 +65,6 @@ SceneObject TestBulletFactory::createServer(const std::string &type, const std::
 
 	// FIXME: WARNING HARDCODED SIZE
 	object.set<HitboxComponent>(0, 0, 16, 8);
-
-	object.setPosition(pos);
 
 	return object;
 }

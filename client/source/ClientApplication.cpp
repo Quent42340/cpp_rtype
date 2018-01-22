@@ -50,6 +50,8 @@ void ClientApplication::handleEvents() {
 			m_window.close();
 		}
 
+		m_stateStack.top().onEvent(event);
+
 		m_keyboardHandler.updateState(event);
 
 		if (event.type == sf::Event::KeyPressed) {

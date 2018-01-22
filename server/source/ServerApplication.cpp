@@ -84,9 +84,9 @@ int ServerApplication::run() {
 
 void ServerApplication::mainLoop() {
 	while (m_isRunning) {
-		m_clock.updateGame([&] {
-			handleNetworkEvents();
+		handleNetworkEvents();
 
+		m_clock.updateGame([&] {
 			m_scene.update();
 		});
 

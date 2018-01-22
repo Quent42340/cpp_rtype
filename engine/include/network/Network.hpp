@@ -38,6 +38,9 @@ class Network {
 	public:
 		Network(u16 port = 0, bool isBlocking = false);
 
+		template<typename... Args>
+		void send(sf::IpAddress address, u16 port, NetworkCommand command, Args &&...args);
+
 		sf::UdpSocket &socket() { return m_socket; }
 
 		static std::string commandToString(NetworkCommand command);

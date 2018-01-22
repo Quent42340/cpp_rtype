@@ -15,6 +15,7 @@
 #define APPLICATIONSTATE_HPP_
 
 #include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Window/Event.hpp>
 
 class ApplicationStateStack;
 
@@ -27,6 +28,8 @@ class ApplicationState : public sf::Drawable {
 
 		ApplicationState &operator=(const ApplicationState &) = delete;
 		ApplicationState &operator=(ApplicationState &&) = default;
+
+		virtual void onEvent(sf::Event &) {}
 
 		virtual void update() = 0;
 
