@@ -27,6 +27,7 @@ std::string Network::commandToString(NetworkCommand command) {
 		{NetworkCommand::KeyPressed,       "KeyPressed"},
 		{NetworkCommand::KeyReleased,      "KeyReleased"},
 		{NetworkCommand::EntityMove,       "EntityMove"},
+		{NetworkCommand::EntityDie,        "EntityDie"},
 		{NetworkCommand::EntitySpawn,      "EntitySpawn"},
 		{NetworkCommand::BulletSpawn,      "BulletSpawn"},
 	};

@@ -36,6 +36,12 @@ class SceneObjectList {
 				return &*it;
 		}
 
+		void removeByName(const std::string &name) {
+			auto it = std::find_if(m_objects.begin(), m_objects.end(), [name] (SceneObject &object) { return object.name() == name; });
+			if (it != m_objects.end())
+				m_objects.erase(it);
+		}
+
 		void pop() { m_objects.pop_back(); }
 
 		SceneObject &operator[](size_t n) { return m_objects[n]; }

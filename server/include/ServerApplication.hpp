@@ -18,6 +18,7 @@
 #include "Network.hpp"
 #include "NetworkInputHandler.hpp"
 #include "Scene.hpp"
+#include "Timer.hpp"
 
 class ServerApplication {
 	public:
@@ -38,6 +39,8 @@ class ServerApplication {
 		Network m_network;
 
 		Scene m_scene;
+
+		Timer m_spawnTimer;
 };
 
 #endif // SERVERAPPLICATION_HPP_

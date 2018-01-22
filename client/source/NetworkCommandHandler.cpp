@@ -47,13 +47,20 @@ void NetworkCommandHandler::update(Scene &scene) {
 
 		if (command == NetworkCommand::EntityMove) {
 			std::string entityName;
-			sf::Uint64 timestamp;
 			sf::Vector2f pos;
-			packet >> timestamp >> entityName >> pos.x >> pos.y;
+			packet >> entityName >> pos.x >> pos.y;
+
+			std::cout << "Movement: " << entityName << " (" << pos.x << ";" << pos.y << ")" << std::endl;
 
 			SceneObject *object = scene.objects().findByName(entityName);
 			if (object)
 				object->setPosition(pos);
+		}
+		else if (command == NetworkCommand::EntityDie) {
+			std::string entityName;
+			packet >> entityName;
+
+			scene.objects().removeByName(entityName);
 		}
 		else if (command == NetworkCommand::EntitySpawn) {
 			std::string entityName;
@@ -61,7 +68,10 @@ void NetworkCommandHandler::update(Scene &scene) {
 			sf::Vector2f pos;
 			packet >> entityName >> entityType >> pos.x >> pos.y;
 
-			scene.addObject(TestEntityFactory::createClient(entityName, entityType, pos.x, pos.y));
+			if (entityType == "Player")
+				scene.addObject(TestEntityFactory::createClient(entityName, entityType, pos.x, pos.y));
+			else if (entityType == "Enemy")
+				scene.addObject(TestEnemyFactory::createClient(entityName, pos));
 		}
 		else if (command == NetworkCommand::BulletSpawn) {
 			std::string entityName;

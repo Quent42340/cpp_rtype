@@ -19,14 +19,26 @@
 #include "HitboxComponent.hpp"
 #include "LifetimeComponent.hpp"
 #include "MovementComponent.hpp"
+#include "Network.hpp"
+#include "NetworkComponent.hpp"
 #include "SceneObjectList.hpp"
 #include "Sprite.hpp"
 #include "TestBulletFactory.hpp"
 #include "TestEnemyFactory.hpp"
 
-SceneObject TestEnemyFactory::create(const sf::Vector2f &pos) {
-	SceneObject object{"TestEnemy", "Enemy"};
+SceneObject TestEnemyFactory::createClient(const std::string &name, const sf::Vector2f &pos) {
+	SceneObject object{name, "Enemy"};
+	object.set<Sprite>("characters-enemy1", 33, 33).setCurrentFrame(0);
 	object.setPosition(pos);
+
+	return object;
+}
+
+SceneObject TestEnemyFactory::createServer(const sf::Vector2f &pos) {
+	static size_t enemyCount = 0;
+	SceneObject object{"TestEnemy" + std::to_string(enemyCount++), "Enemy"};
+	object.setPosition(pos);
+	object.set<NetworkComponent>();
 	object.set<SceneObjectList>();
 	object.set<Timer>().start();
 	object.set<HealthComponent>(500);
@@ -38,9 +50,8 @@ SceneObject TestEnemyFactory::create(const sf::Vector2f &pos) {
 		object.get<MovementComponent>().v.x = -1;
 	})).speed = 0.8f;
 
-	auto &sprite = object.set<Sprite>("characters-enemy1", 33, 33);
-	sprite.setCurrentFrame(0);
-	object.set<HitboxComponent>(0, 0, sprite.frameWidth(), sprite.frameHeight());
+	// FIXME: WARNING HARDCODED SIZE
+	object.set<HitboxComponent>(0, 0, 33, 33);
 
 	auto &collisionComponent = object.set<CollisionComponent>();
 	collisionComponent.addAction(&TestEnemyFactory::enemyCollisionAction);
@@ -49,13 +60,17 @@ SceneObject TestEnemyFactory::create(const sf::Vector2f &pos) {
 	behaviourComponent.addBehaviour<EasyBehaviour>("Update", [] (SceneObject &object) {
 		Timer &timer = object.get<Timer>();
 		if (timer.time() > 1000) {
-			sf::Vector2f bulletPosition = object.getPosition() + sf::Vector2f{0, static_cast<float>(object.get<Sprite>().frameHeight()) / 2 - 4};
-			object.get<SceneObjectList>().addObject(TestBulletFactory::create("bullets-small", bulletPosition, {-1, 0}));
+			sf::Vector2f bulletPosition = object.getPosition() + sf::Vector2f{0, (float)object.get<HitboxComponent>().currentHitbox()->height / 2 - 4};
+			object.get<SceneObjectList>().addObject(TestBulletFactory::createServer("bullets-small", bulletPosition, {-1, 0}));
 
 			timer.reset();
 			timer.start();
 		}
 	});
+
+	sf::Packet packet;
+	packet << NetworkCommand::EntitySpawn << object.name() << object.type() << object.getPosition().x << object.getPosition().y;
+	Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, 4243);
 
 	return object;
 }

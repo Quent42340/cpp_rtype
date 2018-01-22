@@ -13,8 +13,10 @@
  */
 #include <SFML/Window/Keyboard.hpp>
 
+#include "Application.hpp"
 #include "GamePad.hpp"
 #include "ServerApplication.hpp"
+#include "TestEnemyFactory.hpp"
 #include "TestEntityFactory.hpp"
 
 ServerApplication::ServerApplication() : m_network(4242, false) {
@@ -25,9 +27,18 @@ ServerApplication::ServerApplication() : m_network(4242, false) {
 	// m_clock.setTimestep(50);
 
 	Network::setInstance(m_network);
+
+	m_spawnTimer.start();
 }
 
 void ServerApplication::handleNetworkEvents() {
+	if (m_spawnTimer.time() > 2000) {
+		m_spawnTimer.reset();
+		m_spawnTimer.start();
+
+		m_scene.addObject(TestEnemyFactory::createServer({Application::screenWidth + 20, static_cast<float>(std::rand() % (Application::screenHeight - 40))}));
+	}
+
 	sf::Packet packet;
 	sf::IpAddress senderAddress;
 	u16 senderPort;
@@ -47,7 +58,7 @@ void ServerApplication::handleNetworkEvents() {
 			m_inputHandler.setKeyPressed(keyCode, false);
 		}
 		else if (command == NetworkCommand::ClientConnect) {
-			m_scene.addObject(TestEntityFactory::createServer(20, 50, senderPort));
+			m_scene.addObject(TestEntityFactory::createServer(20, 50));
 		}
 		else if (command == NetworkCommand::ClientDisconnect) {
 			m_isRunning = false;

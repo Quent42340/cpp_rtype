@@ -15,6 +15,7 @@
 #include "DrawingSystem.hpp"
 #include "LifetimeSystem.hpp"
 #include "MovementSystem.hpp"
+#include "NetworkSystem.hpp"
 #include "SceneSystem.hpp"
 
 void SceneSystem::reset(SceneObjectList &objectList) {
@@ -42,6 +43,7 @@ void SceneSystem::resetObject(SceneObject &object) {
 void SceneSystem::updateObject(SceneObject &object) {
 	BehaviourSystem::process(object);
 	MovementSystem::process(object);
+	NetworkSystem::process(object);
 
 	if(object.has<SceneObjectList>()) {
 		update(object.get<SceneObjectList>());

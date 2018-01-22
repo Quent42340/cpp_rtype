@@ -18,10 +18,10 @@
 
 class TestEntityFactory {
 	public:
-		static SceneObject create(u16 x, u16 y);
+		// static SceneObject create(u16 x, u16 y);
 
 		static SceneObject createClient(const std::string &name, const std::string &type, u16 x, u16 y);
-		static SceneObject createServer(u16 x, u16 y, u16 senderPort);
+		static SceneObject createServer(u16 x, u16 y);
 };
 
 #endif // TESTENTITYFACTORY_HPP_

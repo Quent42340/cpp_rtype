@@ -17,7 +17,6 @@
 #include "ApplicationState.hpp"
 #include "Image.hpp"
 #include "Scene.hpp"
-#include "Timer.hpp"
 
 class GameState : public ApplicationState {
 	public:
@@ -29,7 +28,6 @@ class GameState : public ApplicationState {
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 		Image m_background{"backgrounds-space"};
-		Timer m_spawnTimer;
 
 		Scene m_scene;
 };
