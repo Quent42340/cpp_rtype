@@ -35,7 +35,7 @@ class KeyboardHandler : public InputHandler {
 			{GameKey::Up,       sf::Keyboard::Up},
 			{GameKey::Down,     sf::Keyboard::Down},
 
-			{GameKey::A,        sf::Keyboard::X},
+			{GameKey::A,        sf::Keyboard::Space},
 			{GameKey::B,        sf::Keyboard::Y},
 
 			{GameKey::Start,    sf::Keyboard::Return},

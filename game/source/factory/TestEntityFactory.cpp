@@ -39,7 +39,7 @@ SceneObject TestEntityFactory::create(u16 x, u16 y, u16 clientId) {
 
 	auto &behaviourComponent = object.set<BehaviourComponent>();
 	behaviourComponent.addBehaviour<EasyBehaviour>("Update", [] (SceneObject &object) {
-		if (GamePad::isKeyPressedWithDelay(GameKey::Start, 200)) {
+		if (GamePad::isKeyPressedWithDelay(GameKey::A, 200)) {
 			auto &hitboxComponent = object.get<HitboxComponent>();
 			sf::Vector2f bulletPosition = object.getPosition() + sf::Vector2f{(float)hitboxComponent.currentHitbox()->width, (float)hitboxComponent.currentHitbox()->height / 2 - 4};
 			object.get<SceneObjectList>().addObject(TestBulletFactory::create("PlayerBullet", "bullets-basic", bulletPosition, {1, 0}));
