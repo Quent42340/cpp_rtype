@@ -11,28 +11,12 @@
  *
  * =====================================================================================
  */
-#include <SFML/Window/Keyboard.hpp>
-
-#include "Config.hpp"
-#include "GamePad.hpp"
 #include "ServerApplication.hpp"
-#include "TestEnemyFactory.hpp"
 
 void ServerApplication::init() {
 	std::srand(std::time(nullptr));
 
-	m_spawnTimer.start();
 	m_server.init();
-}
-
-void ServerApplication::update() {
-	if (m_spawnTimer.time() > 2000) {
-		m_spawnTimer.reset();
-		m_spawnTimer.start();
-
-		m_scene.addObject(TestEnemyFactory::create({Config::screenWidth + 20, static_cast<float>(std::rand() % (Config::screenHeight - 40))}));
-	}
-
 }
 
 int ServerApplication::run() {
@@ -59,7 +43,7 @@ void ServerApplication::mainLoop() {
 		m_server.handleGameEvents(m_scene);
 
 		m_clock.updateGame([&] {
-			update();
+			m_spawnController.update(m_scene);
 			m_scene.update();
 		});
 

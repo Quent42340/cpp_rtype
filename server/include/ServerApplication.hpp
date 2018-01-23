@@ -17,13 +17,11 @@
 #include "GameClock.hpp"
 #include "Server.hpp"
 #include "Scene.hpp"
-#include "Timer.hpp"
+#include "SpawnController.hpp"
 
 class ServerApplication {
 	public:
 		void init();
-
-		void update();
 
 		int run();
 		void mainLoop();
@@ -32,10 +30,9 @@ class ServerApplication {
 		GameClock m_clock;
 
 		Scene m_scene;
+		SpawnController m_spawnController;
 
 		Server m_server;
-
-		Timer m_spawnTimer;
 };
 
 #endif // SERVERAPPLICATION_HPP_

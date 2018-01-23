@@ -52,8 +52,9 @@ TODO
       ◦ TODO: Add a menu to add libs in runtime
       ◦ TODO: Die animation
       ◦ TODO: Handle movement animation
-   ◦ DONE: Background
+   ◦ WIP: Background
       ◦ DONE: Slow horizontal scrolling background
+      ◦ TODO: Stop or loop when the scrolling ends
    ◦ WIP: GUI → Dylan
       ◦ DONE: Button class
       ◦ DONE: Title screen
