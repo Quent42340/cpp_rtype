@@ -14,6 +14,7 @@
 #include "Image.hpp"
 #include "Network.hpp"
 #include "NetworkCommandHandler.hpp"
+#include "PositionComponent.hpp"
 #include "Sprite.hpp"
 
 #include "TestBulletFactory.hpp"
@@ -51,7 +52,7 @@ void NetworkCommandHandler::update(Scene &scene) {
 
 			SceneObject *object = scene.objects().findByName(entityName);
 			if (object)
-				object->setPosition(pos);
+				object->set<PositionComponent>(pos);
 		}
 	}
 
@@ -76,7 +77,7 @@ void NetworkCommandHandler::update(Scene &scene) {
 			packet >> textureName >> frameSize.x >> frameSize.y >> initialFrame;
 
 			SceneObject object{entityName, entityType};
-			object.setPosition(pos);
+			object.set<PositionComponent>(pos);
 			if (frameSize.x == 0 && frameSize.y == 0)
 				object.set<Image>(textureName);
 			else

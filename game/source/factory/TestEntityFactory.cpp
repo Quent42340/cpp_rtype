@@ -24,6 +24,7 @@
 #include "Network.hpp"
 #include "NetworkComponent.hpp"
 #include "PlayerComponent.hpp"
+#include "PositionComponent.hpp"
 #include "SceneObjectList.hpp"
 #include "SpriteComponent.hpp"
 #include "TestBulletFactory.hpp"
@@ -40,7 +41,7 @@ SceneObject TestEntityFactory::create(u16 x, u16 y, u16 clientId) {
 	object.set<LifetimeComponent>([&] (const SceneObject &object) {
 		return object.get<HealthComponent>().life() == 0;
 	});
-	object.setPosition(x, y);
+	object.set<PositionComponent>(x, y);
 
 	auto &collisionComponent = object.set<CollisionComponent>();
 	collisionComponent.addAction(&playerCollisionAction);
@@ -53,7 +54,7 @@ SceneObject TestEntityFactory::create(u16 x, u16 y, u16 clientId) {
 	behaviourComponent.addBehaviour<EasyBehaviour>("Update", [] (SceneObject &object) {
 		if (GamePad::isKeyPressedWithDelay(GameKey::A, 200) && !object.get<LifetimeComponent>().dead(object)) {
 			auto &hitboxComponent = object.get<HitboxComponent>();
-			sf::Vector2f bulletPosition = object.getPosition() + sf::Vector2f{(float)hitboxComponent.currentHitbox()->width, (float)hitboxComponent.currentHitbox()->height / 2 - 4};
+			sf::Vector2f bulletPosition = object.get<PositionComponent>() + sf::Vector2f{(float)hitboxComponent.currentHitbox()->width, (float)hitboxComponent.currentHitbox()->height / 2 - 4};
 			object.get<SceneObjectList>().addObject(TestBulletFactory::create("PlayerBullet", "bullet-basic", bulletPosition, {1, 0}));
 		}
 	});
@@ -75,11 +76,11 @@ void TestEntityFactory::playerCollisionAction(SceneObject &player, SceneObject &
 
 void TestEntityFactory::checkOutOfMap(SceneObject &object) {
 	auto &movementComponent = object.get<MovementComponent>();
-	if (object.getPosition().x + movementComponent.v.x + object.get<HitboxComponent>().currentHitbox()->width > Config::screenWidth
-	 || object.getPosition().x + movementComponent.v.x < 0)
+	if (object.get<PositionComponent>().x + movementComponent.v.x + object.get<HitboxComponent>().currentHitbox()->width > Config::screenWidth
+	 || object.get<PositionComponent>().x + movementComponent.v.x < 0)
 		movementComponent.v.x = 0;
-	if (object.getPosition().y + movementComponent.v.y + object.get<HitboxComponent>().currentHitbox()->height > Config::screenHeight
-	 || object.getPosition().y + movementComponent.v.y < 0)
+	if (object.get<PositionComponent>().y + movementComponent.v.y + object.get<HitboxComponent>().currentHitbox()->height > Config::screenHeight
+	 || object.get<PositionComponent>().y + movementComponent.v.y < 0)
 		movementComponent.v.y = 0;
 }
 

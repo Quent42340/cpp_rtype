@@ -21,13 +21,14 @@
 #include "MovementComponent.hpp"
 #include "Network.hpp"
 #include "NetworkComponent.hpp"
+#include "PositionComponent.hpp"
 #include "SpriteComponent.hpp"
 #include "TestBulletFactory.hpp"
 
 SceneObject TestBulletFactory::create(const std::string &type, const std::string &textureName, const sf::Vector2f &pos, const sf::Vector2f &v) {
 	static size_t bulletCount = 0;
 	SceneObject object{"BasicBullet" + std::to_string(bulletCount++), type};
-	object.setPosition(pos);
+	object.set<PositionComponent>(pos);
 	object.set<SpriteComponent>(textureName);
 	object.set<NetworkComponent>();
 	object.set<LifetimeComponent>(&TestBulletFactory::checkOutOfMap);
@@ -45,9 +46,9 @@ SceneObject TestBulletFactory::create(const std::string &type, const std::string
 }
 
 bool TestBulletFactory::checkOutOfMap(const SceneObject &object) {
-	return (object.getPosition().x + object.get<HitboxComponent>().currentHitbox()->width < 0 ||
-	        object.getPosition().x > Config::screenWidth ||
-	        object.getPosition().y + object.get<HitboxComponent>().currentHitbox()->height < 0 ||
-	        object.getPosition().y > Config::screenHeight);
+	return (object.get<PositionComponent>().x + object.get<HitboxComponent>().currentHitbox()->width < 0 ||
+	        object.get<PositionComponent>().x > Config::screenWidth ||
+	        object.get<PositionComponent>().y + object.get<HitboxComponent>().currentHitbox()->height < 0 ||
+	        object.get<PositionComponent>().y > Config::screenHeight);
 }
 

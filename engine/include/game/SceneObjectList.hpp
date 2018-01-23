@@ -14,6 +14,7 @@
 #ifndef SCENEOBJECTLIST_HPP_
 #define SCENEOBJECTLIST_HPP_
 
+#include <algorithm>
 #include <deque>
 
 #include "SceneObject.hpp"

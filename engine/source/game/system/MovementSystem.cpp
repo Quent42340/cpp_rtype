@@ -15,6 +15,7 @@
 
 #include "CollisionComponent.hpp"
 #include "MovementComponent.hpp"
+#include "PositionComponent.hpp"
 
 void MovementSystem::process(SceneObject &object) {
 	if(object.has<MovementComponent>()) {
@@ -36,7 +37,7 @@ void MovementSystem::process(SceneObject &object) {
 
 		movement.isMoving = (movement.v.x || movement.v.y) ? true : false;
 
-		object.move(movement.v * movement.speed);
+		object.get<PositionComponent>() += movement.v * movement.speed;
 
 		movement.v.x = 0;
 		movement.v.y = 0;

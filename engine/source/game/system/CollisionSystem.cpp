@@ -18,6 +18,7 @@
 #include "CollisionComponent.hpp"
 #include "HitboxComponent.hpp"
 #include "MovementComponent.hpp"
+#include "PositionComponent.hpp"
 
 void CollisionSystem::checkCollision(SceneObject &object1, SceneObject &object2) {
 	bool inCollision = CollisionSystem::inCollision(object1, object2);
@@ -40,8 +41,8 @@ bool CollisionSystem::inCollision(SceneObject &object1, SceneObject &object2) {
 			sf::FloatRect rect1 = *hitbox1.currentHitbox();
 			sf::FloatRect rect2 = *hitbox2.currentHitbox();
 
-			rect1 += object1.getPosition();
-			rect2 += object2.getPosition();
+			rect1 += object1.get<PositionComponent>();
+			rect2 += object2.get<PositionComponent>();
 
 			if(object1.has<MovementComponent>()) {
 				rect1 += object1.get<MovementComponent>().v;

@@ -14,13 +14,15 @@
 #include "DrawingSystem.hpp"
 #include "Image.hpp"
 #include "LifetimeComponent.hpp"
+#include "PositionComponent.hpp"
 #include "Sprite.hpp"
 
 void DrawingSystem::draw(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states) {
-	states.transform *= object.getTransform();
-
 	if (object.has<LifetimeComponent>() && object.get<LifetimeComponent>().dead(object))
 		return;
+
+	if (object.has<PositionComponent>())
+		states.transform.translate(object.get<PositionComponent>());
 
 	if(object.has<Image>()) {
 		target.draw(object.get<Image>(), states);

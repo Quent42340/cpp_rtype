@@ -19,14 +19,16 @@
 #include "MovementComponent.hpp"
 #include "NetworkComponent.hpp"
 #include "SpriteComponent.hpp"
+#include "PositionComponent.hpp"
 
 void NetworkSystem::process(SceneObject &object) {
 	if (object.has<NetworkComponent>()) {
 		auto &networkComponent = object.get<NetworkComponent>();
+		auto &positionComponent = object.get<PositionComponent>();
 		if (!networkComponent.hasSpawned) {
 			sf::Packet packet;
 			packet << NetworkCommand::EntitySpawn;
-			packet << object.name() << object.type() << object.getPosition().x << object.getPosition().y;
+			packet << object.name() << object.type() << positionComponent.x << positionComponent.y;
 
 			auto &spriteComponent = object.get<SpriteComponent>();
 			packet << spriteComponent.textureName() << spriteComponent.frameWidth() << spriteComponent.frameHeight() << spriteComponent.initialFrame();
@@ -42,7 +44,7 @@ void NetworkSystem::process(SceneObject &object) {
 			auto &movementComponent = object.get<MovementComponent>();
 			if (movementComponent.isMoving && networkComponent.timer.time() > 20) {
 				sf::Packet packet;
-				packet << NetworkCommand::EntityMove << object.name() << object.getPosition().x << object.getPosition().y;
+				packet << NetworkCommand::EntityMove << object.name() << positionComponent.x << positionComponent.y;
 				for (const Client &client : ServerInfo::getInstance().clients()) {
 					Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, client.port);
 				}

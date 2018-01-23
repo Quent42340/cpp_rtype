@@ -1,9 +1,9 @@
 TODO
 
-• Timeline:
+• Timeline:                                                                     (21.5 h - 0.5 h)
    ◦ TODO: Améliorer l’architecture des systèmes                                (2 h)
-   ◦ TODO: Faire un `PositionComponent` au lieu de l’héritage à `sf::Transformable` (30 min)
-      → Solution alternative: Ajouter le `sf::Transformable` en composant         or (20 min)
+   ◦ DONE: Faire un `PositionComponent` au lieu de l’héritage à `sf::Transformable`
+      → DONE: Solution alternative: Ajouter le `sf::Transformable` en composant   (20 min)
    ◦ TODO: Intégrer le code de Dylan pour la GUI                                (2 h)
    ◦ TODO: Faire le système de gestion dynamique des entités + PPT              (3 h)
    ◦ TODO: Rajouter des types d’ennemis, de bullets, un boss, ...               (4 h)

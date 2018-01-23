@@ -12,6 +12,7 @@
  * =====================================================================================
  */
 #include "ServerApplication.hpp"
+#include "ServerInfo.hpp"
 
 void ServerApplication::init() {
 	std::srand(std::time(nullptr));
@@ -43,7 +44,9 @@ void ServerApplication::mainLoop() {
 		m_server.handleGameEvents(m_scene);
 
 		m_clock.updateGame([&] {
-			m_spawnController.update(m_scene);
+			if (ServerInfo::getInstance().clients().size() > 0)
+				m_spawnController.update(m_scene);
+
 			m_scene.update();
 		});
 

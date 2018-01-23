@@ -20,6 +20,7 @@
 #include "MovementComponent.hpp"
 #include "Network.hpp"
 #include "NetworkComponent.hpp"
+#include "PositionComponent.hpp"
 #include "SceneObjectList.hpp"
 #include "SpriteComponent.hpp"
 #include "TestBulletFactory.hpp"
@@ -28,7 +29,7 @@
 SceneObject TestEnemyFactory::create(const sf::Vector2f &pos) {
 	static size_t enemyCount = 0;
 	SceneObject object{"TestEnemy" + std::to_string(enemyCount++), "Enemy"};
-	object.setPosition(pos);
+	object.set<PositionComponent>(pos);
 	object.set<NetworkComponent>();
 	object.set<SceneObjectList>();
 	object.set<Timer>().start();
@@ -51,7 +52,7 @@ SceneObject TestEnemyFactory::create(const sf::Vector2f &pos) {
 	behaviourComponent.addBehaviour<EasyBehaviour>("Update", [] (SceneObject &object) {
 		Timer &timer = object.get<Timer>();
 		if (timer.time() > 1000) {
-			sf::Vector2f bulletPosition = object.getPosition() + sf::Vector2f{0, (float)object.get<HitboxComponent>().currentHitbox()->height / 2 - 4};
+			sf::Vector2f bulletPosition = object.get<PositionComponent>() + sf::Vector2f{0, (float)object.get<HitboxComponent>().currentHitbox()->height / 2 - 4};
 			object.get<SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, {-1, 0}));
 
 			timer.reset();
@@ -74,7 +75,7 @@ void TestEnemyFactory::enemyCollisionAction(SceneObject &enemy, SceneObject &obj
 }
 
 bool TestEnemyFactory::checkOutOfMap(const SceneObject &object) {
-	return (object.getPosition().x + object.get<HitboxComponent>().currentHitbox()->width < 0 ||
-	        object.getPosition().y + object.get<HitboxComponent>().currentHitbox()->height < 0);
+	return (object.get<PositionComponent>().x + object.get<HitboxComponent>().currentHitbox()->width < 0 ||
+	        object.get<PositionComponent>().y + object.get<HitboxComponent>().currentHitbox()->height < 0);
 }
 

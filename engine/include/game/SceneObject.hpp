@@ -18,11 +18,9 @@
 #include <typeindex>
 #include <unordered_map>
 
-#include <SFML/Graphics/Transformable.hpp>
-
 #include "Exception.hpp"
 
-class SceneObject : public sf::Transformable {
+class SceneObject {
 	public:
 		SceneObject(const std::string &name = "null", const std::string &type = "null")
 			: m_name(name), m_type(type) {}
