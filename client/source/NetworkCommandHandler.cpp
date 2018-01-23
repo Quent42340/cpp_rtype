@@ -20,16 +20,10 @@
 #include "TestEnemyFactory.hpp"
 #include "TestEntityFactory.hpp"
 
-void NetworkCommandHandler::connect() {
-	sf::Packet packet;
-	packet << NetworkCommand::ClientConnect;
-	Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, 4242);
-}
-
 void NetworkCommandHandler::disconnect() {
 	sf::Packet packet;
 	packet << NetworkCommand::ClientDisconnect;
-	Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, 4242);
+	Network::getInstance().tcpSocket().send(packet);
 }
 
 void NetworkCommandHandler::sendKey(u32 key, bool isPressed) {

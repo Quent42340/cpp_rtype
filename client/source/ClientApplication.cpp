@@ -39,8 +39,6 @@ void ClientApplication::init() {
 	GamePad::init(m_keyboardHandler);
 
 	ApplicationStateStack::getInstance().push<GameState>();
-
-	NetworkCommandHandler::connect();
 }
 
 void ClientApplication::handleEvents() {

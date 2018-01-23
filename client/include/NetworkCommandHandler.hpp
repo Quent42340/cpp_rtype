@@ -18,7 +18,6 @@
 
 class NetworkCommandHandler {
 	public:
-		static void connect();
 		static void disconnect();
 
 		static void sendKey(u32 key, bool isPressed);
