@@ -8,6 +8,7 @@ TODO
    ◦ DONE: Renommer /graphics/characters en /graphics/spaceship et /graphics/bullets en /graphics/bullet
    ◦ TODO: Améliorer le code réseau du client et du serveur
    ◦ TODO: Virer la dépendance à la partie multimédia de la SFML pour le serveur
+      → `Problème:` DrawingSystem est dans SceneSystem et `sf::Transformable` est défini dans la partie graphique de la sfml
       → Mettre les parties affichage/audio dans des bibliothèques séparées utilisées uniquement dans le client
       → Déplacer la dépendance à la SFML vers les CMakeLists.txt du client et du serveur
    ◦ TODO: /LOW/ Remplacer tinyxml2 par Qt et virer le dossier /cmake
@@ -37,8 +38,8 @@ TODO
    ◦ WIP: Player spaceship implementation (blue, red, yellow, green)
       ◦ DONE: Add the ability to shoot
       ◦ DONE: Add network-based movement
-      ◦ TODO: Handle collisions with screen borders
-      ◦ TODO: Handle collisions with enemy bullets
+      ◦ DONE: Handle collisions with screen borders
+      ◦ DONE: Handle collisions with enemy bullets
       ◦ TODO: Handle movement animation
       ◦ TODO: Die animation
    ◦ WIP: Enemy implementation

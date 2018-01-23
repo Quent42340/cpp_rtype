@@ -19,6 +19,10 @@
 class TestEntityFactory {
 	public:
 		static SceneObject create(u16 x, u16 y, u16 clientId);
+
+		static void playerCollisionAction(SceneObject &player, SceneObject &object, bool inCollision);
+
+		static void checkOutOfMap(SceneObject &object);
 };
 
 #endif // TESTENTITYFACTORY_HPP_
