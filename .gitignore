@@ -30,6 +30,7 @@ doc/latex
 # Binaries
 rtype_client
 rtype_server
+*.exe
 
 # Misc
 test_udp/client/client

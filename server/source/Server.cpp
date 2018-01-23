@@ -88,6 +88,7 @@ void Server::handleGameEvents(Scene &scene) {
 						packet >> command;
 
 						if (command == NetworkCommand::ClientDisconnect) {
+							m_selector.remove(*client.tcpSocket);
 							ServerInfo::getInstance().removeClient(client.id);
 							if (ServerInfo::getInstance().clients().size() == 0) {
 								m_tcpListener.close();

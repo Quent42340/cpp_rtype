@@ -23,7 +23,7 @@ void ClientApplication::init() {
 	std::srand(std::time(nullptr));
 
 	m_window.create(sf::VideoMode(screenWidth, screenHeight), "R-Type", sf::Style::Close);
-	m_window.setKeyRepeatEnabled(false);
+	// m_window.setKeyRepeatEnabled(false);
 
 	// FIXME: HARDCODED
 	m_network.connect("127.0.0.1", 4243);

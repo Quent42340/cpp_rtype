@@ -1,16 +1,32 @@
 TODO
 
+• Timeline:
+   ◦ TODO: Améliorer l’architecture des systèmes                                (2 h)
+   ◦ TODO: Faire un `PositionComponent` au lieu de l’héritage à `sf::Transformable` (30 min)
+      → Solution alternative: Ajouter le `sf::Transformable` en composant         or (20 min)
+   ◦ TODO: Intégrer le code de Dylan pour la GUI                                (2 h)
+   ◦ TODO: Faire le système de gestion dynamique des entités + PPT              (3 h)
+   ◦ TODO: Rajouter des types d’ennemis, de bullets, un boss, ...               (4 h)
+   ◦ TODO: Finir d’améliorer l’architecure réseau                               (2 h)
+   ◦ TODO: Faire le système de lobby et le rajouter sur le PPT                  (8 h)
+
 • WIP: Amélioration d’architecture
    ◦ DONE: Transformer /engine en lib pour éviter de recompiler 2 fois tous les fichiers
    ◦ DONE: Le réseau n’a rien à faire dans le `MovementSystem`, le déplacer vers un autre système
    ◦ DONE: Mettre le jeu dans une bibliothèque séparée (càd les Factory/Movement/Behaviour)
    ◦ DONE: Virer `Application` et créer une classe statique `Config` avec les dimensions de l’écran
    ◦ DONE: Renommer /graphics/characters en /graphics/spaceship et /graphics/bullets en /graphics/bullet
-   ◦ TODO: Améliorer le code réseau du client et du serveur
    ◦ TODO: Virer la dépendance à la partie multimédia de la SFML pour le serveur
-      → `Problème:` DrawingSystem est dans SceneSystem et `sf::Transformable` est défini dans la partie graphique de la sfml
+      → `Problèmes:` `DrawingSystem` est dans `SceneSystem` et `sf::Transformable` est défini dans la partie graphique de la sfml
+         → Solutions: Créer des vraies classes pour les systèmes et un conteneur de systèmes dans `Scene` qui remplacerait `SceneSystem`
+                      Créer un `PositionComponent` qui remplacerait l’utilisation de `sf::Transformable` (qui serait utilisée par `Image` à la place)
       → Mettre les parties affichage/audio dans des bibliothèques séparées utilisées uniquement dans le client
       → Déplacer la dépendance à la SFML vers les CMakeLists.txt du client et du serveur
+   ◦ TODO: Améliorer le code réseau du client et du serveur
+      ◦ TODO: Créer une classe `Client` qui remplacerait `NetworkCommandHandler`
+      ◦ TODO: Faire en sorte que `Network` n’ait pas de code spécifique ni au client, ni au serveur
+   ◦ TODO: Vérifier que tous les fichiers de l’engine sont bien à leur place
+   ◦ TODO: Remplacer la SFML2 par BoostASIO pour la partie réseau
    ◦ TODO: /LOW/ Remplacer tinyxml2 par Qt et virer le dossier /cmake
 • WIP: Network issues
    ◦ DONE: Enemy bullets disappear when enemy is killed
@@ -32,9 +48,9 @@ TODO
    ◦ WIP: Network
       ◦ WIP: Server
          ▸ DONE: Handle up to 4 players
-         ▸ TODO: Implement timeout (`ClientAlive` command)
          ▸ TODO: Handle multiple games at the same time (lobby system)
          ▸ TODO: Handle client crash (timeout)
+            ▹ TODO: Implement `ClientAlive` TCP command
    ◦ WIP: Player spaceship implementation (blue, red, yellow, green)
       ◦ DONE: Add the ability to shoot
       ◦ DONE: Add network-based movement
@@ -50,8 +66,8 @@ TODO
       ◦ DONE: Handle collisions with ally bullets
       ◦ TODO: Add a dynamic library loader for enemy factories/movement/behaviours
       ◦ TODO: Add a menu to add libs in runtime
-      ◦ TODO: Die animation
       ◦ TODO: Handle movement animation
+      ◦ TODO: Die animation
    ◦ WIP: Background
       ◦ DONE: Slow horizontal scrolling background
       ◦ TODO: Stop or loop when the scrolling ends
@@ -63,16 +79,16 @@ TODO
       ◦ TODO: Text Box class
       ◦ TODO: Lobby screen
    ◦ TODO: Check if game compiles and works on Windows
-• TODO: Review
-   ◦ TODO: Mettre en avant les features de l’engine
-      → Framerate independent
-      → Fichiers XML qui permettent de modifier le jeu sans avoir à recompiler
-      → Chaque texture n’est chargée qu’une fois en mémoire
-      → Engine modulaire (3 parties, le cœur, la partie graphique et le jeu en lui-même)
-      → Système d’entités à composants
-      → Gestion dynamique des monstres (chaque client peut rajouter/enlever des monstres sur sa game)
-   ◦ TODO: Mettre en avant les features réseau
-      → Système de lobby
-      → Tchat + commandes serveur (ça serait ouf)
-      → Utilisation de TCP pour la connexion et de UDP pour le jeu en lui-même
+• WIP: Review
+   ◦ WIP: Mettre en avant les features de l’engine
+      → DONE: Framerate independent
+      → DONE: Fichiers XML qui permettent de modifier le jeu sans avoir à recompiler
+      → DONE: Engine modulaire (3 parties, le cœur, la partie graphique et le jeu en lui-même)
+      → DONE: Système d’entités à composants
+      → DONE: Chaque texture n’est chargée qu’une fois en mémoire
+      → TODO: Gestion dynamique des monstres (chaque client peut rajouter/enlever des monstres sur sa game)
+   ◦ WIP: Mettre en avant les features réseau
+      → DONE: Utilisation de TCP pour la connexion et de UDP pour le jeu en lui-même
+      → TODO: Système de lobby
+      → TODO: Tchat + commandes serveur (ça serait ouf)
 

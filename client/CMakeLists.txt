@@ -35,10 +35,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wfatal-errors")
 #------------------------------------------------------------------------------
 target_link_libraries(${CMAKE_PROJECT_NAME}_client
                       ${TINYXML2_LIBRARIES}
-                      ${SFML_AUDIO_LIBRARY}
-                      ${SFML_GRAPHICS_LIBRARY}
-                      ${SFML_NETWORK_LIBRARY}
-                      ${SFML_SYSTEM_LIBRARY}
-                      ${SFML_WINDOW_LIBRARY}
-                      ${CMAKE_PROJECT_NAME}_engine)
+                      ${CMAKE_PROJECT_NAME}_engine
+                      ${SFML_LIBRARIES})
 
