@@ -11,6 +11,7 @@
  *
  * =====================================================================================
  */
+#include "DrawingSystem.hpp"
 #include "GameState.hpp"
 #include "NetworkCommandHandler.hpp"
 
@@ -27,6 +28,9 @@ void GameState::update() {
 
 void GameState::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	target.draw(m_background, states);
-	target.draw(m_scene, states);
+
+	for(const SceneObject &object : m_scene.objects())
+		DrawingSystem::draw(object, target, states);
+	// target.draw(m_scene, states);
 }
 

@@ -12,7 +12,6 @@
  * =====================================================================================
  */
 #include "CollisionSystem.hpp"
-#include "Sprite.hpp"
 #include "Utils.hpp"
 
 #include "CollisionComponent.hpp"

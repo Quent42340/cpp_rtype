@@ -16,7 +16,6 @@
 #include "Config.hpp"
 #include "EasyMovement.hpp"
 #include "HitboxComponent.hpp"
-#include "Image.hpp"
 #include "LifetimeComponent.hpp"
 #include "MovementComponent.hpp"
 #include "Network.hpp"

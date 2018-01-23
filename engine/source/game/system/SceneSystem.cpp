@@ -16,7 +16,7 @@
 #include "ServerInfo.hpp"
 
 #include "BehaviourSystem.hpp"
-#include "DrawingSystem.hpp"
+// #include "DrawingSystem.hpp"
 #include "LifetimeSystem.hpp"
 #include "MovementSystem.hpp"
 #include "NetworkSystem.hpp"
@@ -58,7 +58,7 @@ void SceneSystem::updateObject(SceneObject &object) {
 }
 
 void SceneSystem::drawObject(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states) {
-	DrawingSystem::draw(object, target, states);
+	// DrawingSystem::draw(object, target, states);
 
 	if(object.has<SceneObjectList>()) {
 		draw(object.get<SceneObjectList>(), target, states);
