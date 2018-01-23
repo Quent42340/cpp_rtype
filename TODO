@@ -4,13 +4,14 @@ TODO
 
 • DONE: Transformer /engine en lib pour éviter de recompiler 2 fois tous les fichiers
 • DONE: Le réseau n’a rien à faire dans le `MovementSystem`, le déplacer vers un autre système
+• DONE: Mettre le jeu dans une bibliothèque séparée (càd les Factory/Movement/Behaviour)
+• TODO: Améliorer le code réseau du client et du serveur
 • TODO: Renommer /graphics/characters en /graphics/spaceship et /graphics/bullets en /graphics/bullet
-• TODO: Virer `Application`
+• TODO: Virer `Application` et créer une classe statique `Config` avec les dimensions de l’écran
 • TODO: Remplacer tinyxml2 par Qt et virer le dossier /cmake
 • TODO: Virer la dépendance à la partie graphique de la SFML pour le serveur
    → Mettre la partie affichage dans une bibliothèque séparée inclue uniquement dans le client
    → Il sera probablement nécessaire de remplacer `sf::Vector2<T>` par ma classe `Vector2<T>`
-• TODO: Mettre le jeu dans une bibliothèque séparée (càd les Factory/Movement/Behaviour)
 
 # Fixme
 
@@ -18,9 +19,10 @@ TODO
    → Potential solution: Add subentities to Scene if the entity dies
    → Alternative solution: Wait subentities are dead before killing main entity
 • DONE: Bullets appear on the top-left corner before being shooted, why?
-• TODO: During network lag spikes, entities are not correctly deleted/spawned
+• DONE: During network lag spikes, entities are not correctly deleted/spawned
    → Use TCP to send spawn/die events
-• TODO: Faster bullets when spamming shoot button instead of holding it, wtf?
+• TODO: Alive entities are not sent to new clients
+• TODO: /LOW/ Faster bullets when spamming shoot button instead of holding it, wtf?
 
 # Review
 
@@ -56,15 +58,17 @@ TODO
    ◦ TODO: Handle movement animation
    ◦ TODO: Handle collisions with screen borders
    ◦ TODO: Die animation
+   ◦ TODO: Handle collisions with enemy bullets
 • WIP: Enemy implementation
    ◦ DONE: Add movement
    ◦ DONE: Add the ability to shoot
    ◦ DONE: Send notification to each client when a mob spawns, is killed, shoots, kills a player...
    ◦ DONE: Handle random spawn on the right of the screen
-   ◦ TODO: Handle collisions with ally bullets (same for allies but for enemy bullets)
+   ◦ DONE: Handle collisions with ally bullets
    ◦ TODO: Add a dynamic library loader for enemy factories/movement/behaviours
    ◦ TODO: Add a menu to add libs in runtime
    ◦ TODO: Die animation
+   ◦ TODO: Handle movement animation
 • DONE: Background
    ◦ DONE: Slow horizontal scrolling background
 • WIP: GUI → Dylan
