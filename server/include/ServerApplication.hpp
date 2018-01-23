@@ -15,7 +15,7 @@
 #define SERVERAPPLICATION_HPP_
 
 #include "GameClock.hpp"
-#include "Network.hpp"
+#include "Server.hpp"
 #include "Scene.hpp"
 #include "Timer.hpp"
 
@@ -23,19 +23,17 @@ class ServerApplication {
 	public:
 		void init();
 
-		void handleNetworkEvents();
+		void update();
 
 		int run();
 		void mainLoop();
 
 	private:
-		bool m_isRunning = true;
-
 		GameClock m_clock;
 
-		Network m_network;
-
 		Scene m_scene;
+
+		Server m_server;
 
 		Timer m_spawnTimer;
 };
