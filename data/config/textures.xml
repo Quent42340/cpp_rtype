@@ -1,9 +1,9 @@
 <textures>
-	<texture folder="backgrounds" name="space"/>
+	<texture folder="background" name="space"/>
 
-	<texture folder="bullets" name="basic"/>
-	<texture folder="bullets" name="small"/>
+	<texture folder="bullet" name="basic"/>
+	<texture folder="bullet" name="small"/>
 
-	<texture folder="characters" name="enemy1"/>
-	<texture folder="characters" name="players"/>
+	<texture folder="spaceship" name="enemy1"/>
+	<texture folder="spaceship" name="players"/>
 </textures>

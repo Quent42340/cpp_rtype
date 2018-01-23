@@ -1,210 +1,76 @@
 TODO
 
-# Improvements
+• WIP: Amélioration d’architecture
+   ◦ DONE: Transformer /engine en lib pour éviter de recompiler 2 fois tous les fichiers
+   ◦ DONE: Le réseau n’a rien à faire dans le `MovementSystem`, le déplacer vers un autre système
+   ◦ DONE: Mettre le jeu dans une bibliothèque séparée (càd les Factory/Movement/Behaviour)
+   ◦ DONE: Virer `Application` et créer une classe statique `Config` avec les dimensions de l’écran
+   ◦ DONE: Renommer /graphics/characters en /graphics/spaceship et /graphics/bullets en /graphics/bullet
+   ◦ TODO: Améliorer le code réseau du client et du serveur
+   ◦ TODO: Virer la dépendance à la partie multimédia de la SFML pour le serveur
+      → Mettre les parties affichage/audio dans des bibliothèques séparées utilisées uniquement dans le client
+      → Déplacer la dépendance à la SFML vers les CMakeLists.txt du client et du serveur
+   ◦ TODO: /LOW/ Remplacer tinyxml2 par Qt et virer le dossier /cmake
+• WIP: Network issues
+   ◦ DONE: Enemy bullets disappear when enemy is killed
+      → Potential solution: Add subentities to Scene if the entity dies
+      → Alternative solution: Wait subentities are dead before killing main entity
+   ◦ DONE: Bullets appear on the top-left corner before being shooted, why?
+   ◦ DONE: During network lag spikes, entities are not correctly deleted/spawned
+      → Use TCP to send spawn/die events
+   ◦ DONE: Find a way to fix error message at server close “Can’t find client with id”
+   ◦ TODO: Find a way to fix exception “Listen failed”
+   ◦ TODO: Alive entities are not sent to new clients
+• TODO: Other issues
+   ◦ TODO: /LOW/ Faster bullets when spamming shoot button instead of holding it, wtf?
+• TODO: Documentation
+   ◦ TODO: Binary protocol (RFC, ascii format, printed)
+   ◦ TODO: UML class + sequence diagram (printed)
+   ◦ TODO: Doxygen (optional)
+• WIP: Game
+   ◦ WIP: Network
+      ◦ WIP: Server
+         ▸ DONE: Handle up to 4 players
+         ▸ TODO: Implement timeout (`ClientAlive` command)
+         ▸ TODO: Handle multiple games at the same time (lobby system)
+         ▸ TODO: Handle client crash (timeout)
+   ◦ WIP: Player spaceship implementation (blue, red, yellow, green)
+      ◦ DONE: Add the ability to shoot
+      ◦ DONE: Add network-based movement
+      ◦ TODO: Handle collisions with screen borders
+      ◦ TODO: Handle collisions with enemy bullets
+      ◦ TODO: Handle movement animation
+      ◦ TODO: Die animation
+   ◦ WIP: Enemy implementation
+      ◦ DONE: Add movement
+      ◦ DONE: Add the ability to shoot
+      ◦ DONE: Send notification to each client when a mob spawns, is killed, shoots, kills a player...
+      ◦ DONE: Handle random spawn on the right of the screen
+      ◦ DONE: Handle collisions with ally bullets
+      ◦ TODO: Add a dynamic library loader for enemy factories/movement/behaviours
+      ◦ TODO: Add a menu to add libs in runtime
+      ◦ TODO: Die animation
+      ◦ TODO: Handle movement animation
+   ◦ DONE: Background
+      ◦ DONE: Slow horizontal scrolling background
+   ◦ WIP: GUI → Dylan
+      ◦ DONE: Button class
+      ◦ DONE: Title screen
+      ◦ DONE: Pause menu
+      ◦ DONE: Victory/Game over screen
+      ◦ TODO: Text Box class
+      ◦ TODO: Lobby screen
+   ◦ TODO: Check if game compiles and works on Windows
+• TODO: Review
+   ◦ TODO: Mettre en avant les features de l’engine
+      → Framerate independent
+      → Fichiers XML qui permettent de modifier le jeu sans avoir à recompiler
+      → Chaque texture n’est chargée qu’une fois en mémoire
+      → Engine modulaire (3 parties, le cœur, la partie graphique et le jeu en lui-même)
+      → Système d’entités à composants
+      → Gestion dynamique des monstres (chaque client peut rajouter/enlever des monstres sur sa game)
+   ◦ TODO: Mettre en avant les features réseau
+      → Système de lobby
+      → Tchat + commandes serveur (ça serait ouf)
+      → Utilisation de TCP pour la connexion et de UDP pour le jeu en lui-même
 
-• DONE: Transformer /engine en lib pour éviter de recompiler 2 fois tous les fichiers
-• DONE: Le réseau n’a rien à faire dans le `MovementSystem`, le déplacer vers un autre système
-• DONE: Mettre le jeu dans une bibliothèque séparée (càd les Factory/Movement/Behaviour)
-• DONE: Virer `Application` et créer une classe statique `Config` avec les dimensions de l’écran
-• TODO: Améliorer le code réseau du client et du serveur
-• TODO: Renommer /graphics/characters en /graphics/spaceship et /graphics/bullets en /graphics/bullet
-• TODO: Remplacer tinyxml2 par Qt et virer le dossier /cmake
-• TODO: Virer la dépendance à la partie multimédia de la SFML pour le serveur
-   → Mettre la partie affichage/audio dans des bibliothèques séparées utilisées uniquement dans le client
-   → Il sera probablement nécessaire de remplacer `sf::Vector2<T>` par ma classe `Vector2<T>`
-
-# Fixme
-
-• DONE: Enemy bullets disappear when enemy is killed
-   → Potential solution: Add subentities to Scene if the entity dies
-   → Alternative solution: Wait subentities are dead before killing main entity
-• DONE: Bullets appear on the top-left corner before being shooted, why?
-• DONE: During network lag spikes, entities are not correctly deleted/spawned
-   → Use TCP to send spawn/die events
-• DONE: Find a way to fix error message at server close “Can’t find client with id”
-• TODO: Find a way to catch or fix exception “Listen failed”
-• TODO: Alive entities are not sent to new clients
-• TODO: /LOW/ Faster bullets when spamming shoot button instead of holding it, wtf?
-
-# Documentation
-
-• TODO: Binary protocol (RFC, ascii format, printed)
-• TODO: UML class + sequence diagram (printed)
-• TODO: Doxygen (optional)
-
-# Game
-
-• WIP: Network
-   ◦ WIP: Server
-      ◦ DONE: Handle up to 4 players
-      ◦ TODO: Implement timeout (`ClientAlive` command)
-      ◦ TODO: Handle multiple games at the same time (lobby system)
-      ◦ TODO: Handle client crash (timeout)
-• WIP: Player spaceship implementation (blue, red, yellow, green)
-   ◦ DONE: Add the ability to shoot
-   ◦ DONE: Add network-based movement
-   ◦ TODO: Handle collisions with screen borders
-   ◦ TODO: Handle collisions with enemy bullets
-   ◦ TODO: Handle movement animation
-   ◦ TODO: Die animation
-• WIP: Enemy implementation
-   ◦ DONE: Add movement
-   ◦ DONE: Add the ability to shoot
-   ◦ DONE: Send notification to each client when a mob spawns, is killed, shoots, kills a player...
-   ◦ DONE: Handle random spawn on the right of the screen
-   ◦ DONE: Handle collisions with ally bullets
-   ◦ TODO: Add a dynamic library loader for enemy factories/movement/behaviours
-   ◦ TODO: Add a menu to add libs in runtime
-   ◦ TODO: Die animation
-   ◦ TODO: Handle movement animation
-• DONE: Background
-   ◦ DONE: Slow horizontal scrolling background
-• WIP: GUI → Dylan
-   ◦ DONE: Button class
-   ◦ DONE: Title screen
-   ◦ TODO: Text Box class
-   ◦ TODO: Pause menu
-      ◦ TODO: “Add enemy...” entry
-   ◦ TODO: Victory/Game over screen
-   ◦ TODO: Lobby screen
-• TODO: Check if game compiles and works on Windows
-
-# Review
-
-• TODO: Mettre en avant les features de l’engine
-   → Framerate independent
-   → Fichiers XML qui permettent de modifier le jeu sans avoir à recompiler
-   → Chaque texture n’est chargée qu’une fois en mémoire
-   → Engine modulaire (3 parties, le cœur, la partie graphique et le jeu en lui-même)
-   → Système d’entités à composants
-   → Gestion dynamique des monstres (chaque client peut rajouter/enlever des monstres sur sa game)
-
-• TODO: Mettre en avant les features réseau
-   → Système de lobby
-   → Tchat + commandes serveur (ça serait ouf)
-   → Utilisation de TCP pour la connexion et de UDP pour le jeu en lui-même
-
-# Common
-```cpp
-struct UdpPacket {
-   const u16 magic = 0xABCD; // Detect the beginning of a package
-   size_t size;              // Packet size
-   size_t checksum;          // Allows to check if the package is valid
-   size_t timestamp;         // Allows to check if the package is not obsolete
-   const char *message;      // Package content
-};
-
-struct TcpPacket {
-   const u16 magic = 0xDCBA;
-   size_t size;
-   const char *message;
-};
-```
-# Client
-```cpp
-class UdpClient {
-   public:
-      UdpClient(); // Create socket
-
-      void send(const UdpPacket &packet);
-      UdpPacket receive();
-
-   private:
-      int m_fd; // Socket fd
-};
-
-class TcpClient {
-   public:
-      TcpClient(); // Create socket
-
-      void send(const TcpPacket &packet);
-      TcpPacket receive();
-
-   private:
-      int m_fd;
-};
-
-class Network {
-   public:
-      void syncWithServer(); // Sync Scene with server in a dedicated thread
-};
-```
-# Server
-```cpp
-class UdpServer {
-   public:
-      UdpServer(); // Create socket
-
-      void send(const UdpPacket &packet);
-      UdpPacket receive();
-
-   private:
-      int m_fd; // Socket fd
-};
-
-class TcpServer {
-   public:
-      TcpServer(); // Create socket
-
-      void send(const TcpPacket &packet);
-      TcpPacket receive();
-
-   private:
-      int m_fd; // Socket fd
-};
-
-class GameServer {
-   public:
-      void run(); // Run game main loop in a dedicated thread
-                  // At the end of the loop, sync with clients
-                  // I'll do this function
-
-      void addClient(const GameClient &client) { m_clients.emplace(std::make_pair(client.uuid(), client)); }
-
-   private:
-      void syncWithClients(); // Sync Scene with client
-
-      std::map<size_t, GameClient> m_clients; // Store client indexed by their uuid (only if needed)
-
-      UdpServer m_server;
-};
-
-class GameClient {
-   private:
-      bool m_isReady = false;
-      bool m_isPlaying = false;
-
-      size_t m_uuid;
-};
-
-class Lobby {
-   public:
-      void waitForPlayers(); // Wait all players in a dedicated thread and run the game
-                             // Should continue waiting even after the game has started
-                             // this will allow entering in a lobby where a game has already begun
-
-      bool addClient(); // Add a new client and return true on success
-
-   private:
-      void launchGameServer(); // Bind a port for UDP and create a GameServer on this port
-                               // Send port to clients
-
-      std::vector<GameClient> m_clients;
-
-      GameServer m_gameServer;
-      TcpServer m_lobbyServer;
-};
-
-class Application {
-   public:
-      void run(); // Listens to any incoming TCP connection in a dedicated thread
-
-   private:
-      void createLobby(); // Create a new lobby for a client
-      void joinLobby(size_t id); // Add client to existing lobby
-
-      std::vector<Lobby> m_lobbies;
-
-      TcpServer m_server;
-};
-```
