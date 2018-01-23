@@ -30,7 +30,7 @@ SceneObject TestEntityFactory::create(u16 x, u16 y, u16 clientId) {
 	SceneObject object{"Player" + std::to_string(playerCount++), "Player"};
 	object.set<SceneObjectList>();
 	object.set<PlayerComponent>(clientId);
-	object.set<MovementComponent>(new GamePadMovement);
+	object.set<MovementComponent>(new GamePadMovement).speed = 1.5f;
 	object.set<NetworkComponent>();
 	object.setPosition(x, y);
 

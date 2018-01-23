@@ -45,7 +45,7 @@ void SceneSystem::resetObject(SceneObject &object) {
 }
 
 void SceneSystem::updateObject(SceneObject &object) {
-	if (object.has<PlayerComponent>())
+	if (object.has<PlayerComponent>() && ServerInfo::getInstance().clients().size() > 0)
 		GamePad::init(ServerInfo::getInstance().getClient(object.get<PlayerComponent>().clientId()).inputHandler);
 
 	BehaviourSystem::process(object);

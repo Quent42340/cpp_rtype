@@ -33,7 +33,7 @@ SceneObject TestBulletFactory::create(const std::string &type, const std::string
 	object.set<LifetimeComponent>(&TestBulletFactory::checkOutOfMap);
 	object.set<MovementComponent>(new EasyMovement([v] (const SceneObject &object) {
 		object.get<MovementComponent>().v = v;
-	})).speed = 3.0f;
+	})).speed = 4.0f;
 
 	// auto &image = object.set<Image>(textureName);
 	// object.set<HitboxComponent>(0, 0, image.width(), image.height());

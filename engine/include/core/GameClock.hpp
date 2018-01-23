@@ -42,7 +42,7 @@ class GameClock {
 		u32 m_lag = 0;
 		u32 m_timeDropped = 0;
 
-		u8 m_timestep = 6;
+		u8 m_timestep = 8;
 		u8 m_numUpdates = 0;
 };
 

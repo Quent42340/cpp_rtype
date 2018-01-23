@@ -9,8 +9,8 @@ TODO
 • TODO: Améliorer le code réseau du client et du serveur
 • TODO: Renommer /graphics/characters en /graphics/spaceship et /graphics/bullets en /graphics/bullet
 • TODO: Remplacer tinyxml2 par Qt et virer le dossier /cmake
-• TODO: Virer la dépendance à la partie graphique de la SFML pour le serveur
-   → Mettre la partie affichage dans une bibliothèque séparée inclue uniquement dans le client
+• TODO: Virer la dépendance à la partie multimédia de la SFML pour le serveur
+   → Mettre la partie affichage/audio dans des bibliothèques séparées utilisées uniquement dans le client
    → Il sera probablement nécessaire de remplacer `sf::Vector2<T>` par ma classe `Vector2<T>`
 
 # Fixme
@@ -21,25 +21,10 @@ TODO
 • DONE: Bullets appear on the top-left corner before being shooted, why?
 • DONE: During network lag spikes, entities are not correctly deleted/spawned
    → Use TCP to send spawn/die events
-• TODO: Alive entities are not sent to new clients
-• TODO: Find a way to fix error message at server close “Can’t find client with id”
+• DONE: Find a way to fix error message at server close “Can’t find client with id”
 • TODO: Find a way to catch or fix exception “Listen failed”
+• TODO: Alive entities are not sent to new clients
 • TODO: /LOW/ Faster bullets when spamming shoot button instead of holding it, wtf?
-
-# Review
-
-• TODO: Mettre en avant les features de l’engine
-   → Framerate independent
-   → Fichiers XML qui permettent de modifier le jeu sans avoir à recompiler
-   → Chaque texture n’est chargée qu’une fois en mémoire
-   → Engine modulaire (3 parties, le cœur, la partie graphique et le jeu en lui-même)
-   → Système d’entités à composants
-   → Gestion dynamique des monstres (chaque client peut rajouter/enlever des monstres sur sa game)
-
-• TODO: Mettre en avant les features réseau
-   → Système de lobby
-   → Tchat + commandes serveur (ça serait ouf)
-   → Utilisation de TCP pour la connexion et de UDP pour le jeu en lui-même
 
 # Documentation
 
@@ -52,15 +37,16 @@ TODO
 • WIP: Network
    ◦ WIP: Server
       ◦ DONE: Handle up to 4 players
+      ◦ TODO: Implement timeout (`ClientAlive` command)
       ◦ TODO: Handle multiple games at the same time (lobby system)
       ◦ TODO: Handle client crash (timeout)
 • WIP: Player spaceship implementation (blue, red, yellow, green)
    ◦ DONE: Add the ability to shoot
    ◦ DONE: Add network-based movement
-   ◦ TODO: Handle movement animation
    ◦ TODO: Handle collisions with screen borders
-   ◦ TODO: Die animation
    ◦ TODO: Handle collisions with enemy bullets
+   ◦ TODO: Handle movement animation
+   ◦ TODO: Die animation
 • WIP: Enemy implementation
    ◦ DONE: Add movement
    ◦ DONE: Add the ability to shoot
@@ -82,6 +68,21 @@ TODO
    ◦ TODO: Victory/Game over screen
    ◦ TODO: Lobby screen
 • TODO: Check if game compiles and works on Windows
+
+# Review
+
+• TODO: Mettre en avant les features de l’engine
+   → Framerate independent
+   → Fichiers XML qui permettent de modifier le jeu sans avoir à recompiler
+   → Chaque texture n’est chargée qu’une fois en mémoire
+   → Engine modulaire (3 parties, le cœur, la partie graphique et le jeu en lui-même)
+   → Système d’entités à composants
+   → Gestion dynamique des monstres (chaque client peut rajouter/enlever des monstres sur sa game)
+
+• TODO: Mettre en avant les features réseau
+   → Système de lobby
+   → Tchat + commandes serveur (ça serait ouf)
+   → Utilisation de TCP pour la connexion et de UDP pour le jeu en lui-même
 
 # Common
 ```cpp

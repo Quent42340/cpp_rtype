@@ -73,13 +73,16 @@ int ClientApplication::run() {
 	}
 	catch(const Exception &e) {
 		std::cerr << "Fatal error " << e.what() << std::endl;
+		m_network.tcpSocket().disconnect();
 		return 1;
 	}
 	catch(const std::exception &e) {
 		std::cerr << "Exception caught: " << e.what() << std::endl;
+		m_network.tcpSocket().disconnect();
 		return 1;
 	}
 
+	m_network.tcpSocket().disconnect();
 	return 0;
 }
 

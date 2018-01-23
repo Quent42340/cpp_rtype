@@ -20,7 +20,7 @@ GameState::GameState() {
 void GameState::update() {
 	NetworkCommandHandler::update(m_scene);
 
-	m_background.move(-0.03, 0);
+	m_background.move(-0.1f, 0.0f);
 
 	// m_scene.update();
 }

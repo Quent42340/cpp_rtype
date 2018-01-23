@@ -20,7 +20,7 @@
 #include "TestEnemyFactory.hpp"
 #include "TestEntityFactory.hpp"
 
-ServerApplication::ServerApplication() {
+void ServerApplication::init() {
 	std::srand(std::time(nullptr));
 
 	Network::setInstance(m_network);
@@ -109,19 +109,23 @@ void ServerApplication::handleNetworkEvents() {
 }
 
 int ServerApplication::run() {
+	int returnValue = 0;
 	try {
+		init();
 		mainLoop();
 	}
 	catch(const Exception &e) {
 		std::cerr << "Fatal error " << e.what() << std::endl;
-		return 1;
+		returnValue = 1;
 	}
 	catch(const std::exception &e) {
 		std::cerr << "Exception caught: " << e.what() << std::endl;
-		return 1;
+		returnValue = 1;
 	}
 
-	return 0;
+	m_network.tcpListener().close();
+
+	return returnValue;
 }
 
 void ServerApplication::mainLoop() {

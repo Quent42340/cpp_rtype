@@ -40,6 +40,5 @@ target_link_libraries(${CMAKE_PROJECT_NAME}_client
                       ${SFML_NETWORK_LIBRARY}
                       ${SFML_SYSTEM_LIBRARY}
                       ${SFML_WINDOW_LIBRARY}
-                      ${CMAKE_PROJECT_NAME}_game
                       ${CMAKE_PROJECT_NAME}_engine)
 

@@ -21,7 +21,7 @@
 
 class ServerApplication {
 	public:
-		ServerApplication();
+		void init();
 
 		void handleNetworkEvents();
 
