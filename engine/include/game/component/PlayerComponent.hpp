@@ -18,12 +18,12 @@
 
 class PlayerComponent {
 	public:
-		PlayerComponent(u16 clientPort) : m_clientPort(clientPort) {}
+		PlayerComponent(u16 clientId) : m_clientId(clientId) {}
 
-		u16 clientPort() const { return m_clientPort; }
+		u16 clientId() const { return m_clientId; }
 
 	private:
-		u16 m_clientPort;
+		u16 m_clientId;
 };
 
 #endif // PLAYERCOMPONENT_HPP_

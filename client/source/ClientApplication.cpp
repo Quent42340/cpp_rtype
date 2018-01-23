@@ -22,11 +22,11 @@
 void ClientApplication::init() {
 	std::srand(std::time(nullptr));
 
-	// FIXME: HARDCODED
-	m_network.connect("127.0.0.1", 4243);
-
 	m_window.create(sf::VideoMode(screenWidth, screenHeight), "R-Type", sf::Style::Close);
 	m_window.setKeyRepeatEnabled(false);
+
+	// FIXME: HARDCODED
+	m_network.connect("127.0.0.1", 4243);
 
 	Mouse::setWindow(m_window);
 

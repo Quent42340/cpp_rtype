@@ -16,11 +16,11 @@
 
 #include <SFML/Network.hpp>
 
-#include "IntTypes.hpp"
+#include "Scene.hpp"
 
 enum class NetworkCommand {
 	// Client commands
-	ClientConnect,     // [NetworkCommand]
+	ClientConnect,     // [NetworkCommand][u16 udp port/client id]
 	ClientDisconnect,  // [NetworkCommand]
 
 	// Input commands
@@ -35,15 +35,27 @@ enum class NetworkCommand {
 
 class Network {
 	public:
-		Network() = default;
-		Network(u16 udpPort);
+		// Server-side
+		void init(u16 udpPort);
 
+		// Client-side
 		void connect(sf::IpAddress serverAddress, u16 serverPort);
 
-		template<typename... Args>
-		void send(sf::IpAddress address, u16 port, NetworkCommand command, Args &&...args);
+		// Server-side
+		void update(Scene &scene);
 
+		// template<typename... Args>
+		// void send(sf::IpAddress address, u16 port, NetworkCommand command, Args &&...args);
+
+		// Client-side
 		sf::TcpSocket &tcpSocket() { return m_tcpSocket; }
+		u16 clientId() const { return m_clientId; }
+
+		// Server-side
+		sf::TcpListener &tcpListener() { return m_tcpListener; }
+		sf::SocketSelector &selector() { return m_selector; }
+
+		// Both
 		sf::UdpSocket &socket() { return m_socket; }
 
 		static std::string commandToString(NetworkCommand command);
@@ -54,10 +66,15 @@ class Network {
 	private:
 		static Network *s_instance;
 
+		// Client-side
 		sf::TcpSocket m_tcpSocket;
+		u16 m_clientId;
+
+		// Server-side
 		sf::TcpListener m_tcpListener;
 		sf::SocketSelector m_selector;
 
+		// Both
 		sf::UdpSocket m_socket;
 };
 

@@ -20,12 +20,14 @@
 #include "TestEnemyFactory.hpp"
 #include "TestEntityFactory.hpp"
 
-ServerApplication::ServerApplication() : m_network(4242) {
+ServerApplication::ServerApplication() {
 	std::srand(std::time(nullptr));
 
 	Network::setInstance(m_network);
 
 	// m_clock.setTimestep(50);
+
+	m_network.init(4242);
 
 	m_spawnTimer.start();
 }
@@ -43,27 +45,65 @@ void ServerApplication::handleNetworkEvents() {
 	u16 senderPort;
 	while (m_network.socket().receive(packet, senderAddress, senderPort) == sf::Socket::Status::Done) {
 		NetworkCommand command;
-		packet >> command;
+		u16 clientId;
+		packet >> command >> clientId;
 		// std::cout << "Message of type '" << Network::commandToString(command) << "' received from: " << senderAddress << ":" << senderPort << std::endl;
 
 		if (command == NetworkCommand::KeyPressed) {
 			u32 keyCode;
 			packet >> keyCode;
-			ServerInfo::getInstance().getClient(senderPort).inputHandler.setKeyPressed(keyCode, true);
+			ServerInfo::getInstance().getClient(clientId).inputHandler.setKeyPressed(keyCode, true);
 		}
 		else if (command == NetworkCommand::KeyReleased) {
 			u32 keyCode;
 			packet >> keyCode;
-			ServerInfo::getInstance().getClient(senderPort).inputHandler.setKeyPressed(keyCode, false);
+			ServerInfo::getInstance().getClient(clientId).inputHandler.setKeyPressed(keyCode, false);
 		}
-		else if (command == NetworkCommand::ClientConnect) {
-			ServerInfo::getInstance().addClient(senderPort);
-			m_scene.addObject(TestEntityFactory::create(20, 50, senderPort));
+	}
+
+	if (m_network.selector().wait(sf::milliseconds(10))) {
+		if (m_network.selector().isReady(m_network.tcpListener())) {
+			std::shared_ptr<sf::TcpSocket> clientSocket = std::make_shared<sf::TcpSocket>();
+			if (m_network.tcpListener().accept(*clientSocket) == sf::Socket::Done) {
+				sf::Packet packet;
+				clientSocket->receive(packet);
+
+				NetworkCommand command;
+				packet >> command;
+				if (command != NetworkCommand::ClientConnect)
+					throw EXCEPTION("Network error: Expected 'ClientConnect' packet.");
+				u16 port;
+				packet >> port;
+
+				Client &client = ServerInfo::getInstance().addClient(port, clientSocket);
+				m_scene.addObject(TestEntityFactory::create(20, 50, client.id));
+				m_network.selector().add(*client.tcpSocket);
+
+				sf::Packet outPacket;
+				outPacket << NetworkCommand::ClientConnect << client.id;
+				client.tcpSocket->send(outPacket);
+				client.tcpSocket->setBlocking(false);
+			}
+			else {
+				std::cerr << "Warning: Connection accept failed." << std::endl;
+			}
 		}
-		else if (command == NetworkCommand::ClientDisconnect) {
-			ServerInfo::getInstance().removeClient(senderPort);
-			if (ServerInfo::getInstance().clients().size() == 0)
-				m_isRunning = false;
+		else {
+			for (Client &client : ServerInfo::getInstance().clients()) {
+				if (m_network.selector().isReady(*client.tcpSocket)) {
+					sf::Packet packet;
+					if (client.tcpSocket->receive(packet) == sf::Socket::Done) {
+						NetworkCommand command;
+						packet >> command;
+
+						if (command == NetworkCommand::ClientDisconnect) {
+							ServerInfo::getInstance().removeClient(client.id);
+							if (ServerInfo::getInstance().clients().size() == 0)
+								m_isRunning = false;
+						}
+					}
+				}
+			}
 		}
 	}
 }

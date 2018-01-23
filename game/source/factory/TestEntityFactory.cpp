@@ -25,11 +25,11 @@
 #include "TestBulletFactory.hpp"
 #include "TestEntityFactory.hpp"
 
-SceneObject TestEntityFactory::create(u16 x, u16 y, u16 clientPort) {
+SceneObject TestEntityFactory::create(u16 x, u16 y, u16 clientId) {
 	static size_t playerCount = 0;
 	SceneObject object{"Player" + std::to_string(playerCount++), "Player"};
 	object.set<SceneObjectList>();
-	object.set<PlayerComponent>(clientPort);
+	object.set<PlayerComponent>(clientId);
 	object.set<MovementComponent>(new GamePadMovement);
 	object.set<NetworkComponent>();
 	object.setPosition(x, y);

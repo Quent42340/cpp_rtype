@@ -13,21 +13,21 @@
  */
 #include "Exception.hpp"
 #include "Network.hpp"
+#include "ServerInfo.hpp"
 
 Network *Network::s_instance = nullptr;
 
-Network::Network(u16 udpPort) {
+void Network::init(u16 udpPort) {
 	if (m_tcpListener.listen(udpPort + 1) != sf::Socket::Done)
 		throw EXCEPTION("Network error: Listen failed");
-
-	if (m_tcpListener.accept(m_tcpSocket) != sf::Socket::Done)
-		throw EXCEPTION("Network error: Accept failed");
 
 	if (m_socket.bind(udpPort) != sf::Socket::Done)
 		throw EXCEPTION("Network error: Bind failed");
 
-	m_tcpSocket.setBlocking(false);
+	m_tcpListener.setBlocking(false);
 	m_socket.setBlocking(false);
+
+	m_selector.add(m_tcpListener);
 }
 
 void Network::connect(sf::IpAddress serverAddress, u16 serverPort) {
@@ -36,6 +36,19 @@ void Network::connect(sf::IpAddress serverAddress, u16 serverPort) {
 
 	if (m_socket.bind(0) != sf::Socket::Done)
 		throw EXCEPTION("Network error: Bind failed");
+
+	sf::Packet packet;
+	packet << NetworkCommand::ClientConnect << m_socket.getLocalPort();
+	m_tcpSocket.send(packet);
+
+	sf::Packet answer;
+	m_tcpSocket.receive(answer);
+
+	NetworkCommand command;
+	answer >> command;
+	if (command != NetworkCommand::ClientConnect)
+		throw EXCEPTION("Network error: Expected 'ClientConnect' packet.");
+	answer >> m_clientId;
 
 	m_tcpSocket.setBlocking(false);
 	m_socket.setBlocking(false);

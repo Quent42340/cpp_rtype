@@ -34,7 +34,8 @@ void NetworkCommandHandler::disconnect() {
 
 void NetworkCommandHandler::sendKey(u32 key, bool isPressed) {
 	sf::Packet packet;
-	packet << (isPressed ? NetworkCommand::KeyPressed : NetworkCommand::KeyReleased) << key;
+	packet << (isPressed ? NetworkCommand::KeyPressed : NetworkCommand::KeyReleased);
+	packet << Network::getInstance().clientId() << key;
 	Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, 4242);
 }
 

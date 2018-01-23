@@ -15,38 +15,47 @@
 #define SERVERINFO_HPP_
 
 #include <algorithm>
+#include <memory>
 #include <vector>
+
+#include <SFML/Network.hpp>
 
 #include "Exception.hpp"
 #include "NetworkInputHandler.hpp"
 
 struct Client {
+	Client(u16 _id, u16 _port, const std::shared_ptr<sf::TcpSocket> &socket)
+		: id(_id), port(_port), tcpSocket(socket) {}
+
+	u16 id;
 	u16 port;
+	std::shared_ptr<sf::TcpSocket> tcpSocket;
 	NetworkInputHandler inputHandler;
 };
 
 class ServerInfo {
 	public:
-		void addClient(u16 port) {
-			auto it = std::find_if(m_clients.begin(), m_clients.end(), [port] (Client &client) { return client.port == port; });
-			if (it == m_clients.end())
-				m_clients.emplace_back(Client{port, {}});
+		Client &addClient(u16 port, const std::shared_ptr<sf::TcpSocket> &socket) {
+			static u16 clientCount = 0;
+			m_clients.emplace_back(clientCount++, port, socket);
+			return m_clients.back();
 		}
 
-		void removeClient(u16 port) {
-			auto it = std::find_if(m_clients.begin(), m_clients.end(), [port] (Client &client) { return client.port == port; });
+		void removeClient(u16 id) {
+			auto it = std::find_if(m_clients.begin(), m_clients.end(), [id] (Client &client) { return client.id == id; });
 			if (it != m_clients.end())
 				m_clients.erase(it);
 		}
 
-		Client &getClient(u16 port) {
-			auto it = std::find_if(m_clients.begin(), m_clients.end(), [port] (Client &client) { return client.port == port; });
+		Client &getClient(u16 id) {
+			auto it = std::find_if(m_clients.begin(), m_clients.end(), [id] (Client &client) { return client.id == id; });
 			if (it == m_clients.end())
-				throw EXCEPTION("No client connected on port", port);
+				throw EXCEPTION("Can't find client with id", id);
 
 			return *it;
 		}
 
+		std::vector<Client> &clients() { return m_clients; }
 		const std::vector<Client> &clients() const { return m_clients; }
 
 		static ServerInfo &getInstance() {

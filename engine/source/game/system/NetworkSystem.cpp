@@ -31,8 +31,8 @@ void NetworkSystem::process(SceneObject &object) {
 			auto &spriteComponent = object.get<SpriteComponent>();
 			packet << spriteComponent.textureName() << spriteComponent.frameWidth() << spriteComponent.frameHeight() << spriteComponent.initialFrame();
 
-			for (const Client &client : ServerInfo::getInstance().clients()) {
-				Network::getInstance().tcpSocket().send(packet);
+			for (Client &client : ServerInfo::getInstance().clients()) {
+				client.tcpSocket->send(packet);
 			}
 
 			networkComponent.hasSpawned = true;
@@ -57,8 +57,8 @@ void NetworkSystem::process(SceneObject &object) {
 			if (lifetimeComponent.dead(object)) {
 				sf::Packet packet;
 				packet << NetworkCommand::EntityDie << object.name();
-				for (const Client &client : ServerInfo::getInstance().clients()) {
-					Network::getInstance().tcpSocket().send(packet);
+				for (Client &client : ServerInfo::getInstance().clients()) {
+					client.tcpSocket->send(packet);
 				}
 			}
 		}
