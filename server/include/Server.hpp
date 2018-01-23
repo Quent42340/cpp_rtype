@@ -28,9 +28,12 @@ class Server {
 		bool isRunning() const { return m_isRunning; }
 
 	private:
+		bool m_isRunning = true;
+
 		Network m_network;
 
-		bool m_isRunning = true;
+		sf::TcpListener m_tcpListener;
+		sf::SocketSelector m_selector;
 };
 
 #endif // SERVER_HPP_

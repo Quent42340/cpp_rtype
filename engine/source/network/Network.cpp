@@ -18,16 +18,10 @@
 Network *Network::s_instance = nullptr;
 
 void Network::init(u16 udpPort) {
-	if (m_tcpListener.listen(udpPort + 1) != sf::Socket::Done)
-		throw EXCEPTION("Network error: Listen failed");
-
 	if (m_socket.bind(udpPort) != sf::Socket::Done)
 		throw EXCEPTION("Network error: Bind failed");
 
-	m_tcpListener.setBlocking(false);
 	m_socket.setBlocking(false);
-
-	m_selector.add(m_tcpListener);
 }
 
 void Network::connect(sf::IpAddress serverAddress, u16 serverPort) {

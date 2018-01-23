@@ -50,8 +50,6 @@ int ServerApplication::run() {
 		returnValue = 1;
 	}
 
-	Network::getInstance().tcpListener().close();
-
 	return returnValue;
 }
 

@@ -41,19 +41,12 @@ class Network {
 		// Client-side
 		void connect(sf::IpAddress serverAddress, u16 serverPort);
 
-		// Server-side
-		void update(Scene &scene);
-
 		// template<typename... Args>
 		// void send(sf::IpAddress address, u16 port, NetworkCommand command, Args &&...args);
 
 		// Client-side
 		sf::TcpSocket &tcpSocket() { return m_tcpSocket; }
 		u16 clientId() const { return m_clientId; }
-
-		// Server-side
-		sf::TcpListener &tcpListener() { return m_tcpListener; }
-		sf::SocketSelector &selector() { return m_selector; }
 
 		// Both
 		sf::UdpSocket &socket() { return m_socket; }
@@ -69,10 +62,6 @@ class Network {
 		// Client-side
 		sf::TcpSocket m_tcpSocket;
 		u16 m_clientId;
-
-		// Server-side
-		sf::TcpListener m_tcpListener;
-		sf::SocketSelector m_selector;
 
 		// Both
 		sf::UdpSocket m_socket;

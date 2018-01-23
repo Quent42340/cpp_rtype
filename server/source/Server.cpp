@@ -19,6 +19,13 @@ void Server::init() {
 	Network::setInstance(m_network);
 
 	m_network.init(4242);
+
+	if (m_tcpListener.listen(4243) != sf::Socket::Done)
+		throw EXCEPTION("Network error: Listen failed");
+
+	m_tcpListener.setBlocking(false);
+
+	m_selector.add(m_tcpListener);
 }
 
 void Server::handleKeyState() {
@@ -45,10 +52,10 @@ void Server::handleKeyState() {
 }
 
 void Server::handleGameEvents(Scene &scene) {
-	if (m_network.selector().wait(sf::milliseconds(10))) {
-		if (m_network.selector().isReady(m_network.tcpListener())) {
+	if (m_selector.wait(sf::milliseconds(10))) {
+		if (m_selector.isReady(m_tcpListener)) {
 			std::shared_ptr<sf::TcpSocket> clientSocket = std::make_shared<sf::TcpSocket>();
-			if (m_network.tcpListener().accept(*clientSocket) == sf::Socket::Done) {
+			if (m_tcpListener.accept(*clientSocket) == sf::Socket::Done) {
 				sf::Packet packet;
 				clientSocket->receive(packet);
 
@@ -61,7 +68,7 @@ void Server::handleGameEvents(Scene &scene) {
 
 				Client &client = ServerInfo::getInstance().addClient(port, clientSocket);
 				scene.addObject(TestEntityFactory::create(20, 50, client.id));
-				m_network.selector().add(*client.tcpSocket);
+				m_selector.add(*client.tcpSocket);
 
 				sf::Packet outPacket;
 				outPacket << NetworkCommand::ClientConnect << client.id;
@@ -74,7 +81,7 @@ void Server::handleGameEvents(Scene &scene) {
 		}
 		else {
 			for (Client &client : ServerInfo::getInstance().clients()) {
-				if (m_network.selector().isReady(*client.tcpSocket)) {
+				if (m_selector.isReady(*client.tcpSocket)) {
 					sf::Packet packet;
 					if (client.tcpSocket->receive(packet) == sf::Socket::Done) {
 						NetworkCommand command;
