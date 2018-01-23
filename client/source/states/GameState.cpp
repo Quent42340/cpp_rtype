@@ -11,11 +11,8 @@
  *
  * =====================================================================================
  */
-#include "Application.hpp"
 #include "GameState.hpp"
 #include "NetworkCommandHandler.hpp"
-#include "ResourceHandler.hpp"
-#include "Scene.hpp"
 
 GameState::GameState() {
 }

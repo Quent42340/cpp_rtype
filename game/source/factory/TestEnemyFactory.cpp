@@ -11,7 +11,6 @@
  *
  * =====================================================================================
  */
-#include "Application.hpp"
 #include "BehaviourComponent.hpp"
 #include "EasyBehaviour.hpp"
 #include "EasyMovement.hpp"

@@ -13,7 +13,7 @@
  */
 #include <SFML/Window/Keyboard.hpp>
 
-#include "Application.hpp"
+#include "Config.hpp"
 #include "GamePad.hpp"
 #include "ServerApplication.hpp"
 #include "ServerInfo.hpp"
@@ -37,7 +37,7 @@ void ServerApplication::handleNetworkEvents() {
 		m_spawnTimer.reset();
 		m_spawnTimer.start();
 
-		m_scene.addObject(TestEnemyFactory::create({Application::screenWidth + 20, static_cast<float>(std::rand() % (Application::screenHeight - 40))}));
+		m_scene.addObject(TestEnemyFactory::create({Config::screenWidth + 20, static_cast<float>(std::rand() % (Config::screenHeight - 40))}));
 	}
 
 	sf::Packet packet;

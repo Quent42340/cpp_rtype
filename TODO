@@ -5,9 +5,9 @@ TODO
 • DONE: Transformer /engine en lib pour éviter de recompiler 2 fois tous les fichiers
 • DONE: Le réseau n’a rien à faire dans le `MovementSystem`, le déplacer vers un autre système
 • DONE: Mettre le jeu dans une bibliothèque séparée (càd les Factory/Movement/Behaviour)
+• DONE: Virer `Application` et créer une classe statique `Config` avec les dimensions de l’écran
 • TODO: Améliorer le code réseau du client et du serveur
 • TODO: Renommer /graphics/characters en /graphics/spaceship et /graphics/bullets en /graphics/bullet
-• TODO: Virer `Application` et créer une classe statique `Config` avec les dimensions de l’écran
 • TODO: Remplacer tinyxml2 par Qt et virer le dossier /cmake
 • TODO: Virer la dépendance à la partie graphique de la SFML pour le serveur
    → Mettre la partie affichage dans une bibliothèque séparée inclue uniquement dans le client
@@ -22,6 +22,8 @@ TODO
 • DONE: During network lag spikes, entities are not correctly deleted/spawned
    → Use TCP to send spawn/die events
 • TODO: Alive entities are not sent to new clients
+• TODO: Find a way to fix error message at server close “Can’t find client with id”
+• TODO: Find a way to catch or fix exception “Listen failed”
 • TODO: /LOW/ Faster bullets when spamming shoot button instead of holding it, wtf?
 
 # Review

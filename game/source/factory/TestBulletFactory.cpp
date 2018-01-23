@@ -13,7 +13,7 @@
  */
 #include <cmath>
 
-#include "Application.hpp"
+#include "Config.hpp"
 #include "EasyMovement.hpp"
 #include "HitboxComponent.hpp"
 #include "Image.hpp"
@@ -46,8 +46,8 @@ SceneObject TestBulletFactory::create(const std::string &type, const std::string
 
 bool TestBulletFactory::checkOutOfMap(const SceneObject &object) {
 	return (object.getPosition().x + object.get<HitboxComponent>().currentHitbox()->width < 0 ||
-	        object.getPosition().x > Application::screenWidth ||
+	        object.getPosition().x > Config::screenWidth ||
 	        object.getPosition().y + object.get<HitboxComponent>().currentHitbox()->height < 0 ||
-	        object.getPosition().y > Application::screenHeight);
+	        object.getPosition().y > Config::screenHeight);
 }
 
