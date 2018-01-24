@@ -11,8 +11,10 @@
  *
  * =====================================================================================
  */
+#include <SFML/Audio/Music.hpp>
 
 #include "ApplicationStateStack.hpp"
+#include "AudioPlayer.hpp"
 #include "Config.hpp"
 #include "ResourceHandler.hpp"
 #include "ServerConnectState.hpp"
@@ -29,6 +31,8 @@ TitleScreenState::TitleScreenState() {
 
 	m_play.setPosition(Config::screenWidth / 2.0f - m_play.width() / 2.0, 240);
 	m_exit.setPosition(Config::screenWidth / 2.0f - m_exit.width() / 2.0, 240 + m_exit.height() + 20);
+
+	AudioPlayer::playMusic("music-theme");
 }
 
 void TitleScreenState::onEvent(sf::Event &event) {
@@ -38,7 +42,7 @@ void TitleScreenState::onEvent(sf::Event &event) {
 
 void TitleScreenState::update() {
 	if (m_play.isPressed()) {
-		m_stateStack->pop();
+		m_play.reset();
 		// m_stateStack->push<PauseMenuState>();
 		m_stateStack->push<ServerConnectState>();
 	}

@@ -11,6 +11,9 @@
  *
  * =====================================================================================
  */
+#include <SFML/Audio/Music.hpp>
+
+#include "AudioPlayer.hpp"
 #include "DrawingSystem.hpp"
 #include "GameState.hpp"
 #include "NetworkCommandHandler.hpp"
@@ -19,6 +22,8 @@
 
 GameState::GameState(const sf::IpAddress &serverAddress, u16 serverPort) {
 	Network::getInstance().connect(serverAddress, serverPort);
+
+	AudioPlayer::playMusic("music-game");
 }
 
 void GameState::onEvent(sf::Event &event) {

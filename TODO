@@ -39,6 +39,8 @@ TODO
    ◦ DONE: During network lag spikes, entities are not correctly deleted/spawned
       → Use TCP to send spawn/die events
    ◦ DONE: Find a way to fix error message at server close “Can’t find client with id”
+   ◦ TODO: Put a timeout on connect and a “Connecting...” message
+   ◦ TODO: Can’t join the server again if I leave
    ◦ TODO: *MANDATORY:* Alive entities are not sent to new clients
    ◦ TODO: Find a way to fix exception “Listen failed”
 • TODO: Other issues

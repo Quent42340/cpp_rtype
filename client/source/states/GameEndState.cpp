@@ -14,6 +14,7 @@
 #include <iostream>
 
 #include "ApplicationStateStack.hpp"
+#include "AudioPlayer.hpp"
 #include "Config.hpp"
 #include "GameEndState.hpp"
 #include "ResourceHandler.hpp"
@@ -29,6 +30,8 @@ GameEndState::GameEndState(bool isWinner) {
 
 	m_leave.setPosition(Config::screenWidth / 2.0f - m_leave.width() / 2.0, 240);
 	m_exit.setPosition(Config::screenWidth / 2.0f - m_exit.width() / 2.0, 240 + m_exit.height() + 20);
+
+	AudioPlayer::playMusic(isWinner ? "music-victory" : "music-gameover");
 }
 
 void GameEndState::onEvent(sf::Event &event) {

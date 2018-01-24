@@ -17,7 +17,6 @@
 #include "GameState.hpp"
 #include "ResourceHandler.hpp"
 #include "ServerConnectState.hpp"
-#include "TitleScreenState.hpp"
 
 ServerConnectState::ServerConnectState() {
 	m_text.setFont(ResourceHandler::getInstance().get<sf::Font>("font-pdark"));
@@ -61,7 +60,6 @@ void ServerConnectState::update() {
 
 	if (m_back.isPressed()) {
 		m_stateStack->pop();
-		m_stateStack->push<TitleScreenState>();
 	}
 }
 

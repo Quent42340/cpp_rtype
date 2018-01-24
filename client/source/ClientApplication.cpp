@@ -11,6 +11,8 @@
  *
  * =====================================================================================
  */
+#include <SFML/Audio/Music.hpp>
+
 #include "ClientApplication.hpp"
 #include "GamePad.hpp"
 #include "Mouse.hpp"
@@ -35,6 +37,10 @@ void ClientApplication::init() {
 	m_resourceHandler.loadConfigFile<TextureLoader>("data/config/textures.xml");
 	m_resourceHandler.add<sf::Font>("font-default").loadFromFile("fonts/arial.ttf");
 	m_resourceHandler.add<sf::Font>("font-pdark").loadFromFile("fonts/pdark.ttf");
+	m_resourceHandler.add<sf::Music>("music-theme").openFromFile("audio/music/theme.ogg");
+	m_resourceHandler.add<sf::Music>("music-game").openFromFile("audio/music/game.ogg");
+	m_resourceHandler.add<sf::Music>("music-victory").openFromFile("audio/music/victory.ogg");
+	m_resourceHandler.add<sf::Music>("music-gameover").openFromFile("audio/music/gameover.ogg");
 
 	GamePad::init(m_keyboardHandler);
 
@@ -87,6 +93,8 @@ void ClientApplication::mainLoop() {
 		m_clock.updateGame([&] {
 			if (m_stateStack.size() > 0)
 				m_stateStack.top().update();
+
+			m_stateStack.clearDeletedStates();
 		});
 
 		m_clock.drawGame([&] {
