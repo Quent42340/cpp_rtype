@@ -11,6 +11,8 @@
  *
  * =====================================================================================
  */
+#include <SFML/Audio/Music.hpp>
+
 #include "Button.hpp"
 #include "Mouse.hpp"
 #include "ResourceHandler.hpp"
@@ -41,6 +43,8 @@ void Button::onEvent(sf::Event &event) {
 		if (event.mouseButton.button == sf::Mouse::Left) {
 			m_hasReleased = Mouse::isInRect(rect);
 			m_isPressed = false;
+
+			ResourceHandler::getInstance().get<sf::Music>("sound-button").play();
 		}
 	}
 }

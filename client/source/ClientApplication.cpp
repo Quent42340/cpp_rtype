@@ -41,6 +41,8 @@ void ClientApplication::init() {
 	m_resourceHandler.add<sf::Music>("music-game").openFromFile("audio/music/game.ogg");
 	m_resourceHandler.add<sf::Music>("music-victory").openFromFile("audio/music/victory.ogg");
 	m_resourceHandler.add<sf::Music>("music-gameover").openFromFile("audio/music/gameover.ogg");
+	m_resourceHandler.add<sf::Music>("sound-button").openFromFile("audio/sound/button.ogg");
+	m_resourceHandler.add<sf::Music>("sound-keyboard").openFromFile("audio/sound/keyboard.ogg");
 
 	GamePad::init(m_keyboardHandler);
 
