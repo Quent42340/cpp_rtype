@@ -14,6 +14,7 @@
 #ifndef NETWORKCOMMANDHANDLER_HPP_
 #define NETWORKCOMMANDHANDLER_HPP_
 
+#include "ApplicationStateStack.hpp"
 #include "Scene.hpp"
 
 class NetworkCommandHandler {
@@ -22,7 +23,7 @@ class NetworkCommandHandler {
 
 		static void sendKey(u32 key, bool isPressed);
 
-		static void update(Scene &scene);
+		static void update(ApplicationStateStack &stateStack, Scene &scene);
 };
 
 #endif // NETWORKCOMMANDHANDLER_HPP_

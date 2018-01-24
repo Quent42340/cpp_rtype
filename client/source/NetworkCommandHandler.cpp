@@ -11,9 +11,11 @@
  *
  * =====================================================================================
  */
+#include "GameEndState.hpp"
 #include "Image.hpp"
 #include "Network.hpp"
 #include "NetworkCommandHandler.hpp"
+#include "PlayerComponent.hpp"
 #include "PositionComponent.hpp"
 #include "Sprite.hpp"
 
@@ -34,7 +36,7 @@ void NetworkCommandHandler::sendKey(u32 key, bool isPressed) {
 	Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, 4242);
 }
 
-void NetworkCommandHandler::update(Scene &scene) {
+void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &scene) {
 	sf::Packet packet;
 	sf::IpAddress senderAddress;
 	u16 senderPort;
@@ -64,7 +66,12 @@ void NetworkCommandHandler::update(Scene &scene) {
 			std::string entityName;
 			packet >> entityName;
 
-			scene.objects().removeByName(entityName);
+			SceneObject *entity = scene.objects().findByName(entityName);
+			if (entity) {
+				if (entity->has<PlayerComponent>())
+					stateStack.push<GameEndState>(false);
+				scene.objects().removeByName(entityName);
+			}
 		}
 		else if (command == NetworkCommand::EntitySpawn) {
 			std::string entityName;
@@ -82,6 +89,9 @@ void NetworkCommandHandler::update(Scene &scene) {
 				object.set<Image>(textureName);
 			else
 				object.set<Sprite>(textureName, frameSize.x, frameSize.y).setCurrentFrame(0);
+
+			if (entityName == "Player" + std::to_string(Network::getInstance().clientId()))
+				object.set<PlayerComponent>(Network::getInstance().clientId());
 
 			scene.addObject(std::move(object));
 		}

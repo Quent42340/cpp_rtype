@@ -31,7 +31,7 @@ void GameState::onEvent(sf::Event &event) {
 }
 
 void GameState::update() {
-	NetworkCommandHandler::update(m_scene);
+	NetworkCommandHandler::update(*m_stateStack, m_scene);
 
 	m_background.move(-0.1f, 0.0f);
 
