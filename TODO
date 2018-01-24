@@ -28,8 +28,9 @@ TODO
    ◦ TODO: Améliorer le code réseau du client et du serveur
       ◦ TODO: Créer une classe `Client` qui remplacerait `NetworkCommandHandler`
       ◦ TODO: Faire en sorte que `Network` n’ait pas de code spécifique ni au client, ni au serveur
-   ◦ TODO: Vérifier que tous les fichiers de l’engine sont bien à leur place
+   ◦ TODO: Vérifier que tous les fichiers de l’engine soient bien à leur place
    ◦ TODO: Remplacer la SFML2 par BoostASIO pour la partie réseau
+   ◦ TODO: /LOW/ Créer des loaders pour les fonts et les musiques
    ◦ TODO: /LOW/ Remplacer tinyxml2 par Qt et virer le dossier /cmake
 • WIP: Network issues
    ◦ DONE: Enemy bullets disappear when enemy is killed
@@ -40,7 +41,7 @@ TODO
       → Use TCP to send spawn/die events
    ◦ DONE: Find a way to fix error message at server close “Can’t find client with id”
    ◦ TODO: Put a timeout on connect and a “Connecting...” message
-   ◦ TODO: Can’t join the server again if I leave
+   ◦ TODO: Can’t join the server again if I leave (maybe close sockets when I’m out of GameState)
    ◦ TODO: *MANDATORY:* Alive entities are not sent to new clients
    ◦ TODO: Find a way to fix exception “Listen failed”
 • TODO: Other issues
@@ -73,9 +74,9 @@ TODO
       ◦ TODO: Add a menu to add libs in runtime
       ◦ TODO: Handle movement animation
       ◦ TODO: Die animation
-   ◦ WIP: Background
+   ◦ DONE: Background
       ◦ DONE: Slow horizontal scrolling background
-      ◦ TODO: Stop or loop when the scrolling ends
+      ◦ DONE: Stop or loop when the scrolling ends
    ◦ WIP: GUI → Dylan
       ◦ DONE: Button class
       ◦ DONE: Title screen

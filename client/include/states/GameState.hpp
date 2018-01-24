@@ -32,6 +32,7 @@ class GameState : public ApplicationState {
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 		Image m_background{"background-space"};
+		Image m_background2{"background-space"};
 
 		Scene m_scene;
 };
