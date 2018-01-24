@@ -44,6 +44,8 @@ void Network::connect(sf::IpAddress serverAddress, u16 serverPort) {
 		throw EXCEPTION("Network error: Expected 'ClientConnect' packet.");
 	answer >> m_clientId;
 
+	std::cout << "Got client id " << m_clientId << std::endl;
+
 	m_tcpSocket.setBlocking(false);
 	m_socket.setBlocking(false);
 }
@@ -51,7 +53,10 @@ void Network::connect(sf::IpAddress serverAddress, u16 serverPort) {
 std::string Network::commandToString(NetworkCommand command) {
 	std::map<NetworkCommand, std::string> commandNames = {
 		{NetworkCommand::ClientConnect,    "ClientConnect"},
+		{NetworkCommand::ClientReady,      "ClientReady"},
 		{NetworkCommand::ClientDisconnect, "ClientDisconnect"},
+		{NetworkCommand::GameStart,        "GameStart"},
+		{NetworkCommand::GameWin,          "GameWin"},
 		{NetworkCommand::KeyPressed,       "KeyPressed"},
 		{NetworkCommand::KeyReleased,      "KeyReleased"},
 		{NetworkCommand::EntityMove,       "EntityMove"},

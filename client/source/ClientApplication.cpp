@@ -13,6 +13,7 @@
  */
 #include <SFML/Audio/Music.hpp>
 
+#include "AudioPlayer.hpp"
 #include "ClientApplication.hpp"
 #include "GamePad.hpp"
 #include "Mouse.hpp"
@@ -60,6 +61,13 @@ void ClientApplication::handleEvents() {
 			NetworkCommandHandler::disconnect();
 
 			m_window.close();
+		}
+
+		if (event.type == sf::Event::GainedFocus) {
+			AudioPlayer::resumeMusic();
+		}
+		else if (event.type == sf::Event::LostFocus) {
+			AudioPlayer::pauseMusic();
 		}
 
 		m_stateStack.top().onEvent(event);

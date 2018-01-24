@@ -39,10 +39,11 @@ TODO
    ◦ DONE: Bullets appear on the top-left corner before being shooted, why?
    ◦ DONE: During network lag spikes, entities are not correctly deleted/spawned
       → Use TCP to send spawn/die events
+   ◦ DONE: Alive entities are not sent to new clients
    ◦ DONE: Find a way to fix error message at server close “Can’t find client with id”
+   ◦ TODO: Check if client close works as intended (test closing player 0 before 1, then the opposite)
    ◦ TODO: Put a timeout on connect and a “Connecting...” message
    ◦ TODO: Can’t join the server again if I leave (maybe close sockets when I’m out of GameState)
-   ◦ TODO: *MANDATORY:* Alive entities are not sent to new clients
    ◦ TODO: Find a way to fix exception “Listen failed”
 • TODO: Other issues
    ◦ TODO: /LOW/ Faster bullets when spamming shoot button instead of holding it, wtf?

@@ -29,6 +29,12 @@ void NetworkCommandHandler::disconnect() {
 	Network::getInstance().tcpSocket().send(packet);
 }
 
+void NetworkCommandHandler::sendReady() {
+	sf::Packet packet;
+	packet << NetworkCommand::ClientReady << Network::getInstance().clientId();
+	Network::getInstance().tcpSocket().send(packet);
+}
+
 void NetworkCommandHandler::sendKey(u32 key, bool isPressed) {
 	sf::Packet packet;
 	packet << (isPressed ? NetworkCommand::KeyPressed : NetworkCommand::KeyReleased);
@@ -36,7 +42,7 @@ void NetworkCommandHandler::sendKey(u32 key, bool isPressed) {
 	Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, 4242);
 }
 
-void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &scene) {
+void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &scene, bool &hasGameStarted) {
 	sf::Packet packet;
 	sf::IpAddress senderAddress;
 	u16 senderPort;
@@ -62,13 +68,17 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 		NetworkCommand command;
 		packet >> command;
 
+		// std::cout << "Message of type '" << Network::commandToString(command) << "' received from: " << senderAddress << ":" << senderPort << std::endl;
+
 		if (command == NetworkCommand::EntityDie) {
 			std::string entityName;
 			packet >> entityName;
 
+			std::cout << "Entity die: " << entityName << std::endl;
+
 			SceneObject *entity = scene.objects().findByName(entityName);
 			if (entity) {
-				if (entity->has<PlayerComponent>())
+				if (entity->has<PlayerComponent>() && entity->get<PlayerComponent>().clientId() == Network::getInstance().clientId())
 					stateStack.push<GameEndState>(false);
 				scene.objects().removeByName(entityName);
 			}
@@ -94,6 +104,12 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 				object.set<PlayerComponent>(Network::getInstance().clientId());
 
 			scene.addObject(std::move(object));
+		}
+		else if (command == NetworkCommand::GameStart) {
+			hasGameStarted = true;
+		}
+		else if (command == NetworkCommand::GameWin) {
+			stateStack.push<GameEndState>(true);
 		}
 	}
 }

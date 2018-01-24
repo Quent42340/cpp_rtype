@@ -25,7 +25,14 @@ void NetworkSystem::process(SceneObject &object) {
 	if (object.has<NetworkComponent>()) {
 		auto &networkComponent = object.get<NetworkComponent>();
 		auto &positionComponent = object.get<PositionComponent>();
-		if (!networkComponent.hasSpawned) {
+
+		bool hasGameStarted = true;
+		for (Client &client : ServerInfo::getInstance().clients()) {
+			if (!client.isReady)
+				hasGameStarted = false;
+		}
+
+		if (!networkComponent.hasSpawned && hasGameStarted) {
 			sf::Packet packet;
 			packet << NetworkCommand::EntitySpawn;
 			packet << object.name() << object.type() << positionComponent.x << positionComponent.y;

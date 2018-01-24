@@ -21,7 +21,12 @@
 enum class NetworkCommand {
 	// Client commands
 	ClientConnect,     // [NetworkCommand][u16 udp port/client id]
+	ClientReady,       // [NetworkCommand][u16 client id]
 	ClientDisconnect,  // [NetworkCommand]
+
+	// Game commands
+	GameStart,         // [NetworkCommand]
+	GameWin,           // [NetworkCommand]
 
 	// Input commands
 	KeyPressed,        // [NetworkCommand][u32 sfml keycode]

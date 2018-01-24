@@ -26,9 +26,11 @@ class Server {
 		void handleGameEvents(Scene &scene);
 
 		bool isRunning() const { return m_isRunning; }
+		bool hasGameStarted() const { return m_hasGameStarted; }
 
 	private:
 		bool m_isRunning = true;
+		bool m_hasGameStarted = false;
 
 		Network m_network;
 

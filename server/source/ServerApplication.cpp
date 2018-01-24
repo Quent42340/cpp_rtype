@@ -40,17 +40,20 @@ int ServerApplication::run() {
 
 void ServerApplication::mainLoop() {
 	while (m_server.isRunning()) {
-		m_server.handleKeyState();
 		m_server.handleGameEvents(m_scene);
 
-		m_clock.updateGame([&] {
-			if (ServerInfo::getInstance().clients().size() > 0)
-				m_spawnController.update(m_scene);
+		if (m_server.hasGameStarted()) {
+			m_server.handleKeyState();
 
-			m_scene.update();
-		});
+			m_clock.updateGame([&] {
+				if (ServerInfo::getInstance().clients().size() > 0)
+					m_spawnController.update(m_scene);
 
-		m_clock.waitForNextFrame();
+				m_scene.update();
+			});
+
+			m_clock.waitForNextFrame();
+		}
 	}
 }
 

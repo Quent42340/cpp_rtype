@@ -18,7 +18,6 @@
 #include "Config.hpp"
 #include "ResourceHandler.hpp"
 #include "ServerConnectState.hpp"
-// #include "PauseMenuState.hpp"
 #include "TitleScreenState.hpp"
 
 TitleScreenState::TitleScreenState() {
@@ -43,7 +42,6 @@ void TitleScreenState::onEvent(sf::Event &event) {
 void TitleScreenState::update() {
 	if (m_play.isPressed()) {
 		m_play.reset();
-		// m_stateStack->push<PauseMenuState>();
 		m_stateStack->push<ServerConnectState>();
 	}
 	else if (m_exit.isPressed() == true)

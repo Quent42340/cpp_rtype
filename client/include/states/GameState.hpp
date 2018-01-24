@@ -14,6 +14,7 @@
 #ifndef GAMESTATE_HPP_
 #define GAMESTATE_HPP_
 
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/Network/IpAddress.hpp>
 
 #include "ApplicationState.hpp"
@@ -35,6 +36,10 @@ class GameState : public ApplicationState {
 		Image m_background2{"background-space"};
 
 		Scene m_scene;
+
+		sf::Text m_readyText;
+
+		bool m_hasGameStarted = false;
 };
 
 #endif // GAMESTATE_HPP_

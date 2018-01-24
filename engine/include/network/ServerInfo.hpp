@@ -29,6 +29,7 @@ struct Client {
 
 	u16 id;
 	u16 port;
+	bool isReady = false;
 	std::shared_ptr<sf::TcpSocket> tcpSocket;
 	NetworkInputHandler inputHandler;
 };
@@ -47,12 +48,12 @@ class ServerInfo {
 				m_clients.erase(it);
 		}
 
-		Client &getClient(u16 id) {
+		Client *getClient(u16 id) {
 			auto it = std::find_if(m_clients.begin(), m_clients.end(), [id] (Client &client) { return client.id == id; });
 			if (it == m_clients.end())
-				throw EXCEPTION("Can't find client with id", id);
+				return nullptr;
 
-			return *it;
+			return &*it;
 		}
 
 		std::vector<Client> &clients() { return m_clients; }

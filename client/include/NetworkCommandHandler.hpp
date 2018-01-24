@@ -21,9 +21,10 @@ class NetworkCommandHandler {
 	public:
 		static void disconnect();
 
+		static void sendReady();
 		static void sendKey(u32 key, bool isPressed);
 
-		static void update(ApplicationStateStack &stateStack, Scene &scene);
+		static void update(ApplicationStateStack &stateStack, Scene &scene, bool &hasGameStarted);
 };
 
 #endif // NETWORKCOMMANDHANDLER_HPP_

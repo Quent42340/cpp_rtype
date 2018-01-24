@@ -26,3 +26,13 @@ void AudioPlayer::playMusic(const std::string &resourceName) {
 	s_currentMusic = resourceName;
 }
 
+void AudioPlayer::pauseMusic() {
+	if (!s_currentMusic.empty())
+		ResourceHandler::getInstance().get<sf::Music>(s_currentMusic).pause();
+}
+
+void AudioPlayer::resumeMusic() {
+	if (!s_currentMusic.empty())
+		ResourceHandler::getInstance().get<sf::Music>(s_currentMusic).play();
+}
+
