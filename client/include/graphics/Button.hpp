@@ -37,6 +37,7 @@ class Button: public sf::Drawable, public sf::Transformable {
 
 		bool m_isPressed = false;
 		bool m_hasReleased = false;
+		bool m_hasMouse = false;
 
 		Image m_image;
 

@@ -34,6 +34,7 @@ Button::Button(const std::string &name, int posX, int posY) : Button(name) {
 void Button::reset() {
 	m_isPressed = false;
 	m_hasReleased = false;
+	m_hasMouse = false;
 
 	m_image.setTileColor(0, sf::Color::White);
 }
@@ -57,10 +58,15 @@ void Button::onEvent(sf::Event &event) {
 
 	if (event.type == sf::Event::MouseMoved) {
 		if (rect.contains(event.mouseMove.x, event.mouseMove.y)) {
+			if (!m_hasMouse)
+				ResourceHandler::getInstance().get<sf::Music>("sound-hover").play();
+
 			m_image.setTileColor(0, sf::Color(175, 175, 175));
+			m_hasMouse = true;
 		}
 		else {
 			m_image.setTileColor(0, sf::Color::White);
+			m_hasMouse = false;
 		}
 	}
 }

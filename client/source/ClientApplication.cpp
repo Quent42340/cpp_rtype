@@ -43,6 +43,7 @@ void ClientApplication::init() {
 	m_resourceHandler.add<sf::Music>("music-victory").openFromFile("audio/music/victory.ogg");
 	m_resourceHandler.add<sf::Music>("music-gameover").openFromFile("audio/music/gameover.ogg");
 	m_resourceHandler.add<sf::Music>("sound-button").openFromFile("audio/sound/button.ogg");
+	m_resourceHandler.add<sf::Music>("sound-hover").openFromFile("audio/sound/hover.ogg");
 	m_resourceHandler.add<sf::Music>("sound-keyboard").openFromFile("audio/sound/keyboard.ogg");
 
 	auto &bulletSound = m_resourceHandler.add<sf::Music>("sound-bullet");
