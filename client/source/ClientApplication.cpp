@@ -24,6 +24,11 @@
 #include "GameState.hpp"
 #include "TitleScreenState.hpp"
 
+ClientApplication::ClientApplication(int argc, char **argv) {
+	if (argc > 1 && argv[1] == std::string("--no-sound"))
+		AudioPlayer::setMuteState(true);
+}
+
 void ClientApplication::init() {
 	std::srand(std::time(nullptr));
 

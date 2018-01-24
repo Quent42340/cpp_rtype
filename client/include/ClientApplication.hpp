@@ -24,6 +24,8 @@
 
 class ClientApplication {
 	public:
+		ClientApplication(int argc, char **argv);
+
 		void init();
 
 		void handleEvents();

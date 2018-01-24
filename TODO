@@ -28,7 +28,7 @@ TODO
    ◦ TODO: Améliorer le code réseau du client et du serveur
       ◦ TODO: Créer une classe `Client` qui remplacerait `NetworkCommandHandler`
       ◦ TODO: Faire en sorte que `Network` n’ait pas de code spécifique ni au client, ni au serveur
-   ◦ TODO: Vérifier que tous les fichiers de l’engine soient bien à leur place
+   ◦ TODO: Vérifier que tous les fichiers de l’engine soient bien à leur place (`TextureLoader` devrait aller dans /client)
    ◦ TODO: Remplacer la SFML2 par BoostASIO pour la partie réseau
    ◦ TODO: /LOW/ Créer des loaders pour les fonts et les musiques
    ◦ TODO: /LOW/ Remplacer tinyxml2 par Qt et virer le dossier /cmake
@@ -43,6 +43,7 @@ TODO
    ◦ DONE: Find a way to fix error message at server close “Can’t find client with id”
    ◦ DONE: Put a timeout on connect and a “Connecting...” message
    ◦ TODO: When you connect to an empty server that has been already used, the timeout doesn’t work
+      → While lobby system isn’t implemented try to close server when there is no clients playing
    ◦ TODO: Check if client close works as intended (test closing player 0 before 1, then the opposite)
       → When closing Player 0 first, Player 1 stays inactive, maybe he’s dead but he didn’t got the info
    ◦ TODO: Can’t join the server again if I leave (maybe close sockets when I’m out of GameState)
