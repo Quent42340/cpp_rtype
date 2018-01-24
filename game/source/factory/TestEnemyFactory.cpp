@@ -40,7 +40,7 @@ SceneObject TestEnemyFactory::create(const sf::Vector2f &pos) {
 
 	object.set<MovementComponent>(new EasyMovement([] (SceneObject &object) {
 		object.get<MovementComponent>().v.x = -1;
-	})).speed = 1.0f;
+	})).speed = 0.8f;
 
 	auto &spriteComponent = object.set<SpriteComponent>("spaceship-enemy1", 33, 33);
 	object.set<HitboxComponent>(0, 0, spriteComponent.frameWidth(), spriteComponent.frameHeight());

@@ -1,0 +1,12 @@
+<audio>
+	<music name="theme"    volume="70"/>
+	<music name="game"     volume="70"/>
+	<music name="victory"  volume="70"/>
+	<music name="gameover" volume="70"/>
+
+	<sound name="button"   volume="100"/>
+	<sound name="hover"    volume="100"/>
+	<sound name="keyboard" volume="100"/>
+	<sound name="bullet"   volume="50"/>
+	<sound name="boom"     volume="50"/>
+</audio>

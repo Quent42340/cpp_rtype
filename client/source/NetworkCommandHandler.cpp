@@ -102,7 +102,7 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 			if (frameSize.x == 0 && frameSize.y == 0)
 				object.set<Image>(textureName);
 			else
-				object.set<Sprite>(textureName, frameSize.x, frameSize.y).setCurrentFrame(0);
+				object.set<Sprite>(textureName, frameSize.x, frameSize.y).setCurrentFrame(initialFrame);
 
 			if (entityName == "Player" + std::to_string(Network::getInstance().clientId()))
 				object.set<PlayerComponent>(Network::getInstance().clientId());

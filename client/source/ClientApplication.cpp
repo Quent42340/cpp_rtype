@@ -13,6 +13,7 @@
  */
 #include <SFML/Audio/Music.hpp>
 
+#include "AudioLoader.hpp"
 #include "AudioPlayer.hpp"
 #include "ClientApplication.hpp"
 #include "GamePad.hpp"
@@ -27,7 +28,6 @@ void ClientApplication::init() {
 	std::srand(std::time(nullptr));
 
 	m_window.create(sf::VideoMode(screenWidth, screenHeight), "R-Type", sf::Style::Close);
-	// m_window.setKeyRepeatEnabled(false);
 
 	Mouse::setWindow(m_window);
 
@@ -35,28 +35,13 @@ void ClientApplication::init() {
 	Network::setInstance(m_network);
 	ResourceHandler::setInstance(m_resourceHandler);
 
+	m_resourceHandler.loadConfigFile<AudioLoader>("data/config/audio.xml");
 	m_resourceHandler.loadConfigFile<TextureLoader>("data/config/textures.xml");
 	m_resourceHandler.add<sf::Font>("font-default").loadFromFile("fonts/arial.ttf");
 	m_resourceHandler.add<sf::Font>("font-pdark").loadFromFile("fonts/pdark.ttf");
-	m_resourceHandler.add<sf::Music>("music-theme").openFromFile("audio/music/theme.ogg");
-	m_resourceHandler.add<sf::Music>("music-game").openFromFile("audio/music/game.ogg");
-	m_resourceHandler.add<sf::Music>("music-victory").openFromFile("audio/music/victory.ogg");
-	m_resourceHandler.add<sf::Music>("music-gameover").openFromFile("audio/music/gameover.ogg");
-	m_resourceHandler.add<sf::Music>("sound-button").openFromFile("audio/sound/button.ogg");
-	m_resourceHandler.add<sf::Music>("sound-hover").openFromFile("audio/sound/hover.ogg");
-	m_resourceHandler.add<sf::Music>("sound-keyboard").openFromFile("audio/sound/keyboard.ogg");
-
-	auto &bulletSound = m_resourceHandler.add<sf::Music>("sound-bullet");
-	bulletSound.openFromFile("audio/sound/bullet.ogg");
-	bulletSound.setVolume(50);
-
-	auto &boomSound = m_resourceHandler.add<sf::Music>("sound-boom");
-	boomSound.openFromFile("audio/sound/boom.ogg");
-	boomSound.setVolume(50);
 
 	GamePad::init(m_keyboardHandler);
 
-	// ApplicationStateStack::getInstance().push<GameState>();
 	ApplicationStateStack::getInstance().push<TitleScreenState>();
 }
 
@@ -92,16 +77,13 @@ int ClientApplication::run() {
 	}
 	catch(const Exception &e) {
 		std::cerr << "Fatal error " << e.what() << std::endl;
-		m_network.tcpSocket().disconnect();
 		return 1;
 	}
 	catch(const std::exception &e) {
 		std::cerr << "Exception caught: " << e.what() << std::endl;
-		m_network.tcpSocket().disconnect();
 		return 1;
 	}
 
-	m_network.tcpSocket().disconnect();
 	return 0;
 }
 

@@ -47,7 +47,7 @@ SceneObject TestEntityFactory::create(u16 x, u16 y, u16 clientId) {
 	collisionComponent.addAction(&playerCollisionAction);
 	collisionComponent.addChecker(&checkOutOfMap);
 
-	auto &spriteComponent = object.set<SpriteComponent>("spaceship-players", 34, 18);
+	auto &spriteComponent = object.set<SpriteComponent>("spaceship-players", 33, 18, 2);
 	object.set<HitboxComponent>(0, 0, spriteComponent.frameWidth(), spriteComponent.frameHeight());
 
 	auto &behaviourComponent = object.set<BehaviourComponent>();

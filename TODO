@@ -42,6 +42,7 @@ TODO
    ◦ DONE: Alive entities are not sent to new clients
    ◦ DONE: Find a way to fix error message at server close “Can’t find client with id”
    ◦ DONE: Put a timeout on connect and a “Connecting...” message
+   ◦ TODO: When you connect to an empty server that has been already used, the timeout doesn’t work
    ◦ TODO: Check if client close works as intended (test closing player 0 before 1, then the opposite)
       → When closing Player 0 first, Player 1 stays inactive, maybe he’s dead but he didn’t got the info
    ◦ TODO: Can’t join the server again if I leave (maybe close sockets when I’m out of GameState)
