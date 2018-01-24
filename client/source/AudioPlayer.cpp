@@ -36,3 +36,7 @@ void AudioPlayer::resumeMusic() {
 		ResourceHandler::getInstance().get<sf::Music>(s_currentMusic).play();
 }
 
+void AudioPlayer::playSound(const std::string &resourceName) {
+	ResourceHandler::getInstance().get<sf::Music>(resourceName).play();
+}
+

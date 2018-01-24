@@ -11,8 +11,7 @@
  *
  * =====================================================================================
  */
-#include <SFML/Audio/Music.hpp>
-
+#include "AudioPlayer.hpp"
 #include "ResourceHandler.hpp"
 #include "TextInput.hpp"
 
@@ -40,11 +39,11 @@ void TextInput::onEvent(sf::Event &event) {
 		if (event.text.unicode < 128) { // && m_inputTimer.time() - m_lastTimeKeyPressed[event.text.unicode] > 200) {
 			if (event.text.unicode == '\b' && m_content.size() > 0) {
 				m_content.erase(m_content.begin() + m_content.length() - 1);
-				ResourceHandler::getInstance().get<sf::Music>("sound-keyboard").play();
+				AudioPlayer::playSound("sound-keyboard");
 			}
 			else if (isprint(event.text.unicode) && (!m_characterLimit || m_content.size() < m_characterLimit)) {
 				m_content += static_cast<char>(event.text.unicode);
-				ResourceHandler::getInstance().get<sf::Music>("sound-keyboard").play();
+				AudioPlayer::playSound("sound-keyboard");
 			}
 
 			m_text.setString(m_content + "|");

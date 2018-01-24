@@ -11,8 +11,7 @@
  *
  * =====================================================================================
  */
-#include <SFML/Audio/Music.hpp>
-
+#include "AudioPlayer.hpp"
 #include "Button.hpp"
 #include "Mouse.hpp"
 #include "ResourceHandler.hpp"
@@ -52,14 +51,14 @@ void Button::onEvent(sf::Event &event) {
 			m_isPressed = false;
 
 			if (m_hasReleased)
-				ResourceHandler::getInstance().get<sf::Music>("sound-button").play();
+				AudioPlayer::playSound("sound-button");
 		}
 	}
 
 	if (event.type == sf::Event::MouseMoved) {
 		if (rect.contains(event.mouseMove.x, event.mouseMove.y)) {
 			if (!m_hasMouse)
-				ResourceHandler::getInstance().get<sf::Music>("sound-hover").play();
+				AudioPlayer::playSound("sound-hover");
 
 			m_image.setTileColor(0, sf::Color(175, 175, 175));
 			m_hasMouse = true;

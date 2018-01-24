@@ -21,6 +21,7 @@
 class AudioPlayer {
 	public:
 		static void playMusic(const std::string &resourceName);
+		static void playSound(const std::string &resourceName);
 
 		static void pauseMusic();
 		static void resumeMusic();

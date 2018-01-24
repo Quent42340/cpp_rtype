@@ -45,7 +45,7 @@ void TitleScreenState::update() {
 		m_stateStack->push<ServerConnectState>();
 	}
 	else if (m_exit.isPressed()) {
-		ResourceHandler::getInstance().get<sf::Music>("sound-button").play();
+		AudioPlayer::playSound("sound-button");
 
 		sf::sleep(sf::milliseconds(500));
 
