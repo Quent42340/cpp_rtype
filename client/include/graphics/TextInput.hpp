@@ -30,6 +30,7 @@ class TextInput : public sf::Drawable, public sf::Transformable {
 
 		void setPosition(float x, float y);
 		void setSize(u16 width, u16 height);
+		void setCharacterLimit(u16 characterLimit) { m_characterLimit = characterLimit; }
 
 	private:
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
@@ -38,6 +39,8 @@ class TextInput : public sf::Drawable, public sf::Transformable {
 
 		sf::Text m_text;
 		std::string m_content;
+
+		u16 m_characterLimit = 0;
 };
 
 #endif /* TEXTINPUT_HPP_*/

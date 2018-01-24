@@ -25,7 +25,7 @@ void Network::init(u16 udpPort) {
 }
 
 void Network::connect(sf::IpAddress serverAddress, u16 serverPort) {
-	if (m_tcpSocket.connect(serverAddress, serverPort) != sf::Socket::Done)
+	if (serverAddress.toInteger() == 0 || m_tcpSocket.connect(serverAddress, serverPort) != sf::Socket::Done)
 		throw EXCEPTION("Network error: Unable to connect to server");
 
 	if (m_socket.bind(0) != sf::Socket::Done)

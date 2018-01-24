@@ -33,6 +33,7 @@ ServerConnectState::ServerConnectState() {
 	m_errorText.setString("Can't connect to server!");
 	m_errorText.setPosition(Config::screenWidth / 2.0f - m_errorText.getLocalBounds().width / 2.0f + 5, 280);
 
+	m_serverAddressInput.setCharacterLimit(15);
 	m_serverAddressInput.setSize(400, 50);
 	m_serverAddressInput.setPosition(Config::screenWidth / 2.0f - m_serverAddressInput.getSize().x / 2.0f, 200);
 
