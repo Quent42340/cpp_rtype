@@ -81,7 +81,7 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 
 			SceneObject *entity = scene.objects().findByName(entityName);
 			if (entity) {
-				if (entity->type() == "Enemy")
+				if (entity->type() == "Enemy" && entity->get<PositionComponent>().x >= 0)
 					ResourceHandler::getInstance().get<sf::Music>("sound-boom").play();
 
 				if (entity->has<PlayerComponent>() && entity->get<PlayerComponent>().clientId() == Network::getInstance().clientId())
