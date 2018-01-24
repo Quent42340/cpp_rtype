@@ -11,7 +11,8 @@ TODO
    ◦ TODO: Améliorer l’architecture des systèmes                                (2 h)
       → TODO: Rajouter DrawingSystem dans la Scene au lieu de l’appeller direct
 
-*NE PAS OUBLIER DE FAKE LES HEADERS!!!!!!!!!!!!!!!!*
+*NE PAS OUBLIER LES HEADERS!!!!!!!!!!!!!!!!*
+*Commande:* `sed -i '/Created/,+1d' fichier`
 
 • WIP: Amélioration d’architecture
    ◦ DONE: Transformer /engine en lib pour éviter de recompiler 2 fois tous les fichiers
@@ -46,6 +47,7 @@ TODO
       → While lobby system isn’t implemented try to close server when there is no clients playing
    ◦ TODO: Check if client close works as intended (test closing player 0 before 1, then the opposite)
       → When closing Player 0 first, Player 1 stays inactive, maybe he’s dead but he didn’t got the info
+         → Also happens in single player mode???
    ◦ TODO: Can’t join the server again if I leave (maybe close sockets when I’m out of GameState)
    ◦ TODO: Find a way to fix exception “Listen failed”
 • TODO: Other issues

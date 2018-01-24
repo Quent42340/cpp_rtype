@@ -49,9 +49,11 @@ void NetworkSystem::process(SceneObject &object) {
 
 		if (object.has<MovementComponent>()) {
 			auto &movementComponent = object.get<MovementComponent>();
-			if (movementComponent.isMoving && networkComponent.timer.time() > 20) {
+			if (/* movementComponent.isMoving &&  */networkComponent.timer.time() > 20) {
 				sf::Packet packet;
-				packet << NetworkCommand::EntityMove << object.name() << positionComponent.x << positionComponent.y;
+				packet << NetworkCommand::EntityMove << object.name();
+				packet << positionComponent.x << positionComponent.y;
+				packet << movementComponent.isMoving << static_cast<u8>(movementComponent.direction);
 				for (const Client &client : ServerInfo::getInstance().clients()) {
 					Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, client.port);
 				}

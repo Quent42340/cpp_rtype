@@ -12,6 +12,7 @@
  * =====================================================================================
  */
 #include "AudioPlayer.hpp"
+#include "Direction.hpp"
 #include "GameEndState.hpp"
 #include "Image.hpp"
 #include "Network.hpp"
@@ -55,13 +56,28 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 		if (command == NetworkCommand::EntityMove) {
 			std::string entityName;
 			sf::Vector2f pos;
-			packet >> entityName >> pos.x >> pos.y;
+			bool isMoving;
+			u8 direction;
+			packet >> entityName >> pos.x >> pos.y >> isMoving >> direction;
 
 			// std::cout << "Movement: " << entityName << " (" << pos.x << ";" << pos.y << ")" << std::endl;
 
 			SceneObject *object = scene.objects().findByName(entityName);
-			if (object)
+			if (object) {
 				object->set<PositionComponent>(pos);
+
+				if (object->has<PlayerComponent>()) {
+					if (isMoving) {
+						if (static_cast<Direction>(direction) == Direction::Up)
+							object->get<Sprite>().setCurrentFrame(4);
+						else if (static_cast<Direction>(direction) == Direction::Down)
+							object->get<Sprite>().setCurrentFrame(0);
+					}
+					else {
+						object->get<Sprite>().setCurrentFrame(2);
+					}
+				}
+			}
 		}
 	}
 
