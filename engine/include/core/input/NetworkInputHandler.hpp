@@ -33,8 +33,8 @@ class NetworkInputHandler : public InputHandler {
 			{sf::Keyboard::Up,        GameKey::Up},
 			{sf::Keyboard::Down,      GameKey::Down},
 
-			{sf::Keyboard::Space,     GameKey::A},
-			{sf::Keyboard::Y,         GameKey::B},
+			{sf::Keyboard::W,         GameKey::A},
+			{sf::Keyboard::X,         GameKey::B},
 
 			{sf::Keyboard::Return,    GameKey::Start},
 			{sf::Keyboard::BackSpace, GameKey::Select}

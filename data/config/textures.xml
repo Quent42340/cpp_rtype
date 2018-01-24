@@ -6,4 +6,8 @@
 
 	<texture folder="spaceship" name="enemy1"/>
 	<texture folder="spaceship" name="players"/>
+
+	<texture folder="gui" name="button"/>
+	<texture folder="gui" name="button1"/>
+	<texture folder="gui" name="button2"/>
 </textures>

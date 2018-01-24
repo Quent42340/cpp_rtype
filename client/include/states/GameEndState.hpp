@@ -1,28 +1,25 @@
 /*
  * =====================================================================================
  *
- *       Filename:  GameState.hpp
+ *       Filename:  GameEndState.hpp
  *
  *    Description:
  *
- *        Created:  18/01/2018 02:44:55
+ *        Created:  21/01/2018 08:20:17
  *
- *         Author:  Quentin Bazin, <quent42340@gmail.com>
+ *         Author:  Dylan Prinsaud, dylan.prinsaud@epitech.eu
  *
  * =====================================================================================
  */
-#ifndef GAMESTATE_HPP_
-#define GAMESTATE_HPP_
-
-#include <SFML/Network/IpAddress.hpp>
+#ifndef GAMEENDSTATE_HPP_
+#define GAMEENDSTATE_HPP_
 
 #include "ApplicationState.hpp"
-#include "Image.hpp"
-#include "Scene.hpp"
+#include "Button.hpp"
 
-class GameState : public ApplicationState {
+class GameEndState : public ApplicationState {
 	public:
-		GameState(const sf::IpAddress &serverAddress, u16 serverPort = 4243);
+		GameEndState(bool isWinner);
 
 		void onEvent(sf::Event &event) override;
 
@@ -31,9 +28,13 @@ class GameState : public ApplicationState {
 	private:
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
+		sf::Text m_text;
+
 		Image m_background{"background-space"};
 
-		Scene m_scene;
+		Button m_leave{"Leave"};
+		Button m_exit{"Exit"};
 };
 
-#endif // GAMESTATE_HPP_
+#endif /* GAMEENDSTATE_HPP */
+

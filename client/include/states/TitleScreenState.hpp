@@ -1,28 +1,25 @@
 /*
  * =====================================================================================
  *
- *       Filename:  GameState.hpp
+ *       Filename:  TitleScreenState.hpp
  *
  *    Description:
  *
- *        Created:  18/01/2018 02:44:55
+ *        Created:  19/01/2018 22:04:30
  *
- *         Author:  Quentin Bazin, <quent42340@gmail.com>
+ *         Author:  Dylan Prinsaud, dylan.prinsaud@epitech.eu
  *
  * =====================================================================================
  */
-#ifndef GAMESTATE_HPP_
-#define GAMESTATE_HPP_
-
-#include <SFML/Network/IpAddress.hpp>
+#ifndef TITLESCREENSTATE_HPP_
+#define TITLESCREENSTATE_HPP_
 
 #include "ApplicationState.hpp"
-#include "Image.hpp"
-#include "Scene.hpp"
+#include "Button.hpp"
 
-class GameState : public ApplicationState {
+class TitleScreenState : public ApplicationState {
 	public:
-		GameState(const sf::IpAddress &serverAddress, u16 serverPort = 4243);
+		TitleScreenState();
 
 		void onEvent(sf::Event &event) override;
 
@@ -33,7 +30,12 @@ class GameState : public ApplicationState {
 
 		Image m_background{"background-space"};
 
-		Scene m_scene;
+		Button m_play{"Play"};
+		Button m_exit{"Exit"};
+
+		sf::Text m_rtype;
 };
 
-#endif // GAMESTATE_HPP_
+#endif // TITLESCREENSTATE_HPP_
+
+

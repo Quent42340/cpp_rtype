@@ -18,15 +18,13 @@
 #include "TextureLoader.hpp"
 
 #include "GameState.hpp"
+#include "TitleScreenState.hpp"
 
 void ClientApplication::init() {
 	std::srand(std::time(nullptr));
 
 	m_window.create(sf::VideoMode(screenWidth, screenHeight), "R-Type", sf::Style::Close);
 	// m_window.setKeyRepeatEnabled(false);
-
-	// FIXME: HARDCODED
-	m_network.connect("127.0.0.1", 4243);
 
 	Mouse::setWindow(m_window);
 
@@ -35,10 +33,13 @@ void ClientApplication::init() {
 	ResourceHandler::setInstance(m_resourceHandler);
 
 	m_resourceHandler.loadConfigFile<TextureLoader>("data/config/textures.xml");
+	m_resourceHandler.add<sf::Font>("font-default").loadFromFile("fonts/arial.ttf");
+	m_resourceHandler.add<sf::Font>("font-pdark").loadFromFile("fonts/pdark.ttf");
 
 	GamePad::init(m_keyboardHandler);
 
-	ApplicationStateStack::getInstance().push<GameState>();
+	// ApplicationStateStack::getInstance().push<GameState>();
+	ApplicationStateStack::getInstance().push<TitleScreenState>();
 }
 
 void ClientApplication::handleEvents() {
@@ -56,13 +57,6 @@ void ClientApplication::handleEvents() {
 		m_stateStack.top().onEvent(event);
 
 		m_keyboardHandler.updateState(event);
-
-		if (event.type == sf::Event::KeyPressed) {
-			NetworkCommandHandler::sendKey(event.key.code, true);
-		}
-		else if (event.type == sf::Event::KeyReleased) {
-			NetworkCommandHandler::sendKey(event.key.code, false);
-		}
 	}
 }
 
@@ -87,19 +81,19 @@ int ClientApplication::run() {
 }
 
 void ClientApplication::mainLoop() {
-	while(m_window.isOpen()) {
+	while(m_window.isOpen() && m_stateStack.size()) {
 		handleEvents();
 
 		m_clock.updateGame([&] {
-			if (m_stateStack.size() == 0)
-				m_window.close();
-			m_stateStack.top().update();
+			if (m_stateStack.size() > 0)
+				m_stateStack.top().update();
 		});
 
 		m_clock.drawGame([&] {
 			m_window.clear();
 
-			m_window.draw(ApplicationStateStack::getInstance().top());
+			if (m_stateStack.size() > 0)
+				m_window.draw(m_stateStack.top());
 
 			m_window.display();
 		});

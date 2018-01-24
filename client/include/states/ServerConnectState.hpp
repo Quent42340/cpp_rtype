@@ -1,28 +1,28 @@
 /*
  * =====================================================================================
  *
- *       Filename:  GameState.hpp
+ *       Filename:  ServerConnectState.hpp
  *
  *    Description:
  *
- *        Created:  18/01/2018 02:44:55
+ *        Created:  24/01/2018 02:57:50
  *
  *         Author:  Quentin Bazin, <quent42340@gmail.com>
  *
  * =====================================================================================
  */
-#ifndef GAMESTATE_HPP_
-#define GAMESTATE_HPP_
-
-#include <SFML/Network/IpAddress.hpp>
+#ifndef SERVERCONNECTSTATE_HPP_
+#define SERVERCONNECTSTATE_HPP_
 
 #include "ApplicationState.hpp"
+#include "Button.hpp"
 #include "Image.hpp"
-#include "Scene.hpp"
+#include "TextInput.hpp"
+#include "Timer.hpp"
 
-class GameState : public ApplicationState {
+class ServerConnectState : public ApplicationState {
 	public:
-		GameState(const sf::IpAddress &serverAddress, u16 serverPort = 4243);
+		ServerConnectState();
 
 		void onEvent(sf::Event &event) override;
 
@@ -33,7 +33,13 @@ class GameState : public ApplicationState {
 
 		Image m_background{"background-space"};
 
-		Scene m_scene;
+		sf::Text m_text;
+		sf::Text m_errorText;
+		Timer m_errorTimer;
+
+		TextInput m_serverAddressInput;
+
+		Button m_back{"Back"};
 };
 
-#endif // GAMESTATE_HPP_
+#endif // SERVERCONNECTSTATE_HPP_

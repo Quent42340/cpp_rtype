@@ -15,7 +15,19 @@
 #include "GameState.hpp"
 #include "NetworkCommandHandler.hpp"
 
-GameState::GameState() {
+#include "Network.hpp"
+
+GameState::GameState(const sf::IpAddress &serverAddress, u16 serverPort) {
+	Network::getInstance().connect(serverAddress, serverPort);
+}
+
+void GameState::onEvent(sf::Event &event) {
+	if (event.type == sf::Event::KeyPressed) {
+		NetworkCommandHandler::sendKey(event.key.code, true);
+	}
+	else if (event.type == sf::Event::KeyReleased) {
+		NetworkCommandHandler::sendKey(event.key.code, false);
+	}
 }
 
 void GameState::update() {

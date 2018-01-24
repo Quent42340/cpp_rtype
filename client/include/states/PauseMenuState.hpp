@@ -1,28 +1,25 @@
 /*
  * =====================================================================================
  *
- *       Filename:  GameState.hpp
+ *       Filename:  PauseMenuState.hpp
  *
  *    Description:
  *
- *        Created:  18/01/2018 02:44:55
+ *        Created:  21/01/2018 06:44:36
  *
- *         Author:  Quentin Bazin, <quent42340@gmail.com>
+ *         Author:  Dylan Prinsaud, dylan.prinsaud@epitech.eu
  *
  * =====================================================================================
  */
-#ifndef GAMESTATE_HPP_
-#define GAMESTATE_HPP_
-
-#include <SFML/Network/IpAddress.hpp>
+#ifndef PAUSEMENUSTATE_HPP_
+#define PAUSEMENUSTATE_HPP_
 
 #include "ApplicationState.hpp"
-#include "Image.hpp"
-#include "Scene.hpp"
+#include "Button.hpp"
 
-class GameState : public ApplicationState {
+class PauseMenuState : public ApplicationState {
 	public:
-		GameState(const sf::IpAddress &serverAddress, u16 serverPort = 4243);
+		PauseMenuState();
 
 		void onEvent(sf::Event &event) override;
 
@@ -33,7 +30,12 @@ class GameState : public ApplicationState {
 
 		Image m_background{"background-space"};
 
-		Scene m_scene;
+		sf::Text m_text;
+
+		Button m_resume{"Resume"};
+		Button m_leave{"Leave"};
+		Button m_exit{"Exit"};
 };
 
-#endif // GAMESTATE_HPP_
+#endif /* PAUSEMENUSTATE_HPP */
+

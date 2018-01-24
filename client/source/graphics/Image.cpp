@@ -15,8 +15,19 @@
 #include "ResourceHandler.hpp"
 
 Image::Image(const std::string &textureName)
-	: m_textureName(textureName), m_texture(ResourceHandler::getInstance().get<sf::Texture>(textureName))
+	: m_textureName(textureName), m_texture(&ResourceHandler::getInstance().get<sf::Texture>(textureName))
 {
+	m_vertices.setPrimitiveType(sf::Triangles);
+
+	setTileCount(1);
+	setClipRect(0, 0, width(), height());
+	setPosRect(0, 0, width(), height());
+}
+
+void Image::load(const char *textureName) {
+	m_textureName = textureName;
+	m_texture = &ResourceHandler::getInstance().get<sf::Texture>(textureName);
+
 	m_vertices.setPrimitiveType(sf::Triangles);
 
 	setTileCount(1);
@@ -74,13 +85,8 @@ void Image::setPosRect(float x, float y, u16 width, u16 height) {
 	setTilePosRect(0, x, y, width, height);
 }
 
-void Image::setTexture(const char *textureName) {
-	m_textureName = textureName;
-	m_texture = ResourceHandler::getInstance().get<sf::Texture>(textureName);
-}
-
 void Image::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-	states.texture = &m_texture;
+	states.texture = m_texture;
 	states.transform *= getTransform();
 
 	target.draw(m_vertices, states);
