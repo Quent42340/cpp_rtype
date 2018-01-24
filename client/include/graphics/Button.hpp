@@ -25,7 +25,7 @@ class Button: public sf::Drawable, public sf::Transformable {
 
 		void setPosition(int posX, int posY);
 
-		void reset() { m_isPressed = false; m_hasReleased = false; }
+		void reset();
 
 		bool isPressed() const { return m_hasReleased; }
 

@@ -24,7 +24,7 @@ TitleScreenState::TitleScreenState() {
 	m_rtype.setFont(ResourceHandler::getInstance().get<sf::Font>("font-pdark"));
 	m_rtype.setString("RType");
 	m_rtype.setCharacterSize(60);
-	m_rtype.setFillColor(sf::Color::Green);
+	m_rtype.setFillColor(sf::Color::Cyan);
 	m_rtype.setStyle(sf::Text::Bold);
 	m_rtype.setPosition(Config::screenWidth / 2.0f - m_rtype.getLocalBounds().width / 2.0f + 5, 70);
 

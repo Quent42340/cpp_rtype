@@ -31,31 +31,49 @@ Button::Button(const std::string &name, int posX, int posY) : Button(name) {
 	setPosition(posX, posY);
 }
 
+void Button::reset() {
+	m_isPressed = false;
+	m_hasReleased = false;
+
+	m_image.setTileColor(0, sf::Color::White);
+}
+
 void Button::onEvent(sf::Event &event) {
+	sf::FloatRect rect{getPosition(), {(float)m_image.width(), (float)m_image.height()}};
 	if (event.type == sf::Event::MouseButtonPressed) {
-		sf::FloatRect rect{m_image.getPosition(), {(float)m_image.width(), (float)m_image.height()}};
 		if (event.mouseButton.button == sf::Mouse::Left)
 			m_isPressed = Mouse::isInRect(rect);
 	}
 
 	if (m_isPressed && event.type == sf::Event::MouseButtonReleased) {
-		sf::FloatRect rect{m_image.getPosition(), {(float)m_image.width(), (float)m_image.height()}};
 		if (event.mouseButton.button == sf::Mouse::Left) {
 			m_hasReleased = Mouse::isInRect(rect);
 			m_isPressed = false;
 
-			ResourceHandler::getInstance().get<sf::Music>("sound-button").play();
+			if (m_hasReleased)
+				ResourceHandler::getInstance().get<sf::Music>("sound-button").play();
+		}
+	}
+
+	if (event.type == sf::Event::MouseMoved) {
+		if (rect.contains(event.mouseMove.x, event.mouseMove.y)) {
+			m_image.setTileColor(0, sf::Color(175, 175, 175));
+		}
+		else {
+			m_image.setTileColor(0, sf::Color::White);
 		}
 	}
 }
 
 void Button::setPosition(int posX, int posY) {
-	m_image.setPosition(posX, posY);
-	m_text.setPosition(posX + m_image.width() / 2.0f - m_text.getLocalBounds().width / 2.0f,
-	                   posY + m_image.height() / 2.0f - m_text.getLocalBounds().height / 2.0f - 4);
+	sf::Transformable::setPosition(posX, posY);
+	m_text.setPosition(m_image.width() / 2.0f - m_text.getLocalBounds().width / 2.0f,
+	                   m_image.height() / 2.0f - m_text.getLocalBounds().height / 2.0f - 4);
 }
 
 void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+	states.transform *= getTransform();
+
 	target.draw(m_image, states);
 	target.draw(m_text, states);
 }
