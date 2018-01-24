@@ -39,6 +39,8 @@ class ServerConnectState : public ApplicationState {
 
 		TextInput m_serverAddressInput;
 
+		bool m_isConnecting = false;
+
 		Button m_back{"Back"};
 };
 

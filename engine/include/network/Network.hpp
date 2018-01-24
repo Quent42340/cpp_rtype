@@ -50,7 +50,7 @@ class Network {
 		// void send(sf::IpAddress address, u16 port, NetworkCommand command, Args &&...args);
 
 		// Client-side
-		sf::TcpSocket &tcpSocket() { return m_tcpSocket; }
+		sf::TcpSocket &tcpSocket() { return *m_tcpSocket; }
 		u16 clientId() const { return m_clientId; }
 
 		// Both
@@ -65,7 +65,7 @@ class Network {
 		static Network *s_instance;
 
 		// Client-side
-		sf::TcpSocket m_tcpSocket;
+		std::unique_ptr<sf::TcpSocket> m_tcpSocket;
 		u16 m_clientId;
 
 		// Both

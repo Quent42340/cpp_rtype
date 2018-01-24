@@ -28,10 +28,7 @@ ServerConnectState::ServerConnectState() {
 
 	m_errorText.setFont(ResourceHandler::getInstance().get<sf::Font>("font-pdark"));
 	m_errorText.setCharacterSize(20);
-	m_errorText.setFillColor(sf::Color::Red);
 	m_errorText.setStyle(sf::Text::Bold);
-	m_errorText.setString("Can't connect to server!");
-	m_errorText.setPosition(Config::screenWidth / 2.0f - m_errorText.getLocalBounds().width / 2.0f + 5, 280);
 
 	m_serverAddressInput.setCharacterLimit(15);
 	m_serverAddressInput.setSize(400, 50);
@@ -46,17 +43,35 @@ void ServerConnectState::onEvent(sf::Event &event) {
 }
 
 void ServerConnectState::update() {
-	if (m_errorTimer.time() > 3000)
+	if (m_errorTimer.time() > 3000) {
 		m_errorTimer.reset();
+		m_errorText.setString("");
+	}
 
-	if (GamePad::isKeyPressedOnce(GameKey::Start)) {
+	if (m_isConnecting) {
+		m_isConnecting = false;
+
 		try {
 			m_stateStack->push<GameState>(m_serverAddressInput.content());
 		}
 		catch (Exception &e) {
 			std::cerr << "Error " << e.what() << std::endl;
+
+			m_errorText.setFillColor(sf::Color::Red);
+			m_errorText.setString("Can't connect to server!");
+			m_errorText.setPosition(Config::screenWidth / 2.0f - m_errorText.getLocalBounds().width / 2.0f + 5, 280);
+
+			m_errorTimer.reset();
 			m_errorTimer.start();
 		}
+	}
+
+	if (GamePad::isKeyPressedOnce(GameKey::Start)) {
+		m_errorText.setFillColor(sf::Color::White);
+		m_errorText.setString("Connecting...");
+		m_errorText.setPosition(Config::screenWidth / 2.0f - m_errorText.getLocalBounds().width / 2.0f + 5, 280);
+
+		m_isConnecting = true;
 	}
 
 	if (m_back.isPressed()) {
@@ -68,8 +83,7 @@ void ServerConnectState::draw(sf::RenderTarget &target, sf::RenderStates states)
 	target.draw(m_background, states);
 
 	target.draw(m_text, states);
-	if (m_errorTimer.time() > 0)
-		target.draw(m_errorText, states);
+	target.draw(m_errorText, states);
 
 	target.draw(m_serverAddressInput, states);
 

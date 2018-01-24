@@ -41,8 +41,8 @@ TODO
       → Use TCP to send spawn/die events
    ◦ DONE: Alive entities are not sent to new clients
    ◦ DONE: Find a way to fix error message at server close “Can’t find client with id”
+   ◦ DONE: Put a timeout on connect and a “Connecting...” message
    ◦ TODO: Check if client close works as intended (test closing player 0 before 1, then the opposite)
-   ◦ TODO: Put a timeout on connect and a “Connecting...” message
    ◦ TODO: Can’t join the server again if I leave (maybe close sockets when I’m out of GameState)
    ◦ TODO: Find a way to fix exception “Listen failed”
 • TODO: Other issues

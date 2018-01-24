@@ -25,18 +25,23 @@ void Network::init(u16 udpPort) {
 }
 
 void Network::connect(sf::IpAddress serverAddress, u16 serverPort) {
-	if (serverAddress.toInteger() == 0 || m_tcpSocket.connect(serverAddress, serverPort) != sf::Socket::Done)
+	std::cout << "Connecting to " << serverAddress.toString() << "(" << serverAddress.toInteger() << ")" << std::endl;
+
+	m_tcpSocket.reset(new sf::TcpSocket);
+	if (serverAddress.toInteger() == 0 || m_tcpSocket->connect(serverAddress, serverPort, sf::seconds(5)) != sf::Socket::Done)
 		throw EXCEPTION("Network error: Unable to connect to server");
+
+	std::cout << "Connected to server!" << std::endl;
 
 	if (m_socket.bind(0) != sf::Socket::Done)
 		throw EXCEPTION("Network error: Bind failed");
 
 	sf::Packet packet;
 	packet << NetworkCommand::ClientConnect << m_socket.getLocalPort();
-	m_tcpSocket.send(packet);
+	m_tcpSocket->send(packet);
 
 	sf::Packet answer;
-	m_tcpSocket.receive(answer);
+	m_tcpSocket->receive(answer);
 
 	NetworkCommand command;
 	answer >> command;
@@ -46,7 +51,7 @@ void Network::connect(sf::IpAddress serverAddress, u16 serverPort) {
 
 	std::cout << "Got client id " << m_clientId << std::endl;
 
-	m_tcpSocket.setBlocking(false);
+	m_tcpSocket->setBlocking(false);
 	m_socket.setBlocking(false);
 }
 
