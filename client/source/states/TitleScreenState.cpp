@@ -44,8 +44,13 @@ void TitleScreenState::update() {
 		m_play.reset();
 		m_stateStack->push<ServerConnectState>();
 	}
-	else if (m_exit.isPressed() == true)
+	else if (m_exit.isPressed()) {
+		ResourceHandler::getInstance().get<sf::Music>("sound-button").play();
+
+		sf::sleep(sf::milliseconds(500));
+
 		m_stateStack->pop();
+	}
 }
 
 void TitleScreenState::draw(sf::RenderTarget &target, sf::RenderStates states) const {
