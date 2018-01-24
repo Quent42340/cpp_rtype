@@ -45,6 +45,14 @@ void ClientApplication::init() {
 	m_resourceHandler.add<sf::Music>("sound-button").openFromFile("audio/sound/button.ogg");
 	m_resourceHandler.add<sf::Music>("sound-keyboard").openFromFile("audio/sound/keyboard.ogg");
 
+	auto &bulletSound = m_resourceHandler.add<sf::Music>("sound-bullet");
+	bulletSound.openFromFile("audio/sound/bullet.ogg");
+	bulletSound.setVolume(50);
+
+	auto &boomSound = m_resourceHandler.add<sf::Music>("sound-boom");
+	boomSound.openFromFile("audio/sound/boom.ogg");
+	boomSound.setVolume(50);
+
 	GamePad::init(m_keyboardHandler);
 
 	// ApplicationStateStack::getInstance().push<GameState>();

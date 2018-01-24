@@ -11,6 +11,8 @@
  *
  * =====================================================================================
  */
+#include <SFML/Audio/Music.hpp>
+
 #include "GameEndState.hpp"
 #include "Image.hpp"
 #include "Network.hpp"
@@ -18,6 +20,7 @@
 #include "PlayerComponent.hpp"
 #include "PositionComponent.hpp"
 #include "Sprite.hpp"
+#include "ResourceHandler.hpp"
 
 #include "TestBulletFactory.hpp"
 #include "TestEnemyFactory.hpp"
@@ -78,6 +81,9 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 
 			SceneObject *entity = scene.objects().findByName(entityName);
 			if (entity) {
+				if (entity->type() == "Enemy")
+					ResourceHandler::getInstance().get<sf::Music>("sound-boom").play();
+
 				if (entity->has<PlayerComponent>() && entity->get<PlayerComponent>().clientId() == Network::getInstance().clientId())
 					stateStack.push<GameEndState>(false);
 				scene.objects().removeByName(entityName);
@@ -102,6 +108,9 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 
 			if (entityName == "Player" + std::to_string(Network::getInstance().clientId()))
 				object.set<PlayerComponent>(Network::getInstance().clientId());
+
+			if (entityType == "PlayerBullet")
+				ResourceHandler::getInstance().get<sf::Music>("sound-bullet").play();
 
 			scene.addObject(std::move(object));
 		}
