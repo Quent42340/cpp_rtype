@@ -89,6 +89,10 @@ int ClientApplication::run() {
 		std::cerr << "Exception caught: " << e.what() << std::endl;
 		return 1;
 	}
+	catch(...) {
+		std::cerr << "Fatal error: Unknown error." << std::endl;
+		return 1;
+	}
 
 	return 0;
 }

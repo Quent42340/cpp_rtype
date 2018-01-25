@@ -14,6 +14,7 @@
 #include "AudioPlayer.hpp"
 #include "Direction.hpp"
 #include "GameEndState.hpp"
+#include "HitboxComponent.hpp"
 #include "Image.hpp"
 #include "Network.hpp"
 #include "NetworkCommandHandler.hpp"
@@ -119,10 +120,14 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 
 			SceneObject object{entityName, entityType};
 			object.set<PositionComponent>(pos);
-			if (frameSize.x == 0 && frameSize.y == 0)
-				object.set<Image>(textureName);
-			else
+			if (frameSize.x == 0 && frameSize.y == 0) {
+				auto &image = object.set<Image>(textureName);
+				object.set<HitboxComponent>(0, 0, image.width(), image.height());
+			}
+			else {
 				object.set<Sprite>(textureName, frameSize.x, frameSize.y).setCurrentFrame(initialFrame);
+				object.set<HitboxComponent>(0, 0, frameSize.x, frameSize.y);
+			}
 
 			if (entityName == "Player" + std::to_string(Network::getInstance().clientId()))
 				object.set<PlayerComponent>(Network::getInstance().clientId());

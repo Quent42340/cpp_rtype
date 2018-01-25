@@ -34,6 +34,10 @@ int ServerApplication::run() {
 		std::cerr << "Exception caught: " << e.what() << std::endl;
 		returnValue = 1;
 	}
+	catch(...) {
+		std::cerr << "Fatal error: Unknown error." << std::endl;
+		return 1;
+	}
 
 	return returnValue;
 }

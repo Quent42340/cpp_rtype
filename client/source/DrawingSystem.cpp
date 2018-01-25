@@ -12,6 +12,7 @@
  * =====================================================================================
  */
 #include "DrawingSystem.hpp"
+#include "HitboxComponent.hpp"
 #include "Image.hpp"
 #include "LifetimeComponent.hpp"
 #include "PositionComponent.hpp"
@@ -30,6 +31,26 @@ void DrawingSystem::draw(const SceneObject &object, sf::RenderTarget &target, sf
 
 	if(object.has<Sprite>()) {
 		target.draw(object.get<Sprite>(), states);
+	}
+
+	if(object.has<HitboxComponent>()) {
+		// drawHitbox(object, target, states);
+	}
+}
+
+void DrawingSystem::drawHitbox(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states) {
+	auto &hitboxComponent = object.get<HitboxComponent>();
+
+	const sf::FloatRect *hitbox = hitboxComponent.currentHitbox();
+	if(hitbox) {
+		sf::RectangleShape rect;
+		rect.setPosition(hitbox->left, hitbox->top);
+		rect.setSize(sf::Vector2f(hitbox->width, hitbox->height));
+		rect.setOutlineThickness(2);
+		rect.setOutlineColor(sf::Color::White);
+		rect.setFillColor(sf::Color::Transparent);
+
+		target.draw(rect, states);
 	}
 }
 

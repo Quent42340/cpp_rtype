@@ -68,8 +68,6 @@ void TestEntityFactory::playerCollisionAction(SceneObject &player, SceneObject &
 	 && !object.get<LifetimeComponent>().dead(object)) {
 		// TODO: Create BulletComponent with damage
 		player.get<HealthComponent>().removeLife(100);
-		if (player.get<HealthComponent>().life() <= 0)
-			std::cout << player.name() << " is dead." << std::endl;
 
 		if (object.type() == "EnemyBullet")
 			object.get<LifetimeComponent>().kill();

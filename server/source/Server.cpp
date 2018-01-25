@@ -104,8 +104,6 @@ void Server::handleGameEvents(Scene &scene) {
 							ServerInfo::getInstance().removeClient(client.id);
 							m_selector.remove(*client.tcpSocket);
 
-							std::cout << "Client " << i + 1 << " removed" << std::endl;
-
 							if (ServerInfo::getInstance().clients().size() == 0) {
 								m_tcpListener.close();
 								m_isRunning = false;

@@ -22,6 +22,8 @@
 class DrawingSystem {
 	public:
 		static void draw(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states);
+
+		static void drawHitbox(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states);
 };
 
 #endif // DRAWINGSYSTEM_HPP_
