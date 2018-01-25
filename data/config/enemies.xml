@@ -1,0 +1,19 @@
+<enemies>
+   <enemy name="enemy1" health="300" texture="spaceship-enemy1">
+      <hitbox x="0" y="0" width="33" height="33"/>
+      <movement type="dumb" speed="0.8"/>
+      <bullet type="small" vx="-1" vy="0" speed="3.0"/>
+   </enemy>
+
+   <enemy name="enemy2" health="200" texture="spaceship-enemy2">
+      <hitbox x="0" y="0" width="33" height="36"/>
+      <movement type="dumb" speed="0.8"/>
+      <bullet type="small" vx="-1" vy="0" speed="3.0"/>
+   </enemy>
+
+   <enemy name="enemy3" health="500" texture="spaceship-enemy3">
+      <hitbox x="0" y="0" width="33" height="34"/>
+      <movement type="dumb" speed="0.8"/>
+      <bullet type="small" vx="-1" vy="0" speed="3.0"/>
+   </enemy>
+</enemies>

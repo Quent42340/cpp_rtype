@@ -44,8 +44,8 @@ SceneObject BossFactory::create() {
 			object.get<MovementComponent>().v.x = -1;
 	})).speed = 0.8f;
 
-	auto &spriteComponent = object.set<SpriteComponent>("boss-boss1", 268, 518);
-	object.set<HitboxComponent>(0, 0, spriteComponent.frameWidth(), spriteComponent.frameHeight());
+	object.set<SpriteComponent>("boss-boss1");
+	object.set<HitboxComponent>(0, 0, 268, 518);
 
 	auto &collisionComponent = object.set<CollisionComponent>();
 	collisionComponent.addAction(&BossFactory::bossCollisionAction);

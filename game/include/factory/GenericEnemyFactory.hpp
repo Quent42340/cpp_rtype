@@ -1,26 +1,27 @@
 /*
  * =====================================================================================
  *
- *       Filename:  TestEnemyFactory.hpp
+ *       Filename:  GenericEnemyFactory.hpp
  *
  *    Description:
  *
- *        Created:  19/01/2018 05:37:26
+ *        Created:  25/01/2018 11:17:24
  *
  *         Author:  Quentin Bazin, <quent42340@gmail.com>
  *
  * =====================================================================================
  */
-#ifndef TESTENEMYFACTORY_HPP_
-#define TESTENEMYFACTORY_HPP_
+#ifndef GENERICENEMYFACTORY_HPP_
+#define GENERICENEMYFACTORY_HPP_
 
 #include <SFML/System/Vector2.hpp>
 
+#include "EnemyInfo.hpp"
 #include "SceneObject.hpp"
 
-class TestEnemyFactory {
+class GenericEnemyFactory {
 	public:
-		static SceneObject create(const sf::Vector2f &pos);
+		static SceneObject create(const EnemyInfo &info, const sf::Vector2f &pos);
 
 	private:
 		static void enemyCollisionAction(SceneObject &enemy, SceneObject &object, bool inCollision);
@@ -28,4 +29,4 @@ class TestEnemyFactory {
 		static bool checkOutOfMap(const SceneObject &object);
 };
 
-#endif // TESTENEMYFACTORY_HPP_
+#endif // GENERICENEMYFACTORY_HPP_

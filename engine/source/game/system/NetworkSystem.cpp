@@ -38,7 +38,7 @@ void NetworkSystem::process(SceneObject &object) {
 			packet << object.name() << object.type() << positionComponent.x << positionComponent.y;
 
 			auto &spriteComponent = object.get<SpriteComponent>();
-			packet << spriteComponent.textureName() << spriteComponent.frameWidth() << spriteComponent.frameHeight() << spriteComponent.initialFrame();
+			packet << spriteComponent.textureName();
 
 			for (Client &client : ServerInfo::getInstance().clients()) {
 				client.tcpSocket->send(packet);

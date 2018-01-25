@@ -13,8 +13,9 @@
  */
 #include "BossFactory.hpp"
 #include "Config.hpp"
+#include "GenericEnemyFactory.hpp"
 #include "SpawnController.hpp"
-#include "TestEnemyFactory.hpp"
+#include "ResourceHandler.hpp"
 
 SpawnController::SpawnController() {
 	m_spawnTimer.start();
@@ -30,7 +31,9 @@ void SpawnController::update(Scene &scene) {
 			m_bossSpawnTimer.start();
 		}
 
-		scene.addObject(TestEnemyFactory::create({Config::screenWidth + 20, static_cast<float>(std::rand() % (Config::screenHeight - 40))}));
+		sf::Vector2f pos{Config::screenWidth + 20, static_cast<float>(std::rand() % (Config::screenHeight - 40))};
+		EnemyInfo &info = ResourceHandler::getInstance().get<EnemyInfo>("info-enemy" + std::to_string(rand() % 3 + 1));
+		scene.addObject(GenericEnemyFactory::create(info, pos));
 	}
 
 	if (!m_hasBoss && m_bossSpawnTimer.time() > 60000) {

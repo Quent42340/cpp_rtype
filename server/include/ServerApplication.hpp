@@ -18,6 +18,7 @@
 #include "Server.hpp"
 #include "Scene.hpp"
 #include "SpawnController.hpp"
+#include "ResourceHandler.hpp"
 
 class ServerApplication {
 	public:
@@ -33,6 +34,8 @@ class ServerApplication {
 		SpawnController m_spawnController;
 
 		Server m_server;
+
+		ResourceHandler m_resourceHandler;
 };
 
 #endif // SERVERAPPLICATION_HPP_

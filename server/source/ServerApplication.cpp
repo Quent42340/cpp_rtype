@@ -11,11 +11,16 @@
  *
  * =====================================================================================
  */
+#include "EnemyInfoLoader.hpp"
 #include "ServerApplication.hpp"
 #include "ServerInfo.hpp"
 
 void ServerApplication::init() {
 	std::srand(std::time(nullptr));
+
+	ResourceHandler::setInstance(m_resourceHandler);
+
+	m_resourceHandler.loadConfigFile<EnemyInfoLoader>("data/config/enemies.xml");
 
 	m_server.init();
 }

@@ -118,25 +118,15 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 			std::string entityType;
 			sf::Vector2f pos;
 			std::string textureName;
-			sf::Vector2<u16> frameSize;
-			u16 initialFrame;
 			packet >> entityName >> entityType >> pos.x >> pos.y;
-			packet >> textureName >> frameSize.x >> frameSize.y >> initialFrame;
+			packet >> textureName;
 
 			SceneObject object{entityName, entityType};
 			object.set<PositionComponent>(pos);
-			if (frameSize.x == 0 && frameSize.y == 0) {
-				auto &image = object.set<Image>(textureName);
-				object.set<HitboxComponent>(0, 0, image.width(), image.height());
-			}
-			else {
-				Sprite *sprite;
-				if (ResourceHandler::getInstance().has(textureName + "-sprite"))
-					sprite = &object.set<Sprite>(ResourceHandler::getInstance().get<Sprite>(textureName + "-sprite"));
-				else
-					sprite = &object.set<Sprite>(textureName, frameSize.x, frameSize.y); //.setCurrentFrame(initialFrame);
-				object.set<HitboxComponent>(0, 0, sprite->frameWidth(), sprite->frameHeight());
-			}
+			if (ResourceHandler::getInstance().has(textureName + "-sprite"))
+				object.set<Sprite>(ResourceHandler::getInstance().get<Sprite>(textureName + "-sprite"));
+			else
+				object.set<Image>(textureName);
 
 			if (entityName == "Player" + std::to_string(Network::getInstance().clientId()))
 				object.set<PlayerComponent>(Network::getInstance().clientId());
