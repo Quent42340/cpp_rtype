@@ -23,7 +23,6 @@
 #include "Sprite.hpp"
 
 #include "TestBulletFactory.hpp"
-#include "TestEnemyFactory.hpp"
 #include "TestEntityFactory.hpp"
 
 void NetworkCommandHandler::disconnect() {
