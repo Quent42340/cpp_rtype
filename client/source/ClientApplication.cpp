@@ -13,6 +13,7 @@
  */
 #include <SFML/Audio/Music.hpp>
 
+#include "AnimationLoader.hpp"
 #include "AudioLoader.hpp"
 #include "AudioPlayer.hpp"
 #include "ClientApplication.hpp"
@@ -43,6 +44,7 @@ void ClientApplication::init() {
 
 	m_resourceHandler.loadConfigFile<AudioLoader>("data/config/audio.xml");
 	m_resourceHandler.loadConfigFile<TextureLoader>("data/config/textures.xml");
+	m_resourceHandler.loadConfigFile<AnimationLoader>("data/config/animations.xml");
 	m_resourceHandler.add<sf::Font>("font-default").loadFromFile("fonts/arial.ttf");
 	m_resourceHandler.add<sf::Font>("font-pdark").loadFromFile("fonts/pdark.ttf");
 

@@ -21,6 +21,7 @@
 #include "Network.hpp"
 #include "NetworkCommandHandler.hpp"
 #include "ResourceHandler.hpp"
+#include "Sprite.hpp"
 
 GameState::GameState(const sf::IpAddress &serverAddress, u16 serverPort) {
 	Network::getInstance().connect(serverAddress, serverPort);
@@ -64,6 +65,11 @@ void GameState::update() {
 		                        Config::screenHeight / 2.0f - m_readyText.getLocalBounds().height / 2.0f);
 	}
 
+	// FIXME
+	for(const SceneObject &object : m_scene.objects())
+		if (object.has<Sprite>())
+			object.get<Sprite>().updateAnimations();
+
 	// m_scene.update();
 }
 
@@ -74,8 +80,10 @@ void GameState::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	if (!m_hasGameStarted)
 		target.draw(m_readyText, states);
 
+	// FIXME
 	for(const SceneObject &object : m_scene.objects())
 		DrawingSystem::draw(object, target, states);
+
 	// target.draw(m_scene, states);
 }
 

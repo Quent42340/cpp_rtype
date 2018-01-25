@@ -19,7 +19,6 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "Direction.hpp"
 #include "Movement.hpp"
 
 class MovementStack {
@@ -57,8 +56,6 @@ class MovementComponent {
 		bool isMoving = false;
 		bool isBlocked = false;
 		bool isDirectionLocked = false;
-
-		Direction direction;
 
 		MovementStack movements;
 };

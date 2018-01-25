@@ -12,7 +12,6 @@
  * =====================================================================================
  */
 #include "AudioPlayer.hpp"
-#include "Direction.hpp"
 #include "GameEndState.hpp"
 #include "HitboxComponent.hpp"
 #include "Image.hpp"
@@ -20,6 +19,7 @@
 #include "NetworkCommandHandler.hpp"
 #include "PlayerComponent.hpp"
 #include "PositionComponent.hpp"
+#include "ResourceHandler.hpp"
 #include "Sprite.hpp"
 
 #include "TestBulletFactory.hpp"
@@ -57,9 +57,8 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 		if (command == NetworkCommand::EntityMove) {
 			std::string entityName;
 			sf::Vector2f pos;
-			bool isMoving;
-			u8 direction;
-			packet >> entityName >> pos.x >> pos.y >> isMoving >> direction;
+			sf::Vector2f v;
+			packet >> entityName >> pos.x >> pos.y >> v.x >> v.y;
 
 			// std::cout << "Movement: " << entityName << " (" << pos.x << ";" << pos.y << ")" << std::endl;
 
@@ -68,15 +67,12 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 				object->set<PositionComponent>(pos);
 
 				if (object->has<PlayerComponent>()) {
-					if (isMoving) {
-						if (static_cast<Direction>(direction) == Direction::Up)
-							object->get<Sprite>().setCurrentFrame(4);
-						else if (static_cast<Direction>(direction) == Direction::Down)
-							object->get<Sprite>().setCurrentFrame(0);
-					}
-					else {
-						object->get<Sprite>().setCurrentFrame(2);
-					}
+					if (v.y == 0)
+						object->get<Sprite>().setCurrentAnimation(0);
+					else if (v.y < 0)
+						object->get<Sprite>().setCurrentAnimation(2);
+					else if (v.y > 0)
+						object->get<Sprite>().setCurrentAnimation(1);
 				}
 			}
 		}
@@ -125,8 +121,12 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 				object.set<HitboxComponent>(0, 0, image.width(), image.height());
 			}
 			else {
-				object.set<Sprite>(textureName, frameSize.x, frameSize.y).setCurrentFrame(initialFrame);
-				object.set<HitboxComponent>(0, 0, frameSize.x, frameSize.y);
+				Sprite *sprite;
+				if (ResourceHandler::getInstance().has(textureName + "-sprite"))
+					sprite = &object.set<Sprite>(ResourceHandler::getInstance().get<Sprite>(textureName + "-sprite"));
+				else
+					sprite = &object.set<Sprite>(textureName, frameSize.x, frameSize.y); //.setCurrentFrame(initialFrame);
+				object.set<HitboxComponent>(0, 0, sprite->frameWidth(), sprite->frameHeight());
 			}
 
 			if (entityName == "Player" + std::to_string(Network::getInstance().clientId()))

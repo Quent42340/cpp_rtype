@@ -54,7 +54,7 @@ void NetworkSystem::process(SceneObject &object) {
 				// FIXME: Rename `EntityMove` to `EntityState`
 				packet << NetworkCommand::EntityMove << object.name();
 				packet << positionComponent.x << positionComponent.y;
-				packet << movementComponent.isMoving << static_cast<u8>(movementComponent.direction);
+				packet << movementComponent.v.x << movementComponent.v.y;
 				for (const Client &client : ServerInfo::getInstance().clients()) {
 					Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, client.port);
 				}

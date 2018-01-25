@@ -21,6 +21,9 @@ void MovementSystem::process(SceneObject &object) {
 	if(object.has<MovementComponent>()) {
 		auto &movement = object.get<MovementComponent>();
 
+		movement.v.x = 0;
+		movement.v.y = 0;
+
 		if(movement.movements.size() != 0 && movement.movements.top()) {
 			movement.movements.top()->process(object);
 		}
@@ -37,15 +40,7 @@ void MovementSystem::process(SceneObject &object) {
 
 		movement.isMoving = (movement.v.x || movement.v.y) ? true : false;
 
-		if (movement.v.y < 0)
-			movement.direction = Direction::Up;
-		else
-			movement.direction = Direction::Down;
-
 		object.get<PositionComponent>() += movement.v * movement.speed;
-
-		movement.v.x = 0;
-		movement.v.y = 0;
 	}
 }
 

@@ -56,8 +56,9 @@ Notes:
    ◦ TODO: When you connect to an empty server that has been already used, the timeout doesn’t work
       → While lobby system isn’t implemented try to close server when there is no clients playing
    ◦ TODO: Check if client close works as intended (test closing player 0 before 1, then the opposite)
-      → DONE: When closing Player 0 first, Player 1 stays inactive, maybe he’s dead but he didn’t got the info
+      → TODO: When closing Player 0 first, Player 1 stays inactive, maybe he’s dead but he didn’t got the info
          → Also happens in single player mode???
+         → Thought it was fixed, but it really isn’t
    ◦ TODO: Can’t join the server again if I leave (maybe close sockets when I’m out of GameState)
    ◦ TODO: Find a way to fix exception “Listen failed”
 • TODO: Other issues

@@ -43,8 +43,9 @@ class Image : public sf::Drawable, public sf::Transformable {
 	protected:
 		virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
-	private:
 		std::string m_textureName;
+
+	private:
 		sf::Texture *m_texture;
 
 		sf::VertexArray m_vertices;
