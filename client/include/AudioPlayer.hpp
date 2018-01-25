@@ -30,6 +30,7 @@ class AudioPlayer {
 
 	private:
 		static bool s_muteState;
+		static bool s_isPaused;
 		static std::string s_currentMusic;
 };
 

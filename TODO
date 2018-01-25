@@ -37,6 +37,8 @@ Notes:
                       Créer un `PositionComponent` qui remplacerait l’utilisation de `sf::Transformable` (qui serait utilisée par `Image` à la place)
       → Mettre les parties affichage/audio dans des bibliothèques séparées utilisées uniquement dans le client
       → Déplacer la dépendance à la SFML vers les CMakeLists.txt du client et du serveur
+   ◦ TODO: Renommer `EntityMove` par `EntityState`
+   ◦ TODO: Améliorer le formatage de `animations.xml` et renommer ça et le loader en `Sprite`
    ◦ TODO: Améliorer le code réseau du client et du serveur
       ◦ TODO: Créer une classe `Client` qui remplacerait `NetworkCommandHandler`
       ◦ TODO: Faire en sorte que `Network` n’ait pas de code spécifique ni au client, ni au serveur
@@ -58,6 +60,7 @@ Notes:
       → But when they’re out of the screen they’re killed properly
       → Maybe it’s just because the bullets are still touching it, but wtf?
       → `Note:` If the enemy has still bullets alive, he won’t be killed instantly, that explains this issue
+   ◦ TODO: When 4 players are in the game, the server won’t terminate at the end
    ◦ TODO: When you connect to an empty server that has been already used, the timeout doesn’t work
       → While lobby system isn’t implemented try to close server when there is no clients playing
    ◦ TODO: Check if client close works as intended (test closing player 0 before 1, then the opposite)

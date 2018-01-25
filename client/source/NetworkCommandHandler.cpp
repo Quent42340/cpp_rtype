@@ -88,7 +88,7 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 			std::string entityName;
 			packet >> entityName;
 
-			std::cout << "Entity die: " << entityName << std::endl;
+			// std::cout << "Entity die: " << entityName << std::endl;
 
 			SceneObject *entity = scene.objects().findByName(entityName);
 			if (entity) {
