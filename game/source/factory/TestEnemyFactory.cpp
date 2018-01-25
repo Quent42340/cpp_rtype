@@ -42,7 +42,7 @@ SceneObject TestEnemyFactory::create(const sf::Vector2f &pos) {
 		object.get<MovementComponent>().v.x = -1;
 	})).speed = 0.8f;
 
-	auto &spriteComponent = object.set<SpriteComponent>("spaceship-enemy1", 33, 33);
+	auto &spriteComponent = object.set<SpriteComponent>("spaceship-enemy" + std::to_string(rand() % 3 + 1), 33, 33);
 	object.set<HitboxComponent>(0, 0, spriteComponent.frameWidth(), spriteComponent.frameHeight());
 
 	auto &collisionComponent = object.set<CollisionComponent>();

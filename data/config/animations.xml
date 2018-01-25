@@ -12,6 +12,27 @@
 		</animation>
 	</sprite>
 
+	<sprite name="spaceship-enemy2" width="33" height="36">
+		<animation delay="150" loop="1">
+			<frame id="0"/>
+			<frame id="1"/>
+			<frame id="2"/>
+			<frame id="3"/>
+			<frame id="4"/>
+			<frame id="5"/>
+			<frame id="6"/>
+			<frame id="7"/>
+		</animation>
+	</sprite>
+
+	<sprite name="spaceship-enemy3" width="33" height="34">
+		<animation delay="150" loop="1">
+			<frame id="0"/>
+			<frame id="1"/>
+			<frame id="2"/>
+		</animation>
+	</sprite>
+
 	<sprite name="spaceship-players" width="33" height="18">
 		<animation delay="1" loop="0">
 			<frame id="2"/>
