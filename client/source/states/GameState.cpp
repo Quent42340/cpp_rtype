@@ -19,12 +19,11 @@
 #include "GamePad.hpp"
 #include "GameState.hpp"
 #include "Network.hpp"
-#include "NetworkCommandHandler.hpp"
 #include "ResourceHandler.hpp"
 #include "Sprite.hpp"
 
 GameState::GameState(const sf::IpAddress &serverAddress, u16 serverPort) {
-	Network::getInstance().connect(serverAddress, serverPort);
+	m_client.connect(serverAddress, serverPort);
 
 	AudioPlayer::playMusic("music-game");
 
@@ -40,16 +39,24 @@ GameState::GameState(const sf::IpAddress &serverAddress, u16 serverPort) {
 }
 
 void GameState::onEvent(sf::Event &event) {
-	if (event.type == sf::Event::KeyPressed) {
-		NetworkCommandHandler::sendKey(event.key.code, true);
+	if((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+	 || event.type == sf::Event::Closed) {
+		m_client.disconnect();
+
+		while (m_stateStack->size())
+			m_stateStack->pop();
 	}
-	else if (event.type == sf::Event::KeyReleased) {
-		NetworkCommandHandler::sendKey(event.key.code, false);
+
+	if (event.type == sf::Event::KeyPressed && m_hasGameStarted) {
+		m_client.sendKey(event.key.code, true);
+	}
+	else if (event.type == sf::Event::KeyReleased && m_hasGameStarted) {
+		m_client.sendKey(event.key.code, false);
 	}
 }
 
 void GameState::update() {
-	NetworkCommandHandler::update(*m_stateStack, m_scene, m_hasGameStarted);
+	m_client.update(*m_stateStack, m_scene, m_hasGameStarted);
 
 	if (m_hasGameStarted) {
 		if (m_background2.getPosition().x > Config::screenWidth - m_background2.width()) {
@@ -58,7 +65,7 @@ void GameState::update() {
 		}
 	}
 	else if (GamePad::isKeyPressedOnce(GameKey::Start)) {
-		NetworkCommandHandler::sendReady();
+		m_client.sendReady();
 
 		m_readyText.setString("Waiting for other players...");
 		m_readyText.setPosition(Config::screenWidth / 2.0f - m_readyText.getLocalBounds().width / 2.0f,

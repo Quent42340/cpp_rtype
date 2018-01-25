@@ -1,22 +1,22 @@
 /*
  * =====================================================================================
  *
- *       Filename:  NetworkCommandHandler.cpp
+ *       Filename:  Client.cpp
  *
  *    Description:
  *
- *        Created:  22/01/2018 14:40:42
+ *        Created:  25/01/2018 12:26:43
  *
  *         Author:  Quentin Bazin, <quent42340@gmail.com>
  *
  * =====================================================================================
  */
 #include "AudioPlayer.hpp"
+#include "Client.hpp"
 #include "GameEndState.hpp"
 #include "HitboxComponent.hpp"
 #include "Image.hpp"
 #include "Network.hpp"
-#include "NetworkCommandHandler.hpp"
 #include "PlayerComponent.hpp"
 #include "PositionComponent.hpp"
 #include "ResourceHandler.hpp"
@@ -25,35 +25,60 @@
 #include "TestBulletFactory.hpp"
 #include "TestEntityFactory.hpp"
 
-void NetworkCommandHandler::disconnect() {
+void Client::connect(sf::IpAddress serverAddress, u16 serverPort) {
+	m_tcpSocket.reset(new sf::TcpSocket);
+	if (serverAddress.toInteger() == 0 || m_tcpSocket->connect(serverAddress, serverPort, sf::seconds(5)) != sf::Socket::Done)
+		throw EXCEPTION("Network error: Unable to connect to server", serverAddress.toString() + ":" + std::to_string(serverPort));
+
+	if (m_socket.bind(0) != sf::Socket::Done)
+		throw EXCEPTION("Network error: Bind failed");
+
+	sf::Packet packet;
+	packet << NetworkCommand::ClientConnect << m_socket.getLocalPort();
+	m_tcpSocket->send(packet);
+
+	sf::Packet answer;
+	m_tcpSocket->receive(answer);
+
+	NetworkCommand command;
+	answer >> command;
+	if (command != NetworkCommand::ClientConnect)
+		throw EXCEPTION("Network error: Expected 'ClientConnect' packet.");
+	answer >> m_id;
+
+	m_tcpSocket->setBlocking(false);
+	m_socket.setBlocking(false);
+}
+
+void Client::disconnect() {
 	sf::Packet packet;
 	packet << NetworkCommand::ClientDisconnect;
-	Network::getInstance().tcpSocket().send(packet);
+	m_tcpSocket->send(packet);
 }
 
-void NetworkCommandHandler::sendReady() {
+void Client::sendReady() {
 	sf::Packet packet;
-	packet << NetworkCommand::ClientReady << Network::getInstance().clientId();
-	Network::getInstance().tcpSocket().send(packet);
+	packet << NetworkCommand::ClientReady << m_id;
+	m_tcpSocket->send(packet);
 }
 
-void NetworkCommandHandler::sendKey(u32 key, bool isPressed) {
+void Client::sendKey(u32 key, bool isPressed) {
 	sf::Packet packet;
 	packet << (isPressed ? NetworkCommand::KeyPressed : NetworkCommand::KeyReleased);
-	packet << Network::getInstance().clientId() << key;
-	Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, 4242);
+	packet << m_id << key;
+	m_socket.send(packet, sf::IpAddress::Broadcast, 4242);
 }
 
-void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &scene, bool &hasGameStarted) {
+void Client::update(ApplicationStateStack &stateStack, Scene &scene, bool &hasGameStarted) {
 	sf::Packet packet;
 	sf::IpAddress senderAddress;
 	u16 senderPort;
-	while (Network::getInstance().socket().receive(packet, senderAddress, senderPort) == sf::Socket::Done) {
+	while (m_socket.receive(packet, senderAddress, senderPort) == sf::Socket::Done) {
 		NetworkCommand command;
 		packet >> command;
 		// std::cout << "Message of type '" << Network::commandToString(command) << "' received from: " << senderAddress << ":" << senderPort << std::endl;
 
-		if (command == NetworkCommand::EntityMove) {
+		if (command == NetworkCommand::EntityState) {
 			std::string entityName;
 			sf::Vector2f pos;
 			sf::Vector2f v;
@@ -77,7 +102,7 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 		}
 	}
 
-	while (Network::getInstance().tcpSocket().receive(packet) == sf::Socket::Done) {
+	while (m_tcpSocket->receive(packet) == sf::Socket::Done) {
 		NetworkCommand command;
 		packet >> command;
 
@@ -101,7 +126,7 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 					scene.addObject(std::move(boomEffect));
 				}
 
-				if (entity->has<PlayerComponent>() && entity->get<PlayerComponent>().clientId() == Network::getInstance().clientId()) {
+				if (entity->has<PlayerComponent>() && entity->get<PlayerComponent>().clientId() == m_id) {
 					disconnect();
 
 					stateStack.push<GameEndState>(false);
@@ -127,8 +152,8 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 			else
 				object.set<Image>(textureName);
 
-			if (entityName == "Player" + std::to_string(Network::getInstance().clientId()))
-				object.set<PlayerComponent>(Network::getInstance().clientId());
+			if (entityName == "Player" + std::to_string(m_id))
+				object.set<PlayerComponent>(m_id);
 
 			if (entityType == "PlayerBullet")
 				AudioPlayer::playSound("sound-bullet");
@@ -147,4 +172,5 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 		}
 	}
 }
+
 

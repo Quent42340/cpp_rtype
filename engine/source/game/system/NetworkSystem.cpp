@@ -49,10 +49,9 @@ void NetworkSystem::process(SceneObject &object) {
 
 		if (object.has<MovementComponent>()) {
 			auto &movementComponent = object.get<MovementComponent>();
-			if (/* movementComponent.isMoving &&  */networkComponent.timer.time() > 20) {
+			if (networkComponent.timer.time() > 20) {
 				sf::Packet packet;
-				// FIXME: Rename `EntityMove` to `EntityState`
-				packet << NetworkCommand::EntityMove << object.name();
+				packet << NetworkCommand::EntityState << object.name();
 				packet << positionComponent.x << positionComponent.y;
 				packet << movementComponent.v.x << movementComponent.v.y;
 				for (const Client &client : ServerInfo::getInstance().clients()) {

@@ -35,9 +35,6 @@ SceneObject TestBulletFactory::create(const std::string &type, const std::string
 		object.get<MovementComponent>().v = v;
 	})).speed = speed;
 
-	// auto &image = object.set<Image>(textureName);
-	// object.set<HitboxComponent>(0, 0, image.width(), image.height());
-
 	// FIXME: WARNING HARDCODED SIZE
 	object.set<HitboxComponent>(0, 0, 16, 8);
 

@@ -19,7 +19,6 @@
 #include "ApplicationStateStack.hpp"
 #include "GameClock.hpp"
 #include "KeyboardHandler.hpp"
-#include "Network.hpp"
 #include "ResourceHandler.hpp"
 
 class ClientApplication {
@@ -41,8 +40,6 @@ class ClientApplication {
 		GameClock m_clock;
 
 		KeyboardHandler m_keyboardHandler;
-
-		Network m_network;
 
 		ResourceHandler m_resourceHandler;
 };

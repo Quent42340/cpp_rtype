@@ -20,7 +20,6 @@
 #include "Config.hpp"
 #include "GamePad.hpp"
 #include "Mouse.hpp"
-#include "NetworkCommandHandler.hpp"
 #include "TextureLoader.hpp"
 
 #include "GameState.hpp"
@@ -39,7 +38,6 @@ void ClientApplication::init() {
 	Mouse::setWindow(m_window);
 
 	ApplicationStateStack::setInstance(m_stateStack);
-	Network::setInstance(m_network);
 	ResourceHandler::setInstance(m_resourceHandler);
 
 	m_resourceHandler.loadConfigFile<AudioLoader>("data/config/audio.xml");
@@ -58,13 +56,6 @@ void ClientApplication::handleEvents() {
 
 	sf::Event event;
 	while(m_window.pollEvent(event)) {
-		if((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-		 || event.type == sf::Event::Closed) {
-			NetworkCommandHandler::disconnect();
-
-			m_window.close();
-		}
-
 		if (event.type == sf::Event::GainedFocus) {
 			AudioPlayer::resumeMusic();
 		}

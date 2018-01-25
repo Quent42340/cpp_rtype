@@ -33,27 +33,15 @@ enum class NetworkCommand {
 	KeyReleased,       // [NetworkCommand][u32 sfml keycode]
 
 	// Game commands
-	EntityMove,        // [NetworkCommand][std::string name][float x][float y]
+	EntityState,       // [NetworkCommand][std::string name][float x][float y][float vx][float vy]
 	EntityDie,         // [NetworkCommand][std::string name][float x][float y]
-	EntitySpawn        // [NetworkCommand][std::string name][std::string type][float x][float y][std::string texture][u16 frameWidth][u16 frameHeight][u16 initialFrame]
+	EntitySpawn        // [NetworkCommand][std::string name][std::string type][float x][float y][std::string texture]
 };
 
 class Network {
 	public:
-		// Server-side
 		void init(u16 udpPort);
 
-		// Client-side
-		void connect(sf::IpAddress serverAddress, u16 serverPort);
-
-		// template<typename... Args>
-		// void send(sf::IpAddress address, u16 port, NetworkCommand command, Args &&...args);
-
-		// Client-side
-		sf::TcpSocket &tcpSocket() { return *m_tcpSocket; }
-		u16 clientId() const { return m_clientId; }
-
-		// Both
 		sf::UdpSocket &socket() { return m_socket; }
 
 		static std::string commandToString(NetworkCommand command);
@@ -64,11 +52,6 @@ class Network {
 	private:
 		static Network *s_instance;
 
-		// Client-side
-		std::unique_ptr<sf::TcpSocket> m_tcpSocket;
-		u16 m_clientId;
-
-		// Both
 		sf::UdpSocket m_socket;
 };
 

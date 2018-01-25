@@ -37,12 +37,15 @@ Notes:
                       Créer un `PositionComponent` qui remplacerait l’utilisation de `sf::Transformable` (qui serait utilisée par `Image` à la place)
       → Mettre les parties affichage/audio dans des bibliothèques séparées utilisées uniquement dans le client
       → Déplacer la dépendance à la SFML vers les CMakeLists.txt du client et du serveur
-   ◦ TODO: Renommer `EntityMove` par `EntityState`
+   ◦ DONE: Renommer `EntityMove` par `EntityState`
+   ◦ DONE: Améliorer le code réseau du client et du serveur
+      ◦ DONE: Créer une classe `Client` qui remplacerait `NetworkCommandHandler`
+      ◦ DONE: Faire en sorte que `Network` n’ait pas de code spécifique ni au client, ni au serveur
+   ◦ TODO: Vérifier que tous les fichiers de l’engine soient bien à leur place
+      → `TextureLoader` devrait aller dans /client
+      → `EnemyLoader` et `EnemyInfo` devraient aller dans /game
+      → `Network` et `NetworkSystem` devraient aller dans /game
    ◦ TODO: Améliorer le formatage de `animations.xml` et renommer ça et le loader en `Sprite`
-   ◦ TODO: Améliorer le code réseau du client et du serveur
-      ◦ TODO: Créer une classe `Client` qui remplacerait `NetworkCommandHandler`
-      ◦ TODO: Faire en sorte que `Network` n’ait pas de code spécifique ni au client, ni au serveur
-   ◦ TODO: Vérifier que tous les fichiers de l’engine soient bien à leur place (`TextureLoader` devrait aller dans /client)
    ◦ TODO: Remplacer la SFML2 par BoostASIO pour la partie réseau
    ◦ TODO: /LOW/ Créer des loaders pour les fonts et les musiques
    ◦ TODO: /LOW/ Remplacer tinyxml2 par Qt et virer le dossier /cmake
