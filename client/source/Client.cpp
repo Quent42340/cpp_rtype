@@ -76,7 +76,8 @@ void Client::update(ApplicationStateStack &stateStack, Scene &scene, bool &hasGa
 	while (m_socket.receive(packet, senderAddress, senderPort) == sf::Socket::Done) {
 		NetworkCommand command;
 		packet >> command;
-		// std::cout << "Message of type '" << Network::commandToString(command) << "' received from: " << senderAddress << ":" << senderPort << std::endl;
+
+		// std::cout << "UDP Message of type '" << Network::commandToString(command) << "' received from: " << senderAddress << ":" << senderPort << std::endl;
 
 		if (command == NetworkCommand::EntityState)
 			handleEntityStateMessage(scene, packet);
@@ -86,7 +87,7 @@ void Client::update(ApplicationStateStack &stateStack, Scene &scene, bool &hasGa
 		NetworkCommand command;
 		packet >> command;
 
-		// std::cout << "Message of type '" << Network::commandToString(command) << "' received from: " << senderAddress << ":" << senderPort << std::endl;
+		// std::cout << "TCP message of type '" << Network::commandToString(command) << "' received from: " << senderAddress << ":" << senderPort << std::endl;
 
 		if (command == NetworkCommand::EntityDie && !handleEntityDieMessage(stateStack, scene, packet)) {
 			break;

@@ -12,6 +12,10 @@ TODO
       → TODO: Rajouter DrawingSystem dans la Scene au lieu de l’appeller direct
       → TODO: Idem pour le LifetimeSystem au lieu de ne pas l’appeller du tout
 
+• TODO: *MANDATORY:* Change player color and initial position relatively to client ID
+• TODO: *NE PAS OUBLIER LES HEADERS ET LES FIXME!!!!!!!!!!!!!!!!*
+   → *Commande:* `sed -i '/Created/,+1d' fichier`
+
 Notes:
    ◦ DONE: Quand je ferme avec Win+Shift+A
       → Le serveur se ferme et impossible de le relancer instantanément
@@ -21,9 +25,6 @@ Notes:
          → Le serveur se ferme et impossible de le relancer instantanément
       → `Cas 2:` Le serveur ne m’envoie pas que je suis mort, mon perso reste affiché et tout continue sans moi
          → Ce cas semble apparaître quand il y a plusieurs ennemis sur la map
-
-*NE PAS OUBLIER LES HEADERS ET LES FIXME!!!!!!!!!!!!!!!!*
-*Commande:* `sed -i '/Created/,+1d' fichier`
 
 • WIP: Amélioration d’architecture
    ◦ DONE: Transformer /engine en lib pour éviter de recompiler 2 fois tous les fichiers
