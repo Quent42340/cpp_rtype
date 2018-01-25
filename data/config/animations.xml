@@ -1,4 +1,15 @@
 <animations>
+	<sprite name="effect-boom" width="33" height="32">
+		<animation delay="100" loop="0">
+			<frame id="0"/>
+			<frame id="1"/>
+			<frame id="2"/>
+			<frame id="3"/>
+			<frame id="4"/>
+			<frame id="5"/>
+		</animation>
+	</sprite>
+
 	<sprite name="spaceship-enemy1" width="33" height="33">
 		<animation delay="150" loop="1">
 			<frame id="0"/>
@@ -13,7 +24,7 @@
 	</sprite>
 
 	<sprite name="spaceship-enemy2" width="33" height="36">
-		<animation delay="150" loop="1">
+		<animation delay="180" loop="1">
 			<frame id="0"/>
 			<frame id="1"/>
 			<frame id="2"/>
@@ -26,7 +37,7 @@
 	</sprite>
 
 	<sprite name="spaceship-enemy3" width="33" height="34">
-		<animation delay="150" loop="1">
+		<animation delay="200" loop="1">
 			<frame id="0"/>
 			<frame id="1"/>
 			<frame id="2"/>

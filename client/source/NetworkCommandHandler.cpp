@@ -92,13 +92,22 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 
 			SceneObject *entity = scene.objects().findByName(entityName);
 			if (entity) {
-				if (entity->type() == "Enemy" && entity->get<PositionComponent>().x >= 0)
+				if (entity->type() == "Enemy" && entity->get<PositionComponent>().x >= 0) {
 					AudioPlayer::playSound("sound-boom");
+
+					static size_t boomEffectCount = 0;
+					SceneObject boomEffect{"BoomEffect" + std::to_string(boomEffectCount++), "Effect"};
+					boomEffect.set<PositionComponent>(entity->get<PositionComponent>());
+					boomEffect.set<Sprite>(ResourceHandler::getInstance().get<Sprite>("effect-boom-sprite"));
+					scene.addObject(std::move(boomEffect));
+				}
 
 				if (entity->has<PlayerComponent>() && entity->get<PlayerComponent>().clientId() == Network::getInstance().clientId()) {
 					disconnect();
 
 					stateStack.push<GameEndState>(false);
+
+					break;
 				}
 
 				scene.objects().removeByName(entityName);
@@ -144,6 +153,8 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 			disconnect();
 
 			stateStack.push<GameEndState>(true);
+
+			break;
 		}
 	}
 }

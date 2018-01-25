@@ -34,7 +34,7 @@ void SpawnController::update(Scene &scene) {
 	}
 
 	if (!m_hasBoss && m_bossSpawnTimer.time() > 60000) {
-	// if (!m_hasBoss && m_bossSpawnTimer.time() > 2000) {
+	// if (!m_hasBoss && m_bossSpawnTimer.time() > 10000) {
 		scene.addObject(BossFactory::create());
 		m_hasBoss = true;
 	}

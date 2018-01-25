@@ -66,9 +66,18 @@ void GameState::update() {
 	}
 
 	// FIXME
-	for(const SceneObject &object : m_scene.objects())
-		if (object.has<Sprite>())
-			object.get<Sprite>().updateAnimations();
+	// for(const SceneObject &object : m_scene.objects()) {
+	for (size_t i = 0 ; i < m_scene.objects().size() ; ++i) {
+		SceneObject &object = m_scene.objects()[i];
+		if (object.has<Sprite>()) {
+			auto &sprite = object.get<Sprite>();
+			sprite.updateAnimations();
+
+			if (object.type() == "Effect" && sprite.hasAnimations() && sprite.currentAnimation().isFinished()) {
+				m_scene.objects().remove(i--);
+			}
+		}
+	}
 
 	// m_scene.update();
 }

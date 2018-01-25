@@ -30,6 +30,9 @@ class Sprite : public Image {
 		u16 frameWidth() const { return m_frameWidth; }
 		u16 frameHeight() const { return m_frameHeight; }
 
+		bool hasAnimations() { return m_animations.size() != 0; }
+		const SpriteAnimation &currentAnimation() const { return m_animations[m_currentAnimation]; }
+
 		void setCurrentFrame(u16 currentFrame);
 		void setCurrentAnimation(u16 currentAnimation);
 

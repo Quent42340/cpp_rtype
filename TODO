@@ -4,21 +4,24 @@ TODO
    ◦ DONE: Faire un `PositionComponent` au lieu de l’héritage à `sf::Transformable`
       → DONE: Solution alternative: Ajouter le `sf::Transformable` en composant   (20 min)
    ◦ DONE: Intégrer le code de Dylan pour la GUI                                (2 h)
-   ◦ TODO: Faire le système de gestion dynamique des entités + PPT              (3 h)
+   ◦ TODO: Faire le système de gestion dynamique des ennemis + PPT              (3 h)
    ◦ TODO: Rajouter un score, des types d’ennemis, de bullets, un boss, ...     (4 h)
    ◦ TODO: Finir d’améliorer l’architecure réseau                               (2 h)
    ◦ TODO: Faire le système de lobby et le rajouter sur le PPT                  (8 h)
    ◦ TODO: Améliorer l’architecture des systèmes                                (2 h)
       → TODO: Rajouter DrawingSystem dans la Scene au lieu de l’appeller direct
+      → TODO: Idem pour le LifetimeSystem au lieu de ne pas l’appeller du tout
 
 Notes:
-   ◦ Quand je ferme avec Win+Shift+A
+   ◦ DONE: Quand je ferme avec Win+Shift+A
       → Le serveur se ferme et impossible de le relancer instantanément
-   ◦ DONE: Quand je meurs dans le jeu
+   ◦ DONE: Quand je tue le boss j’me tape un GameOver wtf?
+   ◦ TODO: Quand je meurs dans le jeu
       → `Cas 1:` Le serveur m’envoie que je suis mort et l’écran de GameOver s’affiche
-      → `Cas 2:` Le serveur ne m’envoie pas que je suis mort, mon perso reste affiché et tout est bloqué
+         → Le serveur se ferme et impossible de le relancer instantanément
+      → `Cas 2:` Le serveur ne m’envoie pas que je suis mort, mon perso reste affiché et tout continue sans moi
 
-*NE PAS OUBLIER LES HEADERS!!!!!!!!!!!!!!!!*
+*NE PAS OUBLIER LES HEADERS ET LES FIXME!!!!!!!!!!!!!!!!*
 *Commande:* `sed -i '/Created/,+1d' fichier`
 
 • WIP: Amélioration d’architecture
@@ -61,13 +64,14 @@ Notes:
          → Thought it was fixed, but it really isn’t
    ◦ TODO: Can’t join the server again if I leave (maybe close sockets when I’m out of GameState)
    ◦ TODO: Find a way to fix exception “Listen failed”
-• TODO: Other issues
-   ◦ TODO: /LOW/ Faster bullets when spamming shoot button instead of holding it, wtf?
 • TODO: Documentation
    ◦ TODO: *MANDATORY:* Binary protocol (RFC, ascii format, printed)
    ◦ TODO: *MANDATORY:* UML class + sequence diagram (printed)
    ◦ TODO: *MANDATORY:* Doxygen (optional)
 • WIP: Game
+   ◦ DONE: Background
+      ◦ DONE: Slow horizontal scrolling background
+      ◦ DONE: Stop when the scrolling ends
    ◦ WIP: Network
       ◦ WIP: Server
          ▸ DONE: Handle up to 4 players
@@ -79,7 +83,8 @@ Notes:
       ◦ DONE: Add network-based movement
       ◦ DONE: Handle collisions with screen borders
       ◦ DONE: Handle collisions with enemy bullets
-      ◦ TODO: Handle movement animation
+      ◦ DONE: Handle movement animation
+      ◦ TODO: Handle player color
       ◦ TODO: Die animation
    ◦ WIP: Enemy implementation
       ◦ DONE: Add movement
@@ -87,13 +92,13 @@ Notes:
       ◦ DONE: Send notification to each client when a mob spawns, is killed, shoots, kills a player...
       ◦ DONE: Handle random spawn on the right of the screen
       ◦ DONE: Handle collisions with ally bullets
+      ◦ DONE: Handle movement animation
+      ◦ DONE: Die animation
       ◦ TODO: Add a dynamic library loader for enemy factories/movement/behaviours
       ◦ TODO: Add a menu to add libs in runtime
-      ◦ TODO: Handle movement animation
-      ◦ TODO: Die animation
-   ◦ DONE: Background
-      ◦ DONE: Slow horizontal scrolling background
-      ◦ DONE: Stop when the scrolling ends
+   ◦ WIP: Boss implementation
+      ◦ TODO: Special attacks
+      ◦ TODO: Special die animation
    ◦ WIP: GUI → Dylan
       ◦ DONE: Button class
       ◦ DONE: Title screen

@@ -6,12 +6,14 @@
 	<texture folder="bullet" name="basic"/>
 	<texture folder="bullet" name="small"/>
 
-	<texture folder="spaceship" name="enemy1"/>
-	<texture folder="spaceship" name="enemy2"/>
-	<texture folder="spaceship" name="enemy3"/>
-	<texture folder="spaceship" name="players"/>
+	<texture folder="effect" name="boom"/>
 
 	<texture folder="gui" name="button"/>
 	<texture folder="gui" name="button1"/>
 	<texture folder="gui" name="button2"/>
+
+	<texture folder="spaceship" name="enemy1"/>
+	<texture folder="spaceship" name="enemy2"/>
+	<texture folder="spaceship" name="enemy3"/>
+	<texture folder="spaceship" name="players"/>
 </textures>
