@@ -66,12 +66,15 @@ void NetworkSystem::process(SceneObject &object) {
 
 		if (object.has<LifetimeComponent>()) {
 			auto &lifetimeComponent = object.get<LifetimeComponent>();
-			if (lifetimeComponent.dead(object)) {
+			if (lifetimeComponent.dead(object) && !lifetimeComponent.areClientsNotified()) {
 				sf::Packet packet;
 				packet << (object.type() != "Boss" ? NetworkCommand::EntityDie : NetworkCommand::GameWin) << object.name();
+
 				for (Client &client : ServerInfo::getInstance().clients()) {
 					client.tcpSocket->send(packet);
 				}
+
+				lifetimeComponent.setClientsNotified(true);
 			}
 		}
 	}

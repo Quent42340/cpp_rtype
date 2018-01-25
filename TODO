@@ -16,10 +16,11 @@ Notes:
    ◦ DONE: Quand je ferme avec Win+Shift+A
       → Le serveur se ferme et impossible de le relancer instantanément
    ◦ DONE: Quand je tue le boss j’me tape un GameOver wtf?
-   ◦ TODO: Quand je meurs dans le jeu
+   ◦ DONE: Quand je meurs dans le jeu
       → `Cas 1:` Le serveur m’envoie que je suis mort et l’écran de GameOver s’affiche
          → Le serveur se ferme et impossible de le relancer instantanément
       → `Cas 2:` Le serveur ne m’envoie pas que je suis mort, mon perso reste affiché et tout continue sans moi
+         → Ce cas semble apparaître quand il y a plusieurs ennemis sur la map
 
 *NE PAS OUBLIER LES HEADERS ET LES FIXME!!!!!!!!!!!!!!!!*
 *Commande:* `sed -i '/Created/,+1d' fichier`
@@ -53,13 +54,14 @@ Notes:
    ◦ DONE: Alive entities are not sent to new clients
    ◦ DONE: Find a way to fix error message at server close “Can’t find client with id”
    ◦ DONE: Put a timeout on connect and a “Connecting...” message
-   ◦ TODO: When a enemy is killed by the player, its death message is sent way too much times
+   ◦ DONE: When a enemy is killed by the player, its death message is sent way too much times
       → But when they’re out of the screen they’re killed properly
       → Maybe it’s just because the bullets are still touching it, but wtf?
+      → `Note:` If the enemy has still bullets alive, he won’t be killed instantly, that explains this issue
    ◦ TODO: When you connect to an empty server that has been already used, the timeout doesn’t work
       → While lobby system isn’t implemented try to close server when there is no clients playing
    ◦ TODO: Check if client close works as intended (test closing player 0 before 1, then the opposite)
-      → TODO: When closing Player 0 first, Player 1 stays inactive, maybe he’s dead but he didn’t got the info
+      → DONE: When closing Player 0 first, Player 1 stays inactive, maybe he’s dead but he didn’t got the info
          → Also happens in single player mode???
          → Thought it was fixed, but it really isn’t
    ◦ TODO: Can’t join the server again if I leave (maybe close sockets when I’m out of GameState)

@@ -39,12 +39,16 @@ class LifetimeComponent {
 
 		u32 aliveTime() { return m_timer.time(); }
 
+		bool areClientsNotified() const { return m_areClientsNotified; }
+
 		void setDeathChecker(DeathChecker deathChecker) { m_deathChecker = deathChecker; }
+		void setClientsNotified(bool areClientsNotified) { m_areClientsNotified = areClientsNotified; }
 
 	private:
 		Timer m_timer;
 
 		bool m_dead = false;
+		bool m_areClientsNotified = false;
 
 		u32 m_lifetime = 0;
 
