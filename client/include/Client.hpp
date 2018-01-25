@@ -33,6 +33,10 @@ class Client {
 		u16 id() const { return m_id; }
 
 	private:
+		void handleEntityStateMessage(Scene &scene, sf::Packet &packet);
+		bool handleEntityDieMessage(ApplicationStateStack &stateStack, Scene &scene, sf::Packet &packet);
+		void handleEntitySpawnMessage(Scene &scene, sf::Packet &packet);
+
 		u16 m_id;
 
 		std::unique_ptr<sf::TcpSocket> m_tcpSocket;

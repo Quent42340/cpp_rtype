@@ -4,9 +4,9 @@ TODO
    ◦ DONE: Faire un `PositionComponent` au lieu de l’héritage à `sf::Transformable`
       → DONE: Solution alternative: Ajouter le `sf::Transformable` en composant   (20 min)
    ◦ DONE: Intégrer le code de Dylan pour la GUI                                (2 h)
+   ◦ DONE: Finir d’améliorer l’architecure réseau                               (2 h)
    ◦ TODO: Faire le système de gestion dynamique des ennemis + PPT              (3 h)
    ◦ TODO: Rajouter un score, des types d’ennemis, de bullets, un boss, ...     (4 h)
-   ◦ TODO: Finir d’améliorer l’architecure réseau                               (2 h)
    ◦ TODO: Faire le système de lobby et le rajouter sur le PPT                  (8 h)
    ◦ TODO: Améliorer l’architecture des systèmes                                (2 h)
       → TODO: Rajouter DrawingSystem dans la Scene au lieu de l’appeller direct
