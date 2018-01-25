@@ -33,9 +33,6 @@ class ClientApplication {
 		int run();
 		void mainLoop();
 
-		const static u16 screenWidth = 864;
-		const static u16 screenHeight = 486;
-
 	private:
 		sf::RenderWindow m_window;
 

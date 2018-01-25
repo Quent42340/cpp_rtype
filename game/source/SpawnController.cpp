@@ -11,6 +11,7 @@
  *
  * =====================================================================================
  */
+#include "BossFactory.hpp"
 #include "Config.hpp"
 #include "SpawnController.hpp"
 #include "TestEnemyFactory.hpp"
@@ -20,12 +21,22 @@ SpawnController::SpawnController() {
 }
 
 void SpawnController::update(Scene &scene) {
-	if (m_spawnTimer.time() > 2000) {
+	if (!m_hasBoss && m_spawnTimer.time() > 2000) {
 		m_spawnTimer.reset();
 		m_spawnTimer.start();
+
+		if (!m_bossSpawnTimer.isStarted()) {
+			m_bossSpawnTimer.reset();
+			m_bossSpawnTimer.start();
+		}
 
 		scene.addObject(TestEnemyFactory::create({Config::screenWidth + 20, static_cast<float>(std::rand() % (Config::screenHeight - 40))}));
 	}
 
+	if (!m_hasBoss && m_bossSpawnTimer.time() > 60000) {
+	// if (!m_hasBoss && m_bossSpawnTimer.time() > 2000) {
+		scene.addObject(BossFactory::create());
+		m_hasBoss = true;
+	}
 }
 

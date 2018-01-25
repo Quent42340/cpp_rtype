@@ -18,7 +18,7 @@
 
 class TestBulletFactory {
 	public:
-		static SceneObject create(const std::string &type, const std::string &textureName, const sf::Vector2f &pos, const sf::Vector2f &v);
+		static SceneObject create(const std::string &type, const std::string &textureName, const sf::Vector2f &pos, const sf::Vector2f &v, float speed);
 
 	private:
 		static bool checkOutOfMap(const SceneObject &object);

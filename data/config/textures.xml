@@ -1,6 +1,8 @@
 <textures>
 	<texture folder="background" name="space"/>
 
+	<texture folder="boss" name="boss1"/>
+
 	<texture folder="bullet" name="basic"/>
 	<texture folder="bullet" name="small"/>
 

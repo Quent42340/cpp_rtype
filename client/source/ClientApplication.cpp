@@ -16,6 +16,7 @@
 #include "AudioLoader.hpp"
 #include "AudioPlayer.hpp"
 #include "ClientApplication.hpp"
+#include "Config.hpp"
 #include "GamePad.hpp"
 #include "Mouse.hpp"
 #include "NetworkCommandHandler.hpp"
@@ -32,7 +33,7 @@ ClientApplication::ClientApplication(int argc, char **argv) {
 void ClientApplication::init() {
 	std::srand(std::time(nullptr));
 
-	m_window.create(sf::VideoMode(screenWidth, screenHeight), "R-Type", sf::Style::Close);
+	m_window.create(sf::VideoMode(Config::screenWidth, Config::screenHeight), "R-Type", sf::Style::Close);
 
 	Mouse::setWindow(m_window);
 

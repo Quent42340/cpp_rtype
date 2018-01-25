@@ -98,8 +98,12 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 				if (entity->type() == "Enemy" && entity->get<PositionComponent>().x >= 0)
 					AudioPlayer::playSound("sound-boom");
 
-				if (entity->has<PlayerComponent>() && entity->get<PlayerComponent>().clientId() == Network::getInstance().clientId())
+				if (entity->has<PlayerComponent>() && entity->get<PlayerComponent>().clientId() == Network::getInstance().clientId()) {
+					disconnect();
+
 					stateStack.push<GameEndState>(false);
+				}
+
 				scene.objects().removeByName(entityName);
 			}
 		}
@@ -132,6 +136,8 @@ void NetworkCommandHandler::update(ApplicationStateStack &stateStack, Scene &sce
 			hasGameStarted = true;
 		}
 		else if (command == NetworkCommand::GameWin) {
+			disconnect();
+
 			stateStack.push<GameEndState>(true);
 		}
 	}

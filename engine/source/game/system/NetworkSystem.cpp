@@ -51,6 +51,7 @@ void NetworkSystem::process(SceneObject &object) {
 			auto &movementComponent = object.get<MovementComponent>();
 			if (/* movementComponent.isMoving &&  */networkComponent.timer.time() > 20) {
 				sf::Packet packet;
+				// FIXME: Rename `EntityMove` to `EntityState`
 				packet << NetworkCommand::EntityMove << object.name();
 				packet << positionComponent.x << positionComponent.y;
 				packet << movementComponent.isMoving << static_cast<u8>(movementComponent.direction);
@@ -67,7 +68,7 @@ void NetworkSystem::process(SceneObject &object) {
 			auto &lifetimeComponent = object.get<LifetimeComponent>();
 			if (lifetimeComponent.dead(object)) {
 				sf::Packet packet;
-				packet << NetworkCommand::EntityDie << object.name();
+				packet << (object.type() != "Boss" ? NetworkCommand::EntityDie : NetworkCommand::GameWin) << object.name();
 				for (Client &client : ServerInfo::getInstance().clients()) {
 					client.tcpSocket->send(packet);
 				}

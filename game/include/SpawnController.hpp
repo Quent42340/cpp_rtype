@@ -25,6 +25,8 @@ class SpawnController {
 
 	private:
 		Timer m_spawnTimer;
+		Timer m_bossSpawnTimer;
+		bool m_hasBoss = false;
 };
 
 #endif // SPAWNCONTROLLER_HPP_

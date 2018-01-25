@@ -53,7 +53,10 @@ SceneObject TestEnemyFactory::create(const sf::Vector2f &pos) {
 		Timer &timer = object.get<Timer>();
 		if (timer.time() > 1000 && !object.get<LifetimeComponent>().dead(object)) {
 			sf::Vector2f bulletPosition = object.get<PositionComponent>() + sf::Vector2f{0, (float)object.get<HitboxComponent>().currentHitbox()->height / 2 - 4};
-			object.get<SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, {-1, 0}));
+			object.get<SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, {-1, 0}, 3.0f));
+			// object.get<SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, {-1,  1}, 2.0f));
+			// object.get<SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, { 1, -1}, 2.0f));
+			// object.get<SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, { 1,  1}, 2.0f));
 
 			timer.reset();
 			timer.start();
