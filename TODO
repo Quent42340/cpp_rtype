@@ -43,10 +43,10 @@ Notes:
       ◦ DONE: Faire en sorte que `Network` n’ait pas de code spécifique ni au client, ni au serveur
    ◦ DONE: Renommer `AnimationLoader` en `SpriteLoader` et idem pour le fichier XML
    ◦ TODO: Faire un controlleur pour les explosions au lieu de gérer ça à la main
-   ◦ TODO: Vérifier que tous les fichiers de l’engine soient bien à leur place
-      → `TextureLoader` devrait aller dans /client
-      → `EnemyLoader` et `EnemyInfo` devraient aller dans /game
-      → `Network` et `NetworkSystem` devraient aller dans /game
+   ◦  WIP: Vérifier que tous les fichiers de l’engine soient bien à leur place
+      ◦ DONE: `TextureLoader` devrait aller dans /client
+      ◦ DONE: `EnemyInfoLoader` et `EnemyInfo` devraient aller dans /game
+      ◦ TODO: `Network` et `NetworkSystem` devraient aller dans /game
    ◦ TODO: Améliorer le formatage des animations dans le fichier XML
    ◦ TODO: Améliorer les fonctions `Scene::addController` et `Scene::addView`
    ◦ TODO: Faire un dossier /resources pour les ressources
