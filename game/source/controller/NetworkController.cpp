@@ -34,7 +34,7 @@ void NetworkController::update(SceneObject &object) {
 
 		if (!networkComponent.hasSpawned && hasGameStarted) {
 			sf::Packet packet;
-			packet << NetworkCommand::EntitySpawn;
+			packet << Network::Command::EntitySpawn;
 			packet << object.name() << object.type() << positionComponent.x << positionComponent.y;
 
 			auto &spriteComponent = object.get<SpriteComponent>();
@@ -51,11 +51,11 @@ void NetworkController::update(SceneObject &object) {
 			auto &movementComponent = object.get<MovementComponent>();
 			if (networkComponent.timer.time() > 20) {
 				sf::Packet packet;
-				packet << NetworkCommand::EntityState << object.name();
+				packet << Network::Command::EntityState << object.name();
 				packet << positionComponent.x << positionComponent.y;
 				packet << movementComponent.v.x << movementComponent.v.y;
 				for (const Client &client : ServerInfo::getInstance().clients()) {
-					Network::getInstance().socket().send(packet, sf::IpAddress::Broadcast, client.port);
+					m_socket.send(packet, sf::IpAddress::Broadcast, client.port);
 				}
 
 				networkComponent.timer.reset();
@@ -67,7 +67,7 @@ void NetworkController::update(SceneObject &object) {
 			auto &lifetimeComponent = object.get<LifetimeComponent>();
 			if (lifetimeComponent.dead(object) && !lifetimeComponent.areClientsNotified()) {
 				sf::Packet packet;
-				packet << (object.type() != "Boss" ? NetworkCommand::EntityDie : NetworkCommand::GameWin) << object.name();
+				packet << (object.type() != "Boss" ? Network::Command::EntityDie : Network::Command::GameWin) << object.name();
 
 				for (Client &client : ServerInfo::getInstance().clients()) {
 					client.tcpSocket->send(packet);

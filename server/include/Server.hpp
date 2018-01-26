@@ -14,7 +14,10 @@
 #ifndef SERVER_HPP_
 #define SERVER_HPP_
 
-#include "Network.hpp"
+#include <SFML/Network/SocketSelector.hpp>
+#include <SFML/Network/TcpListener.hpp>
+#include <SFML/Network/UdpSocket.hpp>
+
 #include "Scene.hpp"
 
 class Server {
@@ -28,11 +31,13 @@ class Server {
 		bool isRunning() const { return m_isRunning; }
 		bool hasGameStarted() const { return m_hasGameStarted; }
 
+		sf::UdpSocket &udpSocket() { return m_udpSocket; }
+
 	private:
 		bool m_isRunning = true;
 		bool m_hasGameStarted = false;
 
-		Network m_network;
+		sf::UdpSocket m_udpSocket;
 
 		sf::TcpListener m_tcpListener;
 		sf::SocketSelector m_selector;

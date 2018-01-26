@@ -11,14 +11,16 @@
  *
  * =====================================================================================
  */
+#include "Network.hpp"
 #include "Server.hpp"
 #include "ServerInfo.hpp"
 #include "TestEntityFactory.hpp"
 
 void Server::init() {
-	Network::setInstance(m_network);
+	if (m_udpSocket.bind(4242) != sf::Socket::Done)
+		throw EXCEPTION("Network error: Bind failed");
 
-	m_network.init(4242);
+	m_udpSocket.setBlocking(false);
 
 	if (m_tcpListener.listen(4243) != sf::Socket::Done)
 		throw EXCEPTION("Network error: Listen failed");
@@ -32,21 +34,21 @@ void Server::handleKeyState() {
 	sf::Packet packet;
 	sf::IpAddress senderAddress;
 	u16 senderPort;
-	while (m_network.socket().receive(packet, senderAddress, senderPort) == sf::Socket::Status::Done) {
-		NetworkCommand command;
+	while (m_udpSocket.receive(packet, senderAddress, senderPort) == sf::Socket::Status::Done) {
+		Network::Command command;
 		u16 clientId;
 		packet >> command >> clientId;
 
 		// std::cout << "UDP Message of type '" << Network::commandToString(command) << "' received from: " << senderAddress << ":" << senderPort << std::endl;
 
-		if (command == NetworkCommand::KeyPressed) {
+		if (command == Network::Command::KeyPressed) {
 			u32 keyCode;
 			packet >> keyCode;
 			Client *client = ServerInfo::getInstance().getClient(clientId);
 			if (client)
 				client->inputHandler.setKeyPressed(keyCode, true);
 		}
-		else if (command == NetworkCommand::KeyReleased) {
+		else if (command == Network::Command::KeyReleased) {
 			u32 keyCode;
 			packet >> keyCode;
 			Client *client = ServerInfo::getInstance().getClient(clientId);
@@ -64,9 +66,9 @@ void Server::handleGameEvents(Scene &scene) {
 				sf::Packet packet;
 				clientSocket->receive(packet);
 
-				NetworkCommand command;
+				Network::Command command;
 				packet >> command;
-				if (command != NetworkCommand::ClientConnect)
+				if (command != Network::Command::ClientConnect)
 					throw EXCEPTION("Network error: Expected 'ClientConnect' packet.");
 				u16 port;
 				packet >> port;
@@ -76,7 +78,7 @@ void Server::handleGameEvents(Scene &scene) {
 				m_selector.add(*client.tcpSocket);
 
 				sf::Packet outPacket;
-				outPacket << NetworkCommand::ClientConnect << client.id;
+				outPacket << Network::Command::ClientConnect << client.id;
 				client.tcpSocket->send(outPacket);
 				client.tcpSocket->setBlocking(false);
 			}
@@ -91,12 +93,12 @@ void Server::handleGameEvents(Scene &scene) {
 				if (m_selector.isReady(*client.tcpSocket)) {
 					sf::Packet packet;
 					if (client.tcpSocket->receive(packet) == sf::Socket::Done) {
-						NetworkCommand command;
+						Network::Command command;
 						packet >> command;
 
-						if (command == NetworkCommand::ClientDisconnect) {
+						if (command == Network::Command::ClientDisconnect) {
 							sf::Packet packet;
-							packet << NetworkCommand::EntityDie << "Player" + std::to_string(client.id);
+							packet << Network::Command::EntityDie << "Player" + std::to_string(client.id);
 							for (Client &client : ServerInfo::getInstance().clients()) {
 								client.tcpSocket->send(packet);
 							}
@@ -111,7 +113,7 @@ void Server::handleGameEvents(Scene &scene) {
 								m_hasGameStarted = false;
 							}
 						}
-						else if (command == NetworkCommand::ClientReady) {
+						else if (command == Network::Command::ClientReady) {
 							client.isReady = true;
 						}
 					}
@@ -123,7 +125,7 @@ void Server::handleGameEvents(Scene &scene) {
 
 			if (areAllClientsReady) {
 				sf::Packet packet;
-				packet << NetworkCommand::GameStart;
+				packet << Network::Command::GameStart;
 				for (Client &client : ServerInfo::getInstance().clients()) {
 					client.tcpSocket->send(packet);
 				}

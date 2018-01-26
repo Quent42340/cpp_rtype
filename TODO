@@ -1,5 +1,13 @@
 TODO
 
+# High priority
+
+• TODO: *MANDATORY:* Change player color and initial position relatively to client ID
+• TODO: *NE PAS OUBLIER LES HEADERS ET LES FIXME!!!!!!!!!!!!!!!!*
+   → *Commande:* `sed -i '/Created/,+1d' fichier`
+
+# Others
+
 • Timeline:
    ◦ DONE: Faire un `PositionComponent` au lieu de l’héritage à `sf::Transformable`
       → DONE: Solution alternative: Ajouter le `sf::Transformable` en composant
@@ -10,10 +18,6 @@ TODO
    ◦ TODO: Faire le système de gestion dynamique des ennemis + PPT
    ◦ TODO: Rajouter un score, des types d’ennemis, de bullets, un boss, ...
    ◦ TODO: Faire le système de lobby et le rajouter sur le PPT
-
-• TODO: *MANDATORY:* Change player color and initial position relatively to client ID
-• TODO: *NE PAS OUBLIER LES HEADERS ET LES FIXME!!!!!!!!!!!!!!!!*
-   → *Commande:* `sed -i '/Created/,+1d' fichier`
 
 Notes:
    ◦ DONE: Quand je ferme avec Win+Shift+A
@@ -43,16 +47,17 @@ Notes:
       ◦ DONE: Faire en sorte que `Network` n’ait pas de code spécifique ni au client, ni au serveur
    ◦ DONE: Renommer `AnimationLoader` en `SpriteLoader` et idem pour le fichier XML
    ◦ DONE: Améliorer les fonctions `Scene::addController` et `Scene::addView`
-   ◦ TODO: Faire un controlleur pour les explosions au lieu de gérer ça à la main
-   ◦  WIP: Vérifier que tous les fichiers de l’engine soient bien à leur place
+   ◦ DONE: Vérifier que tous les fichiers de l’engine soient bien à leur place
       ◦ DONE: `TextureLoader` devrait aller dans /client
       ◦ DONE: `EnemyInfoLoader` et `EnemyInfo` devraient aller dans /game
-      ◦ TODO: `Network` et `NetworkSystem` devraient aller dans /game
+      ◦ DONE: `NetworkController` devrait aller dans /game
+   ◦ DONE: Virer `Network`
+   ◦ TODO: Transformer `SpawnerController` en vrai `Controller`
+   ◦ TODO: Faire un controlleur pour les explosions au lieu de gérer ça à la main
    ◦ TODO: Améliorer le formatage des animations dans le fichier XML
    ◦ TODO: Faire un dossier /resources pour les ressources
       ◦ TODO: Déplacer /audio /fonts et /graphics dans /resources
       ◦ TODO: Déplacer /data/config dans /resources
-   ◦ TODO: Virer `Network`
    ◦ TODO: Remplacer la SFML2 par BoostASIO pour la partie réseau
    ◦ TODO: /LOW/ Créer des loaders pour les fonts et les musiques
    ◦ TODO: /LOW/ Remplacer tinyxml2 par Qt et virer le dossier /cmake

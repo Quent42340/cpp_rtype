@@ -34,15 +34,15 @@ void Client::connect(sf::IpAddress serverAddress, u16 serverPort) {
 		throw EXCEPTION("Network error: Bind failed");
 
 	sf::Packet packet;
-	packet << NetworkCommand::ClientConnect << m_socket.getLocalPort();
+	packet << Network::Command::ClientConnect << m_socket.getLocalPort();
 	m_tcpSocket->send(packet);
 
 	sf::Packet answer;
 	m_tcpSocket->receive(answer);
 
-	NetworkCommand command;
+	Network::Command command;
 	answer >> command;
-	if (command != NetworkCommand::ClientConnect)
+	if (command != Network::Command::ClientConnect)
 		throw EXCEPTION("Network error: Expected 'ClientConnect' packet.");
 	answer >> m_id;
 
@@ -52,19 +52,19 @@ void Client::connect(sf::IpAddress serverAddress, u16 serverPort) {
 
 void Client::disconnect() {
 	sf::Packet packet;
-	packet << NetworkCommand::ClientDisconnect;
+	packet << Network::Command::ClientDisconnect;
 	m_tcpSocket->send(packet);
 }
 
 void Client::sendReady() {
 	sf::Packet packet;
-	packet << NetworkCommand::ClientReady << m_id;
+	packet << Network::Command::ClientReady << m_id;
 	m_tcpSocket->send(packet);
 }
 
 void Client::sendKey(u32 key, bool isPressed) {
 	sf::Packet packet;
-	packet << (isPressed ? NetworkCommand::KeyPressed : NetworkCommand::KeyReleased);
+	packet << (isPressed ? Network::Command::KeyPressed : Network::Command::KeyReleased);
 	packet << m_id << key;
 	m_socket.send(packet, sf::IpAddress::Broadcast, 4242);
 }
@@ -74,31 +74,31 @@ void Client::update(ApplicationStateStack &stateStack, Scene &scene, bool &hasGa
 	sf::IpAddress senderAddress;
 	u16 senderPort;
 	while (m_socket.receive(packet, senderAddress, senderPort) == sf::Socket::Done) {
-		NetworkCommand command;
+		Network::Command command;
 		packet >> command;
 
 		// std::cout << "UDP Message of type '" << Network::commandToString(command) << "' received from: " << senderAddress << ":" << senderPort << std::endl;
 
-		if (command == NetworkCommand::EntityState)
+		if (command == Network::Command::EntityState)
 			handleEntityStateMessage(scene, packet);
 	}
 
 	while (m_tcpSocket->receive(packet) == sf::Socket::Done) {
-		NetworkCommand command;
+		Network::Command command;
 		packet >> command;
 
 		// std::cout << "TCP message of type '" << Network::commandToString(command) << "' received from: " << senderAddress << ":" << senderPort << std::endl;
 
-		if (command == NetworkCommand::EntityDie && !handleEntityDieMessage(stateStack, scene, packet)) {
+		if (command == Network::Command::EntityDie && !handleEntityDieMessage(stateStack, scene, packet)) {
 			break;
 		}
-		else if (command == NetworkCommand::EntitySpawn) {
+		else if (command == Network::Command::EntitySpawn) {
 			handleEntitySpawnMessage(scene, packet);
 		}
-		else if (command == NetworkCommand::GameStart) {
+		else if (command == Network::Command::GameStart) {
 			hasGameStarted = true;
 		}
-		else if (command == NetworkCommand::GameWin) {
+		else if (command == Network::Command::GameWin) {
 			disconnect();
 
 			stateStack.push<GameEndState>(true);
