@@ -14,7 +14,13 @@
 #include "ServerApplication.hpp"
 
 int main() {
-	ServerApplication app;
-	return app.run();
+	bool isRunning = true;
+	while (isRunning) {
+		ServerApplication app;
+		if (app.run())
+			isRunning = false;
+		else
+			sf::sleep(sf::seconds(2));
+	}
 }
 

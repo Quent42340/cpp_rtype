@@ -83,8 +83,9 @@ Notes:
          → Also happens in single player mode???
          → Thought it was fixed, but it really isn’t
    ◦ DONE: Find a way to fix exception “Listen failed”
-   ◦ TODO: Can’t join the server again if I leave
-      ◦ TODO: Reset the server instead of closing it
+   ◦ DONE: Can’t join the server again if I leave
+      ◦ DONE: Reset the server on game end instead of closing it
+   ◦ TODO: When you try to connect to an already running server, the timeout doesn’t work, it’ll wait the end of the game
 • TODO: Documentation
    ◦ TODO: *MANDATORY:* Binary protocol (RFC, ascii format, printed)
    ◦ TODO: *MANDATORY:* UML class + sequence diagram (printed)
