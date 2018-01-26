@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  AnimationLoader.cpp
+ *       Filename:  SpriteLoader.cpp
  *
  *    Description:
  *
@@ -11,14 +11,13 @@
  *
  * =====================================================================================
  */
-#include "AnimationLoader.hpp"
+#include "SpriteLoader.hpp"
 #include "Sprite.hpp"
 #include "XMLFile.hpp"
 
-void AnimationLoader::load(const char *xmlFilename, ResourceHandler &handler) {
+void SpriteLoader::load(const char *xmlFilename, ResourceHandler &handler) {
 	XMLFile doc(xmlFilename);
 
-	// FIXME: THIS WILL PROBABLY BECOME THE SPRITELOADER, RENAME IT ACCORDINGLY
 	tinyxml2::XMLElement *spriteElement = doc.FirstChildElement("animations").FirstChildElement("sprite").ToElement();
 	while (spriteElement) {
 		std::string name = spriteElement->Attribute("name");

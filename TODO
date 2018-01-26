@@ -41,15 +41,18 @@ Notes:
    ◦ DONE: Améliorer le code réseau du client et du serveur
       ◦ DONE: Créer une classe `Client` qui remplacerait `NetworkCommandHandler`
       ◦ DONE: Faire en sorte que `Network` n’ait pas de code spécifique ni au client, ni au serveur
+   ◦ DONE: Renommer `AnimationLoader` en `SpriteLoader` et idem pour le fichier XML
    ◦ TODO: Faire un controlleur pour les explosions au lieu de gérer ça à la main
    ◦ TODO: Vérifier que tous les fichiers de l’engine soient bien à leur place
       → `TextureLoader` devrait aller dans /client
       → `EnemyLoader` et `EnemyInfo` devraient aller dans /game
       → `Network` et `NetworkSystem` devraient aller dans /game
-   ◦ TODO: Améliorer le formatage de `animations.xml` et renommer ça et le loader en `Sprite`
+   ◦ TODO: Améliorer le formatage des animations dans le fichier XML
+   ◦ TODO: Améliorer les fonctions `Scene::addController` et `Scene::addView`
    ◦ TODO: Faire un dossier /resources pour les ressources
       ◦ TODO: Déplacer /audio /fonts et /graphics dans /resources
       ◦ TODO: Déplacer /data/config dans /resources
+   ◦ TODO: Virer `Network`
    ◦ TODO: Remplacer la SFML2 par BoostASIO pour la partie réseau
    ◦ TODO: /LOW/ Créer des loaders pour les fonts et les musiques
    ◦ TODO: /LOW/ Remplacer tinyxml2 par Qt et virer le dossier /cmake
@@ -94,7 +97,6 @@ Notes:
       ◦ DONE: Add the ability to shoot
       ◦ DONE: Add network-based movement
       ◦ DONE: Handle collisions with screen borders
-      ◦ DONE: Handle collisions with enemy bullets
       ◦ DONE: Handle movement animation
       ◦ TODO: Handle player color
       ◦ TODO: Die animation
@@ -103,11 +105,14 @@ Notes:
       ◦ DONE: Add the ability to shoot
       ◦ DONE: Send notification to each client when a mob spawns, is killed, shoots, kills a player...
       ◦ DONE: Handle random spawn on the right of the screen
-      ◦ DONE: Handle collisions with ally bullets
       ◦ DONE: Handle movement animation
       ◦ DONE: Die animation
       ◦ TODO: Add a dynamic library loader for enemy factories/movement/behaviours
       ◦ TODO: Add a menu to add libs in runtime
+   ◦ WIP: Bullets
+      ◦ DONE: Handle collisions with enemies
+      ◦ DONE: Handle collisions with allies
+      ◦ TODO: Hit animation
    ◦ WIP: Boss implementation
       ◦ TODO: Special attacks
       ◦ TODO: Special die animation

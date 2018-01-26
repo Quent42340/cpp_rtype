@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  AnimationLoader.hpp
+ *       Filename:  SpriteLoader.hpp
  *
  *    Description:
  *
@@ -11,14 +11,14 @@
  *
  * =====================================================================================
  */
-#ifndef ANIMATIONLOADER_HPP_
-#define ANIMATIONLOADER_HPP_
+#ifndef SPRITELOADER_HPP_
+#define SPRITELOADER_HPP_
 
 #include "ResourceLoader.hpp"
 
-class AnimationLoader : public ResourceLoader {
+class SpriteLoader : public ResourceLoader {
 	public:
 		void load(const char *xmlFilename, ResourceHandler &handler);
 };
 
-#endif // ANIMATIONLOADER_HPP_
+#endif // SPRITELOADER_HPP_
