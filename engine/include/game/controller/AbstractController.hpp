@@ -21,23 +21,10 @@ class AbstractController {
 		virtual void reset(SceneObject &) {}
 		virtual void update(SceneObject &object) = 0;
 
-		virtual void reset(SceneObjectList &objectList) {
-			for(auto &object : objectList) {
-				reset(object);
+		virtual void reset(SceneObjectList &objectList) { for(auto &object : objectList) reset(object); }
+		virtual void update(SceneObjectList &objectList) { for(auto &object : objectList) update(object); }
 
-				if (object.has<SceneObjectList>())
-					reset(object.get<SceneObjectList>());
-			}
-		}
-
-		virtual void update(SceneObjectList &objectList) {
-			for(auto &object : objectList) {
-				update(object);
-
-				if (object.has<SceneObjectList>())
-					update(object.get<SceneObjectList>());
-			}
-		}
+		virtual bool isGlobal() const { return false; }
 };
 
 #endif // ABSTRACTCONTROLLER_HPP_

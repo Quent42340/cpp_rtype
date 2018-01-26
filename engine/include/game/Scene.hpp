@@ -14,8 +14,8 @@
 #ifndef SCENE_HPP_
 #define SCENE_HPP_
 
-#include <list>
 #include <functional>
+#include <list>
 
 #include <SFML/Graphics/Drawable.hpp>
 

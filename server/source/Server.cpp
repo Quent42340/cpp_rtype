@@ -36,7 +36,8 @@ void Server::handleKeyState() {
 		NetworkCommand command;
 		u16 clientId;
 		packet >> command >> clientId;
-		// std::cout << "Message of type '" << Network::commandToString(command) << "' received from: " << senderAddress << ":" << senderPort << std::endl;
+
+		// std::cout << "UDP Message of type '" << Network::commandToString(command) << "' received from: " << senderAddress << ":" << senderPort << std::endl;
 
 		if (command == NetworkCommand::KeyPressed) {
 			u32 keyCode;

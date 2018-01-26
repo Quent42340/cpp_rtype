@@ -20,6 +20,8 @@ class LifetimeController : public AbstractController {
 	public:
 		void update(SceneObjectList &objectList) override;
 		void update(SceneObject &) override {}
+
+		bool isGlobal() const override { return true; }
 };
 
 #endif // LIFETIMECONTROLLER_HPP_

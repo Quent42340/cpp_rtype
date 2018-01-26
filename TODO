@@ -70,15 +70,16 @@ Notes:
       → But when they’re out of the screen they’re killed properly
       → Maybe it’s just because the bullets are still touching it, but wtf?
       → `Note:` If the enemy has still bullets alive, he won’t be killed instantly, that explains this issue
-   ◦ TODO: When 4 players are in the game, the server won’t terminate at the end
-   ◦ TODO: When you connect to an empty server that has been already used, the timeout doesn’t work
-      → While lobby system isn’t implemented try to close server when there is no clients playing
-   ◦ TODO: Check if client close works as intended (test closing player 0 before 1, then the opposite)
+   ◦ DONE: When 4 players are in the game, the server won’t terminate at the end
+   ◦ DONE: When you connect to an empty server that has been already used, the timeout doesn’t work
+      → DONE: While lobby system isn’t implemented try to close server when there is no clients playing
+   ◦ DONE: Check if client close works as intended (test closing player 0 before 1, then the opposite)
       → DONE: When closing Player 0 first, Player 1 stays inactive, maybe he’s dead but he didn’t got the info
          → Also happens in single player mode???
          → Thought it was fixed, but it really isn’t
-   ◦ TODO: Can’t join the server again if I leave (maybe close sockets when I’m out of GameState)
-   ◦ TODO: Find a way to fix exception “Listen failed”
+   ◦ DONE: Find a way to fix exception “Listen failed”
+   ◦ TODO: Can’t join the server again if I leave
+      ◦ TODO: Reset the server instead of closing it
 • TODO: Documentation
    ◦ TODO: *MANDATORY:* Binary protocol (RFC, ascii format, printed)
    ◦ TODO: *MANDATORY:* UML class + sequence diagram (printed)

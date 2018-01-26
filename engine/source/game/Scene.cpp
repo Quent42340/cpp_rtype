@@ -19,12 +19,36 @@
 
 void Scene::reset() {
 	for (auto &controller : m_controllerList)
-		controller->reset(m_objects);
+		if (controller->isGlobal())
+			controller->reset(m_objects);
+
+	for (SceneObject &object : m_objects) {
+		for (auto &controller : m_controllerList) {
+			if (!controller->isGlobal()) {
+				controller->reset(object);
+
+				if (object.has<SceneObjectList>())
+					controller->reset(object.get<SceneObjectList>());
+			}
+		}
+	}
 }
 
 void Scene::update() {
 	for (auto &controller : m_controllerList)
-		controller->update(m_objects);
+		if (controller->isGlobal())
+			controller->update(m_objects);
+
+	for (SceneObject &object : m_objects) {
+		for (auto &controller : m_controllerList) {
+			if (!controller->isGlobal()) {
+				controller->update(object);
+
+				if (object.has<SceneObjectList>())
+					controller->update(object.get<SceneObjectList>());
+			}
+		}
+	}
 }
 
 void Scene::draw(sf::RenderTarget &target, sf::RenderStates states) const {
