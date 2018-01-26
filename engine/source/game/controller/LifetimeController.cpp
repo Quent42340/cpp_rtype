@@ -1,21 +1,24 @@
 /*
  * =====================================================================================
  *
- *       Filename:  LifetimeSystem.cpp
+ *       Filename:  LifetimeController.cpp
  *
  *    Description:
  *
- *        Created:  19/01/2018 04:15:07
+ *        Created:  26/01/2018 01:20:41
  *
  *         Author:  Quentin Bazin, <quent42340@gmail.com>
  *
  * =====================================================================================
  */
 #include "LifetimeComponent.hpp"
-#include "LifetimeSystem.hpp"
+#include "LifetimeController.hpp"
 
-void LifetimeSystem::process(SceneObjectList &objects) {
+void LifetimeController::update(SceneObjectList &objects) {
 	for(size_t i = 0 ; i < objects.size() ; i++) {
+		if (objects[i].has<SceneObjectList>())
+			update(objects[i].get<SceneObjectList>());
+
 		if(objects[i].has<LifetimeComponent>()) {
 			auto &lifetimeComponent = objects[i].get<LifetimeComponent>();
 			if (lifetimeComponent.dead(objects[i]) && lifetimeComponent.areClientsNotified()) {

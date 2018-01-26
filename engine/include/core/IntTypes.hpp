@@ -14,7 +14,7 @@
 #ifndef INTTYPES_HPP_
 #define INTTYPES_HPP_
 
-#include <SFML/Graphics/Color.hpp>
+#include <SFML/Config.hpp>
 
 using s8  = sf::Int8;
 using s16 = sf::Int16;

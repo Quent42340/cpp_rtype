@@ -1,24 +1,24 @@
 /*
  * =====================================================================================
  *
- *       Filename:  DrawingSystem.cpp
+ *       Filename:  SpriteView.cpp
  *
  *    Description:
  *
- *        Created:  17/01/2018 19:49:51
+ *        Created:  26/01/2018 01:30:28
  *
  *         Author:  Quentin Bazin, <quent42340@gmail.com>
  *
  * =====================================================================================
  */
-#include "DrawingSystem.hpp"
 #include "HitboxComponent.hpp"
 #include "Image.hpp"
 #include "LifetimeComponent.hpp"
 #include "PositionComponent.hpp"
 #include "Sprite.hpp"
+#include "SpriteView.hpp"
 
-void DrawingSystem::draw(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states) {
+void SpriteView::draw(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states) {
 	if (object.has<LifetimeComponent>() && object.get<LifetimeComponent>().dead(object))
 		return;
 
@@ -38,7 +38,7 @@ void DrawingSystem::draw(const SceneObject &object, sf::RenderTarget &target, sf
 	}
 }
 
-void DrawingSystem::drawHitbox(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states) {
+void SpriteView::drawHitbox(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states) {
 	auto &hitboxComponent = object.get<HitboxComponent>();
 
 	const sf::FloatRect *hitbox = hitboxComponent.currentHitbox();
@@ -53,4 +53,5 @@ void DrawingSystem::drawHitbox(const SceneObject &object, sf::RenderTarget &targ
 		target.draw(rect, states);
 	}
 }
+
 

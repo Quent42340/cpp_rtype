@@ -1,16 +1,15 @@
 TODO
 
-• Timeline:                                                                     (19 h)
+• Timeline:
    ◦ DONE: Faire un `PositionComponent` au lieu de l’héritage à `sf::Transformable`
-      → DONE: Solution alternative: Ajouter le `sf::Transformable` en composant   (20 min)
-   ◦ DONE: Intégrer le code de Dylan pour la GUI                                (2 h)
-   ◦ DONE: Finir d’améliorer l’architecure réseau                               (2 h)
-   ◦ TODO: Faire le système de gestion dynamique des ennemis + PPT              (3 h)
-   ◦ TODO: Rajouter un score, des types d’ennemis, de bullets, un boss, ...     (4 h)
-   ◦ TODO: Faire le système de lobby et le rajouter sur le PPT                  (8 h)
-   ◦ TODO: Améliorer l’architecture des systèmes                                (2 h)
-      → TODO: Rajouter DrawingSystem dans la Scene au lieu de l’appeller direct
-      → TODO: Idem pour le LifetimeSystem au lieu de ne pas l’appeller du tout
+      → DONE: Solution alternative: Ajouter le `sf::Transformable` en composant
+   ◦ DONE: Intégrer le code de Dylan pour la GUI
+   ◦ DONE: Finir d’améliorer l’architecure réseau
+   ◦ DONE: Améliorer l’architecture des systèmes
+      → DONE: Rajouter DrawingSystem dans la Scene au lieu de l’appeller direct
+   ◦ TODO: Faire le système de gestion dynamique des ennemis + PPT
+   ◦ TODO: Rajouter un score, des types d’ennemis, de bullets, un boss, ...
+   ◦ TODO: Faire le système de lobby et le rajouter sur le PPT
 
 • TODO: *MANDATORY:* Change player color and initial position relatively to client ID
 • TODO: *NE PAS OUBLIER LES HEADERS ET LES FIXME!!!!!!!!!!!!!!!!*
@@ -42,11 +41,15 @@ Notes:
    ◦ DONE: Améliorer le code réseau du client et du serveur
       ◦ DONE: Créer une classe `Client` qui remplacerait `NetworkCommandHandler`
       ◦ DONE: Faire en sorte que `Network` n’ait pas de code spécifique ni au client, ni au serveur
+   ◦ TODO: Faire un controlleur pour les explosions au lieu de gérer ça à la main
    ◦ TODO: Vérifier que tous les fichiers de l’engine soient bien à leur place
       → `TextureLoader` devrait aller dans /client
       → `EnemyLoader` et `EnemyInfo` devraient aller dans /game
       → `Network` et `NetworkSystem` devraient aller dans /game
    ◦ TODO: Améliorer le formatage de `animations.xml` et renommer ça et le loader en `Sprite`
+   ◦ TODO: Faire un dossier /resources pour les ressources
+      ◦ TODO: Déplacer /audio /fonts et /graphics dans /resources
+      ◦ TODO: Déplacer /data/config dans /resources
    ◦ TODO: Remplacer la SFML2 par BoostASIO pour la partie réseau
    ◦ TODO: /LOW/ Créer des loaders pour les fonts et les musiques
    ◦ TODO: /LOW/ Remplacer tinyxml2 par Qt et virer le dossier /cmake
@@ -118,7 +121,7 @@ Notes:
       ◦ TODO: Lobby screen
    ◦ WIP: Check if game compiles and works on Windows
       ◦ DONE: Try to cross-compile and run with Wine
-      ◦ TODO: Try to run cross-compilated executable on Windows
+      ◦ DONE: Try to run cross-compilated executable on Windows
       ◦ TODO: Try to compile on Windows
 • WIP: Review
    ◦ WIP: Mettre en avant les features de l’engine

@@ -1,23 +1,23 @@
 /*
  * =====================================================================================
  *
- *       Filename:  MovementSystem.cpp
+ *       Filename:  MovementController.cpp
  *
  *    Description:
  *
- *        Created:  17/01/2018 19:42:16
+ *        Created:  26/01/2018 01:18:19
  *
  *         Author:  Quentin Bazin, <quent42340@gmail.com>
  *
  * =====================================================================================
  */
-#include "MovementSystem.hpp"
+#include "MovementController.hpp"
 
 #include "CollisionComponent.hpp"
 #include "MovementComponent.hpp"
 #include "PositionComponent.hpp"
 
-void MovementSystem::process(SceneObject &object) {
+void MovementController::update(SceneObject &object) {
 	if(object.has<MovementComponent>()) {
 		auto &movement = object.get<MovementComponent>();
 

@@ -15,12 +15,13 @@
 
 #include "AudioPlayer.hpp"
 #include "Config.hpp"
-#include "DrawingSystem.hpp"
 #include "GamePad.hpp"
 #include "GameState.hpp"
+#include "LifetimeController.hpp"
 #include "Network.hpp"
 #include "ResourceHandler.hpp"
 #include "Sprite.hpp"
+#include "SpriteView.hpp"
 
 GameState::GameState(const sf::IpAddress &serverAddress, u16 serverPort) {
 	m_client.connect(serverAddress, serverPort);
@@ -36,6 +37,9 @@ GameState::GameState(const sf::IpAddress &serverAddress, u16 serverPort) {
 	m_readyText.setStyle(sf::Text::Bold);
 	m_readyText.setPosition(Config::screenWidth / 2.0f - m_readyText.getLocalBounds().width / 2.0f,
 	                        Config::screenHeight / 2.0f - m_readyText.getLocalBounds().height / 2.0f);
+
+	m_scene.addController(new LifetimeController);
+	m_scene.addView(new SpriteView);
 }
 
 void GameState::onEvent(sf::Event &event) {
@@ -72,8 +76,7 @@ void GameState::update() {
 		                        Config::screenHeight / 2.0f - m_readyText.getLocalBounds().height / 2.0f);
 	}
 
-	// FIXME
-	// for(const SceneObject &object : m_scene.objects()) {
+	// FIXME: Use LifetimeController
 	for (size_t i = 0 ; i < m_scene.objects().size() ; ++i) {
 		SceneObject &object = m_scene.objects()[i];
 		if (object.has<Sprite>()) {
@@ -86,7 +89,7 @@ void GameState::update() {
 		}
 	}
 
-	// m_scene.update();
+	m_scene.update();
 }
 
 void GameState::draw(sf::RenderTarget &target, sf::RenderStates states) const {
@@ -96,10 +99,6 @@ void GameState::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	if (!m_hasGameStarted)
 		target.draw(m_readyText, states);
 
-	// FIXME
-	for(const SceneObject &object : m_scene.objects())
-		DrawingSystem::draw(object, target, states);
-
-	// target.draw(m_scene, states);
+	target.draw(m_scene, states);
 }
 

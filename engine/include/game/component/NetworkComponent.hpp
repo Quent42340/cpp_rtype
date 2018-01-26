@@ -14,8 +14,6 @@
 #ifndef NETWORKCOMPONENT_HPP_
 #define NETWORKCOMPONENT_HPP_
 
-#include <SFML/Network.hpp>
-
 #include "Timer.hpp"
 
 class NetworkComponent {
@@ -23,8 +21,6 @@ class NetworkComponent {
 		NetworkComponent() {
 			timer.start();
 		}
-
-		sf::UdpSocket socket;
 
 		Timer timer{true};
 		bool hasSpawned = false;

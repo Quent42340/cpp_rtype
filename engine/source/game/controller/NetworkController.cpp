@@ -1,18 +1,18 @@
 /*
  * =====================================================================================
  *
- *       Filename:  NetworkSystem.cpp
+ *       Filename:  NetworkController.cpp
  *
  *    Description:
  *
- *        Created:  22/01/2018 16:46:35
+ *        Created:  26/01/2018 01:23:47
  *
  *         Author:  Quentin Bazin, <quent42340@gmail.com>
  *
  * =====================================================================================
  */
 #include "Network.hpp"
-#include "NetworkSystem.hpp"
+#include "NetworkController.hpp"
 #include "ServerInfo.hpp"
 
 #include "LifetimeComponent.hpp"
@@ -21,7 +21,7 @@
 #include "SpriteComponent.hpp"
 #include "PositionComponent.hpp"
 
-void NetworkSystem::process(SceneObject &object) {
+void NetworkController::update(SceneObject &object) {
 	if (object.has<NetworkComponent>()) {
 		auto &networkComponent = object.get<NetworkComponent>();
 		auto &positionComponent = object.get<PositionComponent>();

@@ -15,12 +15,24 @@
 #include "ServerApplication.hpp"
 #include "ServerInfo.hpp"
 
+#include "BehaviourController.hpp"
+#include "GamePadController.hpp"
+#include "LifetimeController.hpp"
+#include "MovementController.hpp"
+#include "NetworkController.hpp"
+
 void ServerApplication::init() {
 	std::srand(std::time(nullptr));
 
 	ResourceHandler::setInstance(m_resourceHandler);
 
 	m_resourceHandler.loadConfigFile<EnemyInfoLoader>("data/config/enemies.xml");
+
+	m_scene.addController(new LifetimeController);
+	m_scene.addController(new GamePadController);
+	m_scene.addController(new BehaviourController);
+	m_scene.addController(new MovementController);
+	m_scene.addController(new NetworkController);
 
 	m_server.init();
 }

@@ -14,20 +14,22 @@
 #include <SFML/Network.hpp>
 
 #include "CollisionComponent.hpp"
-#include "CollisionSystem.hpp"
+#include "CollisionHelper.hpp"
 #include "Scene.hpp"
-#include "SceneSystem.hpp"
 
 void Scene::reset() {
-	SceneSystem::reset(m_objects);
+	for (auto &controller : m_controllerList)
+		controller->reset(m_objects);
 }
 
 void Scene::update() {
-	SceneSystem::update(m_objects);
+	for (auto &controller : m_controllerList)
+		controller->update(m_objects);
 }
 
 void Scene::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-	SceneSystem::draw(m_objects, target, states);
+	for (auto &view : m_viewList)
+		view->draw(m_objects, target, states);
 }
 
 SceneObject &Scene::addObject(SceneObject &&object) {
@@ -53,17 +55,16 @@ void Scene::addCollisionChecker(std::function<void(SceneObject &)> checker) {
 void Scene::checkCollisionsFor(SceneObject &object) {
 	for(SceneObject &object2 : m_objects) {
 		if(&object != &object2) {
-			CollisionSystem::checkCollision(object, object2);
+			CollisionHelper::checkCollision(object, object2);
 
 			if (object.has<SceneObjectList>())
 				for (SceneObject &child : object.get<SceneObjectList>())
-					CollisionSystem::checkCollision(child, object2);
+					CollisionHelper::checkCollision(child, object2);
 
 			if (object2.has<SceneObjectList>())
 				for (SceneObject &child : object2.get<SceneObjectList>())
-					CollisionSystem::checkCollision(object, child);
+					CollisionHelper::checkCollision(object, child);
 		}
 	}
 }
-
 

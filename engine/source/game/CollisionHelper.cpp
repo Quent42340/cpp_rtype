@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  CollisionSystem.cpp
+ *       Filename:  CollisionHelper.cpp
  *
  *    Description:
  *
@@ -11,7 +11,7 @@
  *
  * =====================================================================================
  */
-#include "CollisionSystem.hpp"
+#include "CollisionHelper.hpp"
 #include "Utils.hpp"
 
 #include "CollisionComponent.hpp"
@@ -19,8 +19,8 @@
 #include "MovementComponent.hpp"
 #include "PositionComponent.hpp"
 
-void CollisionSystem::checkCollision(SceneObject &object1, SceneObject &object2) {
-	bool inCollision = CollisionSystem::inCollision(object1, object2);
+void CollisionHelper::checkCollision(SceneObject &object1, SceneObject &object2) {
+	bool inCollision = CollisionHelper::inCollision(object1, object2);
 
 	if(object1.has<CollisionComponent>()) {
 		object1.get<CollisionComponent>().collisionActions(object1, object2, inCollision);
@@ -31,7 +31,7 @@ void CollisionSystem::checkCollision(SceneObject &object1, SceneObject &object2)
 	}
 }
 
-bool CollisionSystem::inCollision(SceneObject &object1, SceneObject &object2) {
+bool CollisionHelper::inCollision(SceneObject &object1, SceneObject &object2) {
 	if(object1.has<HitboxComponent>() && object2.has<HitboxComponent>()) {
 		auto &hitbox1 = object1.get<HitboxComponent>();
 		auto &hitbox2 = object2.get<HitboxComponent>();

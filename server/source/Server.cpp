@@ -101,8 +101,8 @@ void Server::handleGameEvents(Scene &scene) {
 							}
 
 							--i;
-							ServerInfo::getInstance().removeClient(client.id);
 							m_selector.remove(*client.tcpSocket);
+							ServerInfo::getInstance().removeClient(client.id);
 
 							if (ServerInfo::getInstance().clients().size() == 0) {
 								m_tcpListener.close();
