@@ -3,6 +3,10 @@ TODO
 # High priority
 
 • TODO: *MANDATORY:* Change player color and initial position relatively to client ID
+• TODO: Add a script `pack_for_windows.sh` which will pack executables, resources and dlls
+• TODO: Add an AUR package, just for fun
+• TODO: Test on LAN, then on the Internet
+
 • TODO: *NE PAS OUBLIER LES HEADERS ET LES FIXME!!!!!!!!!!!!!!!!*
    → *Commande:* `sed -i '/Created/,+1d' fichier`
 
@@ -52,12 +56,15 @@ Notes:
       ◦ DONE: `EnemyInfoLoader` et `EnemyInfo` devraient aller dans /game
       ◦ DONE: `NetworkController` devrait aller dans /game
    ◦ DONE: Virer `Network`
-   ◦ TODO: Transformer `SpawnerController` en vrai `Controller`
-   ◦ TODO: Faire un controlleur pour les explosions au lieu de gérer ça à la main
-   ◦ TODO: Améliorer le formatage des animations dans le fichier XML
+   ◦ TODO: `ServerInfo` ne devrait pas être un singleton
+      → Il est utilisé par `ServerApplication`, `Server` et `NetworkController`
+   ◦ TODO: Render `ResourceHandler` thread safe
    ◦ TODO: Faire un dossier /resources pour les ressources
       ◦ TODO: Déplacer /audio /fonts et /graphics dans /resources
       ◦ TODO: Déplacer /data/config dans /resources
+   ◦ TODO: Transformer `SpawnerController` en vrai `Controller`
+   ◦ TODO: Faire un controlleur pour les explosions au lieu de gérer ça à la main
+   ◦ TODO: Améliorer le formatage des animations dans le fichier XML
    ◦ TODO: Remplacer la SFML2 par BoostASIO pour la partie réseau
    ◦ TODO: /LOW/ Créer des loaders pour les fonts et les musiques
    ◦ TODO: /LOW/ Remplacer tinyxml2 par Qt et virer le dossier /cmake
