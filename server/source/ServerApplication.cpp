@@ -13,7 +13,6 @@
  */
 #include "EnemyInfoLoader.hpp"
 #include "ServerApplication.hpp"
-#include "ServerInfo.hpp"
 
 #include "BehaviourController.hpp"
 #include "GamePadController.hpp"
@@ -31,10 +30,10 @@ void ServerApplication::init() {
 	m_server.init();
 
 	m_scene.addController<LifetimeController>();
-	m_scene.addController<GamePadController>();
+	m_scene.addController<GamePadController>(m_server.info());
 	m_scene.addController<BehaviourController>();
 	m_scene.addController<MovementController>();
-	m_scene.addController<NetworkController>(m_server.udpSocket());
+	m_scene.addController<NetworkController>(m_server.info(), m_server.udpSocket());
 }
 
 int ServerApplication::run() {
@@ -67,8 +66,7 @@ void ServerApplication::mainLoop() {
 			m_server.handleKeyState();
 
 			m_clock.updateGame([&] {
-				if (ServerInfo::getInstance().clients().size() > 0)
-					m_spawnController.update(m_scene);
+				m_spawnController.update(m_scene);
 
 				m_scene.update();
 			});

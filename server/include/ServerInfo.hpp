@@ -36,37 +36,14 @@ struct Client {
 
 class ServerInfo {
 	public:
-		Client &addClient(u16 port, const std::shared_ptr<sf::TcpSocket> &socket) {
-			static u16 clientCount = 0;
-			m_clients.emplace_back(clientCount++, port, socket);
-			return m_clients.back();
-		}
-
-		void removeClient(u16 id) {
-			auto it = std::find_if(m_clients.begin(), m_clients.end(), [id] (Client &client) { return client.id == id; });
-			if (it != m_clients.end())
-				m_clients.erase(it);
-		}
-
-		Client *getClient(u16 id) {
-			auto it = std::find_if(m_clients.begin(), m_clients.end(), [id] (Client &client) { return client.id == id; });
-			if (it == m_clients.end())
-				return nullptr;
-
-			return &*it;
-		}
+		Client &addClient(u16 port, const std::shared_ptr<sf::TcpSocket> &socket);
+		Client *getClient(u16 id);
+		void removeClient(u16 id);
 
 		std::vector<Client> &clients() { return m_clients; }
 		const std::vector<Client> &clients() const { return m_clients; }
 
-		static ServerInfo &getInstance() {
-			static ServerInfo instance;
-			return instance;
-		}
-
 	private:
-		ServerInfo() = default;
-
 		std::vector<Client> m_clients;
 };
 

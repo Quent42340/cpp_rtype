@@ -13,7 +13,6 @@
  */
 #include "Network.hpp"
 #include "Server.hpp"
-#include "ServerInfo.hpp"
 #include "TestEntityFactory.hpp"
 
 void Server::init() {
@@ -44,14 +43,14 @@ void Server::handleKeyState() {
 		if (command == Network::Command::KeyPressed) {
 			u32 keyCode;
 			packet >> keyCode;
-			Client *client = ServerInfo::getInstance().getClient(clientId);
+			Client *client = m_info.getClient(clientId);
 			if (client)
 				client->inputHandler.setKeyPressed(keyCode, true);
 		}
 		else if (command == Network::Command::KeyReleased) {
 			u32 keyCode;
 			packet >> keyCode;
-			Client *client = ServerInfo::getInstance().getClient(clientId);
+			Client *client = m_info.getClient(clientId);
 			if (client)
 				client->inputHandler.setKeyPressed(keyCode, false);
 		}
@@ -73,7 +72,7 @@ void Server::handleGameEvents(Scene &scene) {
 				u16 port;
 				packet >> port;
 
-				Client &client = ServerInfo::getInstance().addClient(port, clientSocket);
+				Client &client = m_info.addClient(port, clientSocket);
 				scene.addObject(TestEntityFactory::create(20, 50, client.id));
 				m_selector.add(*client.tcpSocket);
 
@@ -88,8 +87,8 @@ void Server::handleGameEvents(Scene &scene) {
 		}
 		else {
 			bool areAllClientsReady = true;
-			for (size_t i = 0 ; i < ServerInfo::getInstance().clients().size() ; ++i) {
-				Client &client = ServerInfo::getInstance().clients()[i];
+			for (size_t i = 0 ; i < m_info.clients().size() ; ++i) {
+				Client &client = m_info.clients()[i];
 				if (m_selector.isReady(*client.tcpSocket)) {
 					sf::Packet packet;
 					if (client.tcpSocket->receive(packet) == sf::Socket::Done) {
@@ -99,15 +98,15 @@ void Server::handleGameEvents(Scene &scene) {
 						if (command == Network::Command::ClientDisconnect) {
 							sf::Packet packet;
 							packet << Network::Command::EntityDie << "Player" + std::to_string(client.id);
-							for (Client &client : ServerInfo::getInstance().clients()) {
+							for (Client &client : m_info.clients()) {
 								client.tcpSocket->send(packet);
 							}
 
 							--i;
 							m_selector.remove(*client.tcpSocket);
-							ServerInfo::getInstance().removeClient(client.id);
+							m_info.removeClient(client.id);
 
-							if (ServerInfo::getInstance().clients().size() == 0) {
+							if (m_info.clients().size() == 0) {
 								m_tcpListener.close();
 								m_isRunning = false;
 								m_hasGameStarted = false;
@@ -126,7 +125,7 @@ void Server::handleGameEvents(Scene &scene) {
 			if (areAllClientsReady) {
 				sf::Packet packet;
 				packet << Network::Command::GameStart;
-				for (Client &client : ServerInfo::getInstance().clients()) {
+				for (Client &client : m_info.clients()) {
 					client.tcpSocket->send(packet);
 				}
 

@@ -19,6 +19,7 @@
 #include <SFML/Network/UdpSocket.hpp>
 
 #include "Scene.hpp"
+#include "ServerInfo.hpp"
 
 class Server {
 	public:
@@ -31,11 +32,15 @@ class Server {
 		bool isRunning() const { return m_isRunning; }
 		bool hasGameStarted() const { return m_hasGameStarted; }
 
+		ServerInfo &info() { return m_info; }
+
 		sf::UdpSocket &udpSocket() { return m_udpSocket; }
 
 	private:
 		bool m_isRunning = true;
 		bool m_hasGameStarted = false;
+
+		ServerInfo m_info;
 
 		sf::UdpSocket m_udpSocket;
 

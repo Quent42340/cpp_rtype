@@ -18,7 +18,7 @@
 
 void GamePadController::update(SceneObject &object) {
 	if (object.has<PlayerComponent>()) {
-		Client *client = ServerInfo::getInstance().getClient(object.get<PlayerComponent>().clientId());
+		Client *client = m_serverInfo.getClient(object.get<PlayerComponent>().clientId());
 		if (client)
 			GamePad::init(client->inputHandler);
 	}

@@ -17,14 +17,18 @@
 #include <SFML/Network/UdpSocket.hpp>
 
 #include "AbstractController.hpp"
+#include "ServerInfo.hpp"
 
 class NetworkController : public AbstractController {
 	public:
-		NetworkController(sf::UdpSocket &socket) : m_socket(socket) {}
+		NetworkController(ServerInfo &serverInfo, sf::UdpSocket &socket)
+			: m_serverInfo(serverInfo), m_socket(socket) {}
 
 		void update(SceneObject &object) override;
 
 	private:
+		ServerInfo &m_serverInfo;
+
 		sf::UdpSocket &m_socket;
 };
 

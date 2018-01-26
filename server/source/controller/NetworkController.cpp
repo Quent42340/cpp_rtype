@@ -13,7 +13,6 @@
  */
 #include "Network.hpp"
 #include "NetworkController.hpp"
-#include "ServerInfo.hpp"
 
 #include "LifetimeComponent.hpp"
 #include "MovementComponent.hpp"
@@ -27,7 +26,7 @@ void NetworkController::update(SceneObject &object) {
 		auto &positionComponent = object.get<PositionComponent>();
 
 		bool hasGameStarted = true;
-		for (Client &client : ServerInfo::getInstance().clients()) {
+		for (Client &client : m_serverInfo.clients()) {
 			if (!client.isReady)
 				hasGameStarted = false;
 		}
@@ -40,7 +39,7 @@ void NetworkController::update(SceneObject &object) {
 			auto &spriteComponent = object.get<SpriteComponent>();
 			packet << spriteComponent.textureName();
 
-			for (Client &client : ServerInfo::getInstance().clients()) {
+			for (Client &client : m_serverInfo.clients()) {
 				client.tcpSocket->send(packet);
 			}
 
@@ -54,7 +53,7 @@ void NetworkController::update(SceneObject &object) {
 				packet << Network::Command::EntityState << object.name();
 				packet << positionComponent.x << positionComponent.y;
 				packet << movementComponent.v.x << movementComponent.v.y;
-				for (const Client &client : ServerInfo::getInstance().clients()) {
+				for (const Client &client : m_serverInfo.clients()) {
 					m_socket.send(packet, sf::IpAddress::Broadcast, client.port);
 				}
 
@@ -69,7 +68,7 @@ void NetworkController::update(SceneObject &object) {
 				sf::Packet packet;
 				packet << (object.type() != "Boss" ? Network::Command::EntityDie : Network::Command::GameWin) << object.name();
 
-				for (Client &client : ServerInfo::getInstance().clients()) {
+				for (Client &client : m_serverInfo.clients()) {
 					client.tcpSocket->send(packet);
 				}
 
