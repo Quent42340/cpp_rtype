@@ -38,8 +38,8 @@ GameState::GameState(const sf::IpAddress &serverAddress, u16 serverPort) {
 	m_readyText.setPosition(Config::screenWidth / 2.0f - m_readyText.getLocalBounds().width / 2.0f,
 	                        Config::screenHeight / 2.0f - m_readyText.getLocalBounds().height / 2.0f);
 
-	m_scene.addController(new LifetimeController);
-	m_scene.addView(new SpriteView);
+	m_scene.addController<LifetimeController>();
+	m_scene.addView<SpriteView>();
 }
 
 void GameState::onEvent(sf::Event &event) {

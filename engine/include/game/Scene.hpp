@@ -37,8 +37,17 @@ class Scene : public sf::Drawable {
 		SceneObjectList &objects() { return m_objects; }
 		const SceneObjectList &objects() const { return m_objects; }
 
-		void addController(AbstractController *controller) { m_controllerList.emplace_back(controller); }
-		void addView(AbstractView *view) { m_viewList.emplace_back(view); }
+		template<typename T, typename... Args>
+		auto addController(Args &&...args) -> typename std::enable_if<std::is_base_of<AbstractController, T>::value, T&>::type {
+			m_controllerList.emplace_back(new T(std::forward<Args>(args)...));
+			return *dynamic_cast<T*>(m_controllerList.back().get());
+		}
+
+		template<typename T, typename... Args>
+		auto addView(Args &&...args) -> typename std::enable_if<std::is_base_of<AbstractView, T>::value, T&>::type {
+			m_viewList.emplace_back(new T(std::forward<Args>(args)...));
+			return *dynamic_cast<T*>(m_viewList.back().get());
+		}
 
 	private:
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;

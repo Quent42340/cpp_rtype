@@ -28,11 +28,11 @@ void ServerApplication::init() {
 
 	m_resourceHandler.loadConfigFile<EnemyInfoLoader>("data/config/enemies.xml");
 
-	m_scene.addController(new LifetimeController);
-	m_scene.addController(new GamePadController);
-	m_scene.addController(new BehaviourController);
-	m_scene.addController(new MovementController);
-	m_scene.addController(new NetworkController);
+	m_scene.addController<LifetimeController>();
+	m_scene.addController<GamePadController>();
+	m_scene.addController<BehaviourController>();
+	m_scene.addController<MovementController>();
+	m_scene.addController<NetworkController>();
 
 	m_server.init();
 }
