@@ -21,7 +21,7 @@ void Server::init() {
 
 	m_udpSocket.setBlocking(false);
 
-	if (m_tcpListener.listen(4243) != sf::Socket::Done)
+	if (m_tcpListener.listen(4242) != sf::Socket::Done)
 		throw EXCEPTION("Network error: Listen failed");
 
 	m_tcpListener.setBlocking(false);
@@ -35,28 +35,30 @@ void Server::handleKeyState() {
 	u16 senderPort;
 	while (m_udpSocket.receive(packet, senderAddress, senderPort) == sf::Socket::Status::Done) {
 		Network::Command command;
+		u32 timestamp;
 		u16 clientId;
-		packet >> command >> clientId;
+		packet >> command >> timestamp >> clientId;
 
 		// std::cout << "UDP Message of type '" << Network::commandToString(command) << "' received from: " << senderAddress << ":" << senderPort << std::endl;
 
-		if (command == Network::Command::KeyPressed) {
-			u32 keyCode;
-			packet >> keyCode;
-			Client *client = m_info.getClient(clientId);
-			if (client)
-				client->inputHandler.setKeyPressed(keyCode, true);
-		}
-		else if (command == Network::Command::KeyReleased) {
-			u32 keyCode;
-			packet >> keyCode;
-			Client *client = m_info.getClient(clientId);
-			if (client)
-				client->inputHandler.setKeyPressed(keyCode, false);
+		if (m_previousKeyTimestamp < timestamp) {
+			m_previousKeyTimestamp = timestamp;
+
+			if (command == Network::Command::KeyState) {
+				Client *client = m_info.getClient(clientId);
+				while (client && !packet.endOfPacket()) {
+					u8 key;
+					bool isPressed;
+					packet >> key >> isPressed;
+
+					client->inputHandler.setKeyPressed(static_cast<GameKey>(key), isPressed);
+				}
+			}
 		}
 	}
 }
 
+// FIXME: Refactor this function
 void Server::handleGameEvents(Scene &scene) {
 	if (m_selector.wait(sf::milliseconds(10))) {
 		if (!m_hasGameStarted && m_selector.isReady(m_tcpListener)) {
@@ -79,7 +81,7 @@ void Server::handleGameEvents(Scene &scene) {
 				m_selector.add(*client.tcpSocket);
 
 				sf::Packet outPacket;
-				outPacket << Network::Command::ClientConnect << client.id;
+				outPacket << Network::Command::ClientOk << client.id;
 				client.tcpSocket->send(outPacket);
 				client.tcpSocket->setBlocking(false);
 			}

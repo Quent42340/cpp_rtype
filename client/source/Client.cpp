@@ -13,9 +13,12 @@
  */
 #include "AudioPlayer.hpp"
 #include "Client.hpp"
+#include "GameClock.hpp"
 #include "GameEndState.hpp"
+#include "GamePad.hpp"
 #include "HitboxComponent.hpp"
 #include "Image.hpp"
+#include "InputHandler.hpp"
 #include "Network.hpp"
 #include "NetworkComponent.hpp"
 #include "PlayerComponent.hpp"
@@ -27,6 +30,9 @@
 #include "TestEntityFactory.hpp"
 
 void Client::connect(sf::IpAddress serverAddress, u16 serverPort) {
+	m_serverAddress = serverAddress;
+	m_serverPort = serverPort;
+
 	m_tcpSocket.reset(new sf::TcpSocket);
 	if (serverAddress.toInteger() == 0 || m_tcpSocket->connect(serverAddress, serverPort, sf::seconds(5)) != sf::Socket::Done)
 		throw EXCEPTION("Network error: Unable to connect to server", serverAddress.toString() + ":" + std::to_string(serverPort));
@@ -43,8 +49,8 @@ void Client::connect(sf::IpAddress serverAddress, u16 serverPort) {
 
 	Network::Command command;
 	answer >> command;
-	if (command != Network::Command::ClientConnect)
-		throw EXCEPTION("Network error: Expected 'ClientConnect' packet.");
+	if (command != Network::Command::ClientOk)
+		throw EXCEPTION("Network error: Expected 'ClientOk' packet.");
 	answer >> m_id;
 
 	m_tcpSocket->setBlocking(false);
@@ -63,11 +69,25 @@ void Client::sendReady() {
 	m_tcpSocket->send(packet);
 }
 
-void Client::sendKey(u32 key, bool isPressed) {
-	sf::Packet packet;
-	packet << (isPressed ? Network::Command::KeyPressed : Network::Command::KeyReleased);
-	packet << m_id << key;
-	m_socket.send(packet, sf::IpAddress::Broadcast, 4242);
+void Client::sendKeyState() {
+	if (!m_keyUpdateTimer.isStarted())
+		m_keyUpdateTimer.start();
+
+	if (m_keyUpdateTimer.time() > 15) {
+		InputHandler *inputHandler = GamePad::getInputHandler();
+		if (inputHandler) {
+			sf::Packet packet;
+			packet << Network::Command::KeyState << GameClock::getTicks() << m_id;
+			for (auto &it : inputHandler->keysPressed()) {
+				packet << static_cast<u8>(it.first) << it.second;
+			}
+
+			m_socket.send(packet, m_serverAddress, m_serverPort);
+		}
+
+		m_keyUpdateTimer.reset();
+		m_keyUpdateTimer.start();
+	}
 }
 
 void Client::update(ApplicationStateStack &stateStack, Scene &scene, bool &hasGameStarted) {
@@ -116,7 +136,7 @@ void Client::handleEntityStateMessage(Scene &scene, sf::Packet &packet) {
 	sf::Vector2f v;
 	packet >> timestamp >> entityName >> pos.x >> pos.y >> v.x >> v.y;
 
-	std::cout << "New entity state at " << timestamp << ": " << entityName << " (" << pos.x << ";" << pos.y << ")" << std::endl;
+	// std::cout << "New entity state at " << timestamp << ": " << entityName << " (" << pos.x << ";" << pos.y << ")" << std::endl;
 
 	SceneObject *object = scene.objects().findByName(entityName);
 	if (object) {

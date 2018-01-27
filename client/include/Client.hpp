@@ -19,6 +19,7 @@
 
 #include "ApplicationStateStack.hpp"
 #include "Scene.hpp"
+#include "Timer.hpp"
 
 class Client {
 	public:
@@ -26,7 +27,7 @@ class Client {
 		void disconnect();
 
 		void sendReady();
-		void sendKey(u32 key, bool isPressed);
+		void sendKeyState();
 
 		void update(ApplicationStateStack &stateStack, Scene &scene, bool &hasGameStarted);
 
@@ -39,9 +40,14 @@ class Client {
 
 		u16 m_id;
 
+		sf::IpAddress m_serverAddress;
+		u16 m_serverPort;
+
 		std::unique_ptr<sf::TcpSocket> m_tcpSocket;
 
 		sf::UdpSocket m_socket;
+
+		Timer m_keyUpdateTimer;
 };
 
 #endif // CLIENT_HPP_

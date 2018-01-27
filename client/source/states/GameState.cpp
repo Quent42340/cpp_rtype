@@ -50,19 +50,14 @@ void GameState::onEvent(sf::Event &event) {
 		while (m_stateStack->size())
 			m_stateStack->pop();
 	}
-
-	if (event.type == sf::Event::KeyPressed && m_hasGameStarted) {
-		m_client.sendKey(event.key.code, true);
-	}
-	else if (event.type == sf::Event::KeyReleased && m_hasGameStarted) {
-		m_client.sendKey(event.key.code, false);
-	}
 }
 
 void GameState::update() {
 	m_client.update(*m_stateStack, m_scene, m_hasGameStarted);
 
 	if (m_hasGameStarted) {
+		m_client.sendKeyState();
+
 		if (m_background2.getPosition().x > Config::screenWidth - m_background2.width()) {
 			m_background.move(-0.1f, 0.0f);
 			m_background2.move(-0.1f, 0.0f);

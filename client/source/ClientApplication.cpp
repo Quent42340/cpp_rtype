@@ -37,6 +37,8 @@ void ClientApplication::init() {
 
 	Mouse::setWindow(m_window);
 
+	GamePad::init(m_keyboardHandler);
+
 	ApplicationStateStack::setInstance(m_stateStack);
 	ResourceHandler::setInstance(m_resourceHandler);
 
@@ -46,14 +48,10 @@ void ClientApplication::init() {
 	m_resourceHandler.add<sf::Font>("font-default").loadFromFile("resources/fonts/arial.ttf");
 	m_resourceHandler.add<sf::Font>("font-pdark").loadFromFile("resources/fonts/pdark.ttf");
 
-	GamePad::init(m_keyboardHandler);
-
 	ApplicationStateStack::getInstance().push<TitleScreenState>();
 }
 
 void ClientApplication::handleEvents() {
-	m_keyboardHandler.resetState();
-
 	sf::Event event;
 	while(m_window.pollEvent(event)) {
 		if (event.type == sf::Event::GainedFocus) {

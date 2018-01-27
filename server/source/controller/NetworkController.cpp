@@ -56,7 +56,7 @@ void NetworkController::update(SceneObject &object) {
 				packet << positionComponent.x << positionComponent.y;
 				packet << movementComponent.v.x << movementComponent.v.y;
 				for (const Client &client : m_serverInfo.clients()) {
-					std::cout << "Sending entity state for " << object.name() << " to " << client.address.toString() << ":" << client.port << std::endl;
+					// std::cout << "Sending entity state for " << object.name() << " to " << client.address.toString() << ":" << client.port << std::endl;
 					m_socket.send(packet, client.address, client.port);
 				}
 

@@ -24,7 +24,7 @@
 
 class GameState : public ApplicationState {
 	public:
-		GameState(const sf::IpAddress &serverAddress, u16 serverPort = 4243);
+		GameState(const sf::IpAddress &serverAddress, u16 serverPort = 4242);
 
 		void onEvent(sf::Event &event) override;
 

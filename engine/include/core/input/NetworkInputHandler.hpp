@@ -20,25 +20,11 @@
 
 class NetworkInputHandler : public InputHandler {
 	public:
-		void setKeyPressed(u32 key, bool isPressed) {
-			auto it = m_keys.find(key);
-			if (it != m_keys.end())
-				m_keysPressed[it->second] = isPressed;
+		void setKeyPressed(GameKey key, bool isPressed) {
+			auto it = m_keysPressed.find(key);
+			if (it != m_keysPressed.end())
+				it->second = isPressed;
 		}
-
-	private:
-		std::map<u32, GameKey> m_keys{
-			{sf::Keyboard::Left,      GameKey::Left},
-			{sf::Keyboard::Right,     GameKey::Right},
-			{sf::Keyboard::Up,        GameKey::Up},
-			{sf::Keyboard::Down,      GameKey::Down},
-
-			{sf::Keyboard::W,         GameKey::A},
-			{sf::Keyboard::X,         GameKey::B},
-
-			{sf::Keyboard::Return,    GameKey::Start},
-			{sf::Keyboard::BackSpace, GameKey::Select}
-		};
 };
 
 #endif // NETWORKINPUTHANDLER_HPP_

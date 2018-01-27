@@ -24,6 +24,8 @@ class GamePad {
 		static bool isKeyPressedOnce(GameKey key);
 		static bool isKeyPressedWithDelay(GameKey key, u16 delay);
 
+		static InputHandler *getInputHandler() { return inputHandler; }
+
 	private:
 		static InputHandler *inputHandler;
 };

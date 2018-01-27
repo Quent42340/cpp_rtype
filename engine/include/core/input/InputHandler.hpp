@@ -27,6 +27,8 @@ class InputHandler {
 		virtual bool isKeyPressedOnce(GameKey key);
 		virtual bool isKeyPressedWithDelay(GameKey key, u16 delay);
 
+		const std::map<GameKey, bool> &keysPressed() const { return m_keysPressed; }
+
 	protected:
 		std::map<GameKey, bool> m_keysPressed{
 			{GameKey::Left,     false},

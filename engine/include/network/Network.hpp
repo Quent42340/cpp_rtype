@@ -21,22 +21,22 @@
 namespace Network {
 	enum class Command {
 		// Client commands
-		ClientConnect,     // [NetworkCommand][u16 udp port/client id]
-		ClientReady,       // [NetworkCommand][u16 client id]
-		ClientDisconnect,  // [NetworkCommand]
+		ClientConnect,     // <TCP> [NetworkCommand][u16 udp port]
+		ClientOk,          // <TCP> [NetworkCommand][u16 client id]
+		ClientReady,       // <TCP> [NetworkCommand][u16 client id]
+		ClientDisconnect,  // <TCP> [NetworkCommand]
 
 		// Game commands
-		GameStart,         // [NetworkCommand]
-		GameWin,           // [NetworkCommand]
+		GameStart,         // <TCP> [NetworkCommand]
+		GameWin,           // <TCP> [NetworkCommand]
 
 		// Input commands
-		KeyPressed,        // [NetworkCommand][u32 sfml keycode]
-		KeyReleased,       // [NetworkCommand][u32 sfml keycode]
+		KeyState,          // <UDP> [NetworkCommand][u32 timestamp][u16 client id][u32 keycode][bool isPressed]...
 
 		// Game commands
-		EntityState,       // [NetworkCommand][u32 timestamp][std::string name][float x][float y][float vx][float vy]
-		EntityDie,         // [NetworkCommand][std::string name][float x][float y]
-		EntitySpawn        // [NetworkCommand][std::string name][std::string type][float x][float y][std::string texture]
+		EntityState,       // <UDP> [NetworkCommand][u32 timestamp][std::string name][float x][float y][float vx][float vy]
+		EntityDie,         // <TCP> [NetworkCommand][std::string name][float x][float y]
+		EntitySpawn        // <TCP> [NetworkCommand][std::string name][std::string type][float x][float y][std::string texture]
 	};
 
 	std::string commandToString(Command command);

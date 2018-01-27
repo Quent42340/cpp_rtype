@@ -2,14 +2,17 @@ TODO
 
 # High priority
 
+• DONE: Test on LAN, then on the Internet
+   ◦ DONE: Try to find a solution for packet loss/order
+      → An easy fix: A component in entities which stores the last packet timestamp they used
+                     for update. That way they shouldn’t accept older packets. (Same for keys?)
+   ◦ DONE: Improve key sending and intepretation (last step to LAN without lag)
 • TODO: *MANDATORY:* Change player color and initial position relatively to client ID
 • TODO: *MANDATORY:* Limit game to 4 players
 • TODO: *MANDATORY:* Add a HUD with score + health + time
-• TODO: Test on LAN, then on the Internet
-   ◦ TODO: Try to find a solution for packet loss/order
-      → An easy fix: A component in entities which stores the last packet timestamp they used
-                     for update. That way they shouldn’t accept older packets. (Same for keys?)
+• TODO: *WTFFFFFFFFFFFFF* Closing with Escape causes SEGFAULT????
 • TODO: Find why Windows + Linux has bugs (Windows + Windows and Linux + Linux are fine)
+   → Maybe fixed, to check.
 
 • TODO: *NE PAS OUBLIER LES HEADERS ET LES FIXME!!!!!!!!!!!!!!!!*
    → *Commande:* `sed -i '/Created/,+1d' fichier`
