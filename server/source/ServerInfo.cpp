@@ -13,9 +13,9 @@
  */
 #include "ServerInfo.hpp"
 
-Client &ServerInfo::addClient(u16 port, const std::shared_ptr<sf::TcpSocket> &socket) {
+Client &ServerInfo::addClient(sf::IpAddress address, u16 port, const std::shared_ptr<sf::TcpSocket> &socket) {
 	static u16 clientCount = 0;
-	m_clients.emplace_back(clientCount++, port, socket);
+	m_clients.emplace_back(clientCount++, address, port, socket);
 	return m_clients.back();
 }
 

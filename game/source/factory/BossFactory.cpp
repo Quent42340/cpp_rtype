@@ -34,7 +34,7 @@ SceneObject BossFactory::create() {
 	object.set<NetworkComponent>();
 	object.set<SceneObjectList>();
 	object.set<Timer>().start();
-	object.set<HealthComponent>(10000);
+	object.set<HealthComponent>(5000);
 	object.set<LifetimeComponent>([&] (const SceneObject &object) {
 		return object.get<HealthComponent>().life() == 0;
 	});

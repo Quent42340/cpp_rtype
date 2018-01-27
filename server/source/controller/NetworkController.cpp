@@ -11,6 +11,7 @@
  *
  * =====================================================================================
  */
+#include "GameClock.hpp"
 #include "Network.hpp"
 #include "NetworkController.hpp"
 
@@ -50,11 +51,13 @@ void NetworkController::update(SceneObject &object) {
 			auto &movementComponent = object.get<MovementComponent>();
 			if (networkComponent.timer.time() > 20) {
 				sf::Packet packet;
-				packet << Network::Command::EntityState << object.name();
+				packet << Network::Command::EntityState;
+				packet << GameClock::getTicks() << object.name();
 				packet << positionComponent.x << positionComponent.y;
 				packet << movementComponent.v.x << movementComponent.v.y;
 				for (const Client &client : m_serverInfo.clients()) {
-					m_socket.send(packet, sf::IpAddress::Broadcast, client.port);
+					std::cout << "Sending entity state for " << object.name() << " to " << client.address.toString() << ":" << client.port << std::endl;
+					m_socket.send(packet, client.address, client.port);
 				}
 
 				networkComponent.timer.reset();

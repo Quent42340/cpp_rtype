@@ -24,6 +24,8 @@ class NetworkComponent {
 
 		Timer timer{true};
 		bool hasSpawned = false;
+
+		u32 lastUpdateTimestamp = 0;
 };
 
 #endif // NETWORKCOMPONENT_HPP_

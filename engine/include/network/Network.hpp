@@ -34,7 +34,7 @@ namespace Network {
 		KeyReleased,       // [NetworkCommand][u32 sfml keycode]
 
 		// Game commands
-		EntityState,       // [NetworkCommand][std::string name][float x][float y][float vx][float vy]
+		EntityState,       // [NetworkCommand][u32 timestamp][std::string name][float x][float y][float vx][float vy]
 		EntityDie,         // [NetworkCommand][std::string name][float x][float y]
 		EntitySpawn        // [NetworkCommand][std::string name][std::string type][float x][float y][std::string texture]
 	};

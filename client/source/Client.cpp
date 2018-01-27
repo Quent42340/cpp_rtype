@@ -17,6 +17,7 @@
 #include "HitboxComponent.hpp"
 #include "Image.hpp"
 #include "Network.hpp"
+#include "NetworkComponent.hpp"
 #include "PlayerComponent.hpp"
 #include "PositionComponent.hpp"
 #include "ResourceHandler.hpp"
@@ -34,7 +35,7 @@ void Client::connect(sf::IpAddress serverAddress, u16 serverPort) {
 		throw EXCEPTION("Network error: Bind failed");
 
 	sf::Packet packet;
-	packet << Network::Command::ClientConnect << m_socket.getLocalPort();
+	packet << Network::Command::ClientConnect << sf::IpAddress::getLocalAddress().toString() << m_socket.getLocalPort();
 	m_tcpSocket->send(packet);
 
 	sf::Packet answer;
@@ -109,24 +110,30 @@ void Client::update(ApplicationStateStack &stateStack, Scene &scene, bool &hasGa
 }
 
 void Client::handleEntityStateMessage(Scene &scene, sf::Packet &packet) {
+	u32 timestamp;
 	std::string entityName;
 	sf::Vector2f pos;
 	sf::Vector2f v;
-	packet >> entityName >> pos.x >> pos.y >> v.x >> v.y;
+	packet >> timestamp >> entityName >> pos.x >> pos.y >> v.x >> v.y;
 
-	// std::cout << "Movement: " << entityName << " (" << pos.x << ";" << pos.y << ")" << std::endl;
+	std::cout << "New entity state at " << timestamp << ": " << entityName << " (" << pos.x << ";" << pos.y << ")" << std::endl;
 
 	SceneObject *object = scene.objects().findByName(entityName);
 	if (object) {
-		object->set<PositionComponent>(pos);
+		auto &networkComponent = object->get<NetworkComponent>();
+		if (networkComponent.lastUpdateTimestamp < timestamp) {
+			networkComponent.lastUpdateTimestamp = timestamp;
 
-		if (object->has<PlayerComponent>()) {
-			if (v.y == 0)
-				object->get<Sprite>().setCurrentAnimation(0);
-			else if (v.y < 0)
-				object->get<Sprite>().setCurrentAnimation(2);
-			else if (v.y > 0)
-				object->get<Sprite>().setCurrentAnimation(1);
+			object->set<PositionComponent>(pos);
+
+			if (object->has<PlayerComponent>()) {
+				if (v.y == 0)
+					object->get<Sprite>().setCurrentAnimation(0);
+				else if (v.y < 0)
+					object->get<Sprite>().setCurrentAnimation(2);
+				else if (v.y > 0)
+					object->get<Sprite>().setCurrentAnimation(1);
+			}
 		}
 	}
 }
@@ -173,6 +180,7 @@ void Client::handleEntitySpawnMessage(Scene &scene, sf::Packet &packet) {
 
 	SceneObject object{entityName, entityType};
 	object.set<PositionComponent>(pos);
+	object.set<NetworkComponent>();
 	if (ResourceHandler::getInstance().has(textureName + "-sprite"))
 		object.set<Sprite>(ResourceHandler::getInstance().get<Sprite>(textureName + "-sprite"));
 	else

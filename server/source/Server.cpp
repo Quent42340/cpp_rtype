@@ -69,10 +69,12 @@ void Server::handleGameEvents(Scene &scene) {
 				packet >> command;
 				if (command != Network::Command::ClientConnect)
 					throw EXCEPTION("Network error: Expected 'ClientConnect' packet.");
-				u16 port;
-				packet >> port;
 
-				Client &client = m_info.addClient(port, clientSocket);
+				std::string address;
+				u16 port;
+				packet >> address >> port;
+
+				Client &client = m_info.addClient(address, port, clientSocket);
 				scene.addObject(TestEntityFactory::create(20, 50, client.id));
 				m_selector.add(*client.tcpSocket);
 
