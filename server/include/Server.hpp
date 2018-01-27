@@ -40,8 +40,6 @@ class Server {
 		bool m_isRunning = true;
 		bool m_hasGameStarted = false;
 
-		u32 m_previousKeyTimestamp = 0;
-
 		ServerInfo m_info;
 
 		sf::UdpSocket m_udpSocket;

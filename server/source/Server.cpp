@@ -12,8 +12,8 @@
  * =====================================================================================
  */
 #include "Network.hpp"
+#include "PlayerFactory.hpp"
 #include "Server.hpp"
-#include "TestEntityFactory.hpp"
 
 void Server::init() {
 	if (m_udpSocket.bind(4242) != sf::Socket::Done)
@@ -41,12 +41,12 @@ void Server::handleKeyState() {
 
 		// std::cout << "UDP Message of type '" << Network::commandToString(command) << "' received from: " << senderAddress << ":" << senderPort << std::endl;
 
-		if (m_previousKeyTimestamp < timestamp) {
-			m_previousKeyTimestamp = timestamp;
+		if (command == Network::Command::KeyState) {
+			Client *client = m_info.getClient(clientId);
+			if (client && client->previousKeyTimestamp < timestamp) {
+				client->previousKeyTimestamp = timestamp;
 
-			if (command == Network::Command::KeyState) {
-				Client *client = m_info.getClient(clientId);
-				while (client && !packet.endOfPacket()) {
+				while (!packet.endOfPacket()) {
 					u8 key;
 					bool isPressed;
 					packet >> key >> isPressed;
@@ -77,7 +77,7 @@ void Server::handleGameEvents(Scene &scene) {
 				packet >> address >> port;
 
 				Client &client = m_info.addClient(address, port, clientSocket);
-				scene.addObject(TestEntityFactory::create(20, 50, client.id));
+				scene.addObject(PlayerFactory::create(20, 50 + 100 * client.id, client.id));
 				m_selector.add(*client.tcpSocket);
 
 				sf::Packet outPacket;

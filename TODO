@@ -2,17 +2,12 @@ TODO
 
 # High priority
 
-• DONE: Test on LAN, then on the Internet
-   ◦ DONE: Try to find a solution for packet loss/order
-      → An easy fix: A component in entities which stores the last packet timestamp they used
-                     for update. That way they shouldn’t accept older packets. (Same for keys?)
-   ◦ DONE: Improve key sending and intepretation (last step to LAN without lag)
-• TODO: *MANDATORY:* Change player color and initial position relatively to client ID
-• TODO: *MANDATORY:* Limit game to 4 players
+• TODO: *MANDATORY:* Limit game to 5 players (blue, red, green, cyan, magenta)
 • TODO: *MANDATORY:* Add a HUD with score + health + time
 • TODO: *WTFFFFFFFFFFFFF* Closing with Escape causes SEGFAULT????
 • TODO: Find why Windows + Linux has bugs (Windows + Windows and Linux + Linux are fine)
    → Maybe fixed, to check.
+• TODO: Test multiplayer on LAN and on the Internet
 
 • TODO: *NE PAS OUBLIER LES HEADERS ET LES FIXME!!!!!!!!!!!!!!!!*
    → *Commande:* `sed -i '/Created/,+1d' fichier`
@@ -112,6 +107,7 @@ Notes:
    ◦ DONE: Can’t join the server again if I leave
       ◦ DONE: Reset the server on game end instead of closing it
    ◦ TODO: When you try to connect to an already running server, the timeout doesn’t work, it’ll wait the end of the game
+      ◦ TODO: Send a `ClientKo` instead of letting the client wait for `ServerOk`
 • TODO: Documentation
    ◦ TODO: *MANDATORY:* Binary protocol (RFC, ascii format, printed)
    ◦ TODO: *MANDATORY:* UML class + sequence diagram (printed)

@@ -44,7 +44,49 @@
 		</animation>
 	</sprite>
 
-	<sprite name="spaceship-players" width="33" height="18">
+	<sprite name="spaceship-player1" width="33" height="15">
+		<animation delay="1" loop="0">
+			<frame id="2"/>
+		</animation>
+		<animation delay="150" loop="0">
+			<frame id="1"/>
+			<frame id="0"/>
+		</animation>
+		<animation delay="150" loop="0">
+			<frame id="3"/>
+			<frame id="4"/>
+		</animation>
+	</sprite>
+
+	<sprite name="spaceship-player2" width="33" height="15">
+		<animation delay="1" loop="0">
+			<frame id="2"/>
+		</animation>
+		<animation delay="150" loop="0">
+			<frame id="1"/>
+			<frame id="0"/>
+		</animation>
+		<animation delay="150" loop="0">
+			<frame id="3"/>
+			<frame id="4"/>
+		</animation>
+	</sprite>
+
+	<sprite name="spaceship-player3" width="33" height="15">
+		<animation delay="1" loop="0">
+			<frame id="2"/>
+		</animation>
+		<animation delay="150" loop="0">
+			<frame id="1"/>
+			<frame id="0"/>
+		</animation>
+		<animation delay="150" loop="0">
+			<frame id="3"/>
+			<frame id="4"/>
+		</animation>
+	</sprite>
+
+	<sprite name="spaceship-player4" width="33" height="15">
 		<animation delay="1" loop="0">
 			<frame id="2"/>
 		</animation>

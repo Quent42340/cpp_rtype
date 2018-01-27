@@ -26,9 +26,6 @@
 #include "ResourceHandler.hpp"
 #include "Sprite.hpp"
 
-#include "TestBulletFactory.hpp"
-#include "TestEntityFactory.hpp"
-
 void Client::connect(sf::IpAddress serverAddress, u16 serverPort) {
 	m_serverAddress = serverAddress;
 	m_serverPort = serverPort;

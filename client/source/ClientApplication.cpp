@@ -61,7 +61,8 @@ void ClientApplication::handleEvents() {
 			AudioPlayer::pauseMusic();
 		}
 
-		m_stateStack.top().onEvent(event);
+		if (!m_stateStack.empty())
+			m_stateStack.top().onEvent(event);
 
 		m_keyboardHandler.updateState(event);
 	}
@@ -93,7 +94,7 @@ void ClientApplication::mainLoop() {
 		handleEvents();
 
 		m_clock.updateGame([&] {
-			if (m_stateStack.size() > 0)
+			if (!m_stateStack.empty())
 				m_stateStack.top().update();
 
 			m_stateStack.clearDeletedStates();
@@ -102,7 +103,7 @@ void ClientApplication::mainLoop() {
 		m_clock.drawGame([&] {
 			m_window.clear();
 
-			if (m_stateStack.size() > 0)
+			if (!m_stateStack.empty())
 				m_window.draw(m_stateStack.top());
 
 			m_window.display();

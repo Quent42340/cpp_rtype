@@ -16,14 +16,14 @@
 
 bool InputHandler::isKeyPressedOnce(GameKey key) {
 	if(isKeyPressed(key)) {
-		if(!m_keysPressed[key]) {
-			m_keysPressed[key] = true;
+		if(!m_keysPressedOnce[key]) {
+			m_keysPressedOnce[key] = true;
 			return true;
 		} else {
 			return false;
 		}
 	} else {
-		m_keysPressed[key] = false;
+		m_keysPressedOnce[key] = false;
 		return false;
 	}
 }

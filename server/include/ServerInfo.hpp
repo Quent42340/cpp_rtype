@@ -33,6 +33,8 @@ struct Client {
 	sf::IpAddress address;
 	u16 port;
 
+	u32 previousKeyTimestamp = 0;
+
 	std::shared_ptr<sf::TcpSocket> tcpSocket;
 
 	NetworkInputHandler inputHandler;

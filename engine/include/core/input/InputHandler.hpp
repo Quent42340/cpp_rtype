@@ -43,6 +43,19 @@ class InputHandler {
 			{GameKey::Select,   false}
 		};
 
+		std::map<GameKey, bool> m_keysPressedOnce{
+			{GameKey::Left,     false},
+			{GameKey::Right,    false},
+			{GameKey::Up,       false},
+			{GameKey::Down,     false},
+
+			{GameKey::A,        false},
+			{GameKey::B,        false},
+
+			{GameKey::Start,    false},
+			{GameKey::Select,   false}
+		};
+
 		std::map<GameKey, u32> m_lastTimePressed{
 			{GameKey::Left,     0},
 			{GameKey::Right,    0},

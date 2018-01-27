@@ -31,11 +31,3 @@ void KeyboardHandler::updateState(const sf::Event &event) {
 	}
 }
 
-bool KeyboardHandler::isKeyPressed(GameKey key) {
-	return sf::Keyboard::isKeyPressed(m_keys[key]);
-}
-
-bool KeyboardHandler::isKeyPressedOnce(GameKey key) {
-	return m_keysPressed[key];
-}
-

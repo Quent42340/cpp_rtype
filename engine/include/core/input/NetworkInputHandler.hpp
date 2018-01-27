@@ -21,9 +21,7 @@
 class NetworkInputHandler : public InputHandler {
 	public:
 		void setKeyPressed(GameKey key, bool isPressed) {
-			auto it = m_keysPressed.find(key);
-			if (it != m_keysPressed.end())
-				it->second = isPressed;
+			m_keysPressed[key] = isPressed;
 		}
 };
 

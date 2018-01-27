@@ -25,9 +25,6 @@ class KeyboardHandler : public InputHandler {
 
 		void updateState(const sf::Event &event);
 
-		bool isKeyPressed(GameKey key) override;
-		bool isKeyPressedOnce(GameKey key) override;
-
 	private:
 		std::map<GameKey, sf::Keyboard::Key> m_keys{
 			{GameKey::Left,     sf::Keyboard::Left},

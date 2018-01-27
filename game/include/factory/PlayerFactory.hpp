@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  TestEntityFactory.hpp
+ *       Filename:  PlayerFactory.hpp
  *
  *    Description:
  *
@@ -11,12 +11,12 @@
  *
  * =====================================================================================
  */
-#ifndef TESTENTITYFACTORY_HPP_
-#define TESTENTITYFACTORY_HPP_
+#ifndef PLAYERFACTORY_HPP_
+#define PLAYERFACTORY_HPP_
 
 #include "SceneObject.hpp"
 
-class TestEntityFactory {
+class PlayerFactory {
 	public:
 		static SceneObject create(u16 x, u16 y, u16 clientId);
 
@@ -25,4 +25,4 @@ class TestEntityFactory {
 		static void checkOutOfMap(SceneObject &object);
 };
 
-#endif // TESTENTITYFACTORY_HPP_
+#endif // PLAYERFACTORY_HPP_

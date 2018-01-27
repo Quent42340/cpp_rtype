@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  TestEntityFactory.cpp
+ *       Filename:  PlayerFactory.cpp
  *
  *    Description:
  *
@@ -24,13 +24,13 @@
 #include "Network.hpp"
 #include "NetworkComponent.hpp"
 #include "PlayerComponent.hpp"
+#include "PlayerFactory.hpp"
 #include "PositionComponent.hpp"
 #include "SceneObjectList.hpp"
 #include "SpriteComponent.hpp"
 #include "TestBulletFactory.hpp"
-#include "TestEntityFactory.hpp"
 
-SceneObject TestEntityFactory::create(u16 x, u16 y, u16 clientId) {
+SceneObject PlayerFactory::create(u16 x, u16 y, u16 clientId) {
 	static size_t playerCount = 0;
 	SceneObject object{"Player" + std::to_string(playerCount++), "Player"};
 	object.set<SceneObjectList>();
@@ -47,8 +47,8 @@ SceneObject TestEntityFactory::create(u16 x, u16 y, u16 clientId) {
 	collisionComponent.addAction(&playerCollisionAction);
 	collisionComponent.addChecker(&checkOutOfMap);
 
-	object.set<SpriteComponent>("spaceship-players");
-	object.set<HitboxComponent>(0, 0, 33, 18);
+	object.set<SpriteComponent>("spaceship-player" + std::to_string(clientId + 1));
+	object.set<HitboxComponent>(0, 0, 33, 15);
 
 	auto &behaviourComponent = object.set<BehaviourComponent>();
 	behaviourComponent.addBehaviour<EasyBehaviour>("Update", [] (SceneObject &object) {
@@ -62,7 +62,7 @@ SceneObject TestEntityFactory::create(u16 x, u16 y, u16 clientId) {
 	return object;
 }
 
-void TestEntityFactory::playerCollisionAction(SceneObject &player, SceneObject &object, bool inCollision) {
+void PlayerFactory::playerCollisionAction(SceneObject &player, SceneObject &object, bool inCollision) {
 	if (inCollision && (object.type() == "EnemyBullet" || object.type() == "Enemy" || object.type() == "Boss")
 	 && !player.get<LifetimeComponent>().dead(player)
 	 && !object.get<LifetimeComponent>().dead(object)) {
@@ -74,7 +74,7 @@ void TestEntityFactory::playerCollisionAction(SceneObject &player, SceneObject &
 	}
 }
 
-void TestEntityFactory::checkOutOfMap(SceneObject &object) {
+void PlayerFactory::checkOutOfMap(SceneObject &object) {
 	auto &movementComponent = object.get<MovementComponent>();
 	if (object.get<PositionComponent>().x + movementComponent.v.x + object.get<HitboxComponent>().currentHitbox()->width > Config::screenWidth
 	 || object.get<PositionComponent>().x + movementComponent.v.x < 0)

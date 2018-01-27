@@ -15,5 +15,9 @@
 	<texture folder="spaceship" name="enemy1"/>
 	<texture folder="spaceship" name="enemy2"/>
 	<texture folder="spaceship" name="enemy3"/>
-	<texture folder="spaceship" name="players"/>
+
+	<texture folder="spaceship" name="player1"/>
+	<texture folder="spaceship" name="player2"/>
+	<texture folder="spaceship" name="player3"/>
+	<texture folder="spaceship" name="player4"/>
 </textures>

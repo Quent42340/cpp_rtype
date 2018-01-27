@@ -62,6 +62,21 @@ void GameState::update() {
 			m_background.move(-0.1f, 0.0f);
 			m_background2.move(-0.1f, 0.0f);
 		}
+
+		// FIXME: Use LifetimeController
+		for (size_t i = 0 ; i < m_scene.objects().size() ; ++i) {
+			SceneObject &object = m_scene.objects()[i];
+			if (object.has<Sprite>()) {
+				auto &sprite = object.get<Sprite>();
+				sprite.updateAnimations();
+
+				if (object.type() == "Effect" && sprite.hasAnimations() && sprite.currentAnimation().isFinished()) {
+					m_scene.objects().remove(i--);
+				}
+			}
+		}
+
+		m_scene.update();
 	}
 	else if (GamePad::isKeyPressedOnce(GameKey::Start)) {
 		m_client.sendReady();
@@ -70,21 +85,6 @@ void GameState::update() {
 		m_readyText.setPosition(Config::screenWidth / 2.0f - m_readyText.getLocalBounds().width / 2.0f,
 		                        Config::screenHeight / 2.0f - m_readyText.getLocalBounds().height / 2.0f);
 	}
-
-	// FIXME: Use LifetimeController
-	for (size_t i = 0 ; i < m_scene.objects().size() ; ++i) {
-		SceneObject &object = m_scene.objects()[i];
-		if (object.has<Sprite>()) {
-			auto &sprite = object.get<Sprite>();
-			sprite.updateAnimations();
-
-			if (object.type() == "Effect" && sprite.hasAnimations() && sprite.currentAnimation().isFinished()) {
-				m_scene.objects().remove(i--);
-			}
-		}
-	}
-
-	m_scene.update();
 }
 
 void GameState::draw(sf::RenderTarget &target, sf::RenderStates states) const {
