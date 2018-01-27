@@ -4,17 +4,14 @@ TODO
 
 • TODO: *MANDATORY:* Limit game to 5 players (blue, red, green, cyan, magenta)
 • TODO: *MANDATORY:* Add a HUD with score + health + time
-• TODO: *WTFFFFFFFFFFFFF* Closing with Escape causes SEGFAULT????
-• TODO: Find why Windows + Linux has bugs (Windows + Windows and Linux + Linux are fine)
-   → Maybe fixed, to check.
-• TODO: Test multiplayer on LAN and on the Internet
+• TODO: Test multiplayer on LAN and on the Internet, on the same platform and between Win and Linux
 
 • TODO: *NE PAS OUBLIER LES HEADERS ET LES FIXME!!!!!!!!!!!!!!!!*
    → *Commande:* `sed -i '/Created/,+1d' fichier`
 
 # Low priority
 
-• TODO: Add a script `pack_for_windows.sh` which will pack executables, resources and dlls
+• DONE: Add a script `pack_for_windows.sh` which will pack executables, resources and dlls
 • TODO: Add an AUR package, just for fun
 
 # Others

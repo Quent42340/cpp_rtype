@@ -36,4 +36,6 @@ rtype_server
 test_udp/client/client
 test_udp/server/server
 Notes
+rtype_windows
+*.zip
 
