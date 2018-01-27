@@ -20,7 +20,7 @@ int main() {
 		if (app.run())
 			isRunning = false;
 		else
-			sf::sleep(sf::seconds(2));
+			sf::sleep(sf::seconds(4));
 	}
 }
 

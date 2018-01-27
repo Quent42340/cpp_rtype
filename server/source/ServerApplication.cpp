@@ -25,7 +25,7 @@ void ServerApplication::init() {
 
 	ResourceHandler::setInstance(m_resourceHandler);
 
-	m_resourceHandler.loadConfigFile<EnemyInfoLoader>("data/config/enemies.xml");
+	m_resourceHandler.loadConfigFile<EnemyInfoLoader>("resources/config/enemies.xml");
 
 	m_server.init();
 

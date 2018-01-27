@@ -26,7 +26,7 @@ void AudioLoader::load(const char *xmlFilename, ResourceHandler &handler) {
 		int volume = musicElement->IntAttribute("volume");
 
 		sf::Music &music = handler.add<sf::Music>("music-" + name);
-		music.openFromFile("audio/music/" + name + ".ogg");
+		music.openFromFile("resources/audio/music/" + name + ".ogg");
 		music.setVolume(volume);
 
 		musicElement = musicElement->NextSiblingElement("music");
@@ -38,7 +38,7 @@ void AudioLoader::load(const char *xmlFilename, ResourceHandler &handler) {
 		int volume = soundElement->IntAttribute("volume");
 
 		sf::Music &music = handler.add<sf::Music>("sound-" + name);
-		music.openFromFile("audio/sound/" + name + ".ogg");
+		music.openFromFile("resources/audio/sound/" + name + ".ogg");
 		music.setVolume(volume);
 
 		soundElement = soundElement->NextSiblingElement("sound");

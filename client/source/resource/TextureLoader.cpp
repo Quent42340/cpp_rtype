@@ -25,7 +25,7 @@ void TextureLoader::load(const char *xmlFilename, ResourceHandler &handler) {
 		std::string name = textureElement->Attribute("name");
 
 		sf::Texture &texture = handler.add<sf::Texture>(folder + "-" + name);
-		texture.loadFromFile("graphics/" + folder + "/" + name + ".png");
+		texture.loadFromFile("resources/graphics/" + folder + "/" + name + ".png");
 
 		textureElement = textureElement->NextSiblingElement("texture");
 	}

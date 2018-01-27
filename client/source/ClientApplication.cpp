@@ -40,11 +40,11 @@ void ClientApplication::init() {
 	ApplicationStateStack::setInstance(m_stateStack);
 	ResourceHandler::setInstance(m_resourceHandler);
 
-	m_resourceHandler.loadConfigFile<AudioLoader>("data/config/audio.xml");
-	m_resourceHandler.loadConfigFile<TextureLoader>("data/config/textures.xml");
-	m_resourceHandler.loadConfigFile<SpriteLoader>("data/config/sprites.xml");
-	m_resourceHandler.add<sf::Font>("font-default").loadFromFile("fonts/arial.ttf");
-	m_resourceHandler.add<sf::Font>("font-pdark").loadFromFile("fonts/pdark.ttf");
+	m_resourceHandler.loadConfigFile<AudioLoader>("resources/config/audio.xml");
+	m_resourceHandler.loadConfigFile<TextureLoader>("resources/config/textures.xml");
+	m_resourceHandler.loadConfigFile<SpriteLoader>("resources/config/sprites.xml");
+	m_resourceHandler.add<sf::Font>("font-default").loadFromFile("resources/fonts/arial.ttf");
+	m_resourceHandler.add<sf::Font>("font-pdark").loadFromFile("resources/fonts/pdark.ttf");
 
 	GamePad::init(m_keyboardHandler);
 

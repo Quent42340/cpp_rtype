@@ -62,15 +62,19 @@ Notes:
    ◦ DONE: `ServerInfo` ne devrait pas être un singleton
       → Il est utilisé par `Server` et `NetworkController`
       → Le déplacer vers le dossier du serveur
-   ◦ TODO: Rendre `ResourceHandler` thread safe
-   ◦ TODO: Faire un dossier /resources pour les ressources
-      ◦ TODO: Déplacer /audio /fonts et /graphics dans /resources
-      ◦ TODO: Déplacer /data/config dans /resources
-   ◦ TODO: Transformer `SpawnerController` en vrai `Controller`
+   ◦ DONE: Créer un loader pour les musiques
+   ◦ DONE: Faire un dossier /resources pour les ressources
+      ◦ DONE: Déplacer /audio /fonts et /graphics dans /resources
+      ◦ DONE: Déplacer /data/config dans /resources
+   ◦ TODO: En attendant le système de lobby réutiliser les sockets du serveur pour toutes les games
    ◦ TODO: Faire un controlleur pour les explosions au lieu de gérer ça à la main
+      → Penser au fait que les bullets utiliseront probablement ce controlleur pour les hit
    ◦ TODO: Améliorer le formatage des animations dans le fichier XML
+   ◦ TODO: Rendre `ResourceHandler` thread safe, en préparation pour le système de lobby
+   ◦ TODO: Transformer `SpawnerController` en vrai `Controller`
+      → Actuellement impossible à cause des `CollisionHandler` ajoutés dans `Scene::addObject()`
    ◦ TODO: Remplacer la SFML2 par BoostASIO pour la partie réseau
-   ◦ TODO: /LOW/ Créer des loaders pour les fonts et les musiques
+   ◦ TODO: /LOW/ Créer un loader pour les fonts
    ◦ TODO: /LOW/ Remplacer tinyxml2 par Qt et virer le dossier /cmake
 • WIP: Network issues
    ◦ DONE: Enemy bullets disappear when enemy is killed
