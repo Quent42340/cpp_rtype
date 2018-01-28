@@ -34,14 +34,15 @@ SceneObject BossFactory::create() {
 	object.set<NetworkComponent>();
 	object.set<SceneObjectList>();
 	object.set<Timer>().start();
-	object.set<HealthComponent>(5000);
+	object.set<HealthComponent>(10000);
 	object.set<LifetimeComponent>([&] (const SceneObject &object) {
 		return object.get<HealthComponent>().life() == 0;
 	});
 
 	object.set<MovementComponent>(new EasyMovement([] (SceneObject &object) {
-		if (object.get<PositionComponent>().x > Config::screenWidth - object.get<HitboxComponent>().currentHitbox()->width)
+		if (object.get<PositionComponent>().x > Config::screenWidth - object.get<HitboxComponent>().currentHitbox()->width) {
 			object.get<MovementComponent>().v.x = -1;
+		}
 	})).speed = 0.8f;
 
 	object.set<SpriteComponent>("boss-boss1");

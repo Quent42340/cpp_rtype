@@ -66,7 +66,7 @@ void ServerApplication::mainLoop() {
 			m_server.handleKeyState();
 
 			m_clock.updateGame([&] {
-				m_spawnController.update(m_scene);
+				m_spawnController.update(m_server, m_scene);
 
 				m_scene.update();
 			});

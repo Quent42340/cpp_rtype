@@ -15,13 +15,14 @@
 #define SPAWNCONTROLLER_HPP_
 
 #include "Scene.hpp"
+#include "Server.hpp"
 #include "Timer.hpp"
 
 class SpawnController {
 	public:
 		SpawnController();
 
-		void update(Scene &m_scene);
+		void update(Server &server, Scene &scene);
 
 	private:
 		Timer m_spawnTimer;

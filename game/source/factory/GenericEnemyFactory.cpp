@@ -11,6 +11,8 @@
  *
  * =====================================================================================
  */
+#include <cmath>
+
 #include "BehaviourComponent.hpp"
 #include "CollisionComponent.hpp"
 #include "EasyBehaviour.hpp"
@@ -39,8 +41,10 @@ SceneObject GenericEnemyFactory::create(const EnemyInfo &info, const sf::Vector2
 		return checkOutOfMap(object) || object.get<HealthComponent>().life() == 0;
 	});
 
-	object.set<MovementComponent>(new EasyMovement([] (SceneObject &object) {
+	object.set<MovementComponent>(new EasyMovement([&] (SceneObject &object) {
 		object.get<MovementComponent>().v.x = -1;
+		if (info.movementType == "sinusoidal")
+			object.get<MovementComponent>().v.y = 3.0f * sin(object.get<PositionComponent>().x * 2 * M_PI / 180.0f);
 	})).speed = info.movementSpeed;
 
 	object.set<SpriteComponent>(info.texture);

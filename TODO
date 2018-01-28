@@ -3,7 +3,9 @@ TODO
 # High priority
 
 • TODO: *MANDATORY:* Limit game to 5 players (blue, red, green, cyan, magenta)
+• TODO: *MANDATORY:* Send `ClientRefused` when a client tries to join an already started game
 • TODO: *MANDATORY:* Add a HUD with score + health + time
+• TODO: *MANDATORY:* Do a very basic lobby system without GUI
 • TODO: Test multiplayer on LAN and on the Internet, on the same platform and between Win and Linux
 
 • TODO: *NE PAS OUBLIER LES HEADERS ET LES FIXME!!!!!!!!!!!!!!!!*
@@ -13,6 +15,9 @@ TODO
 
 • DONE: Add a script `pack_for_windows.sh` which will pack executables, resources and dlls
 • TODO: Add an AUR package, just for fun
+   → So impossible right now, resources need to be in a known place
+   → Maybe use ~/.local/share/rtype but the game won’t work if it’s not installed :/
+      → In that case check for local folder first, if /resources doesn’t exist check the other folder
 
 # Others
 
@@ -104,7 +109,7 @@ Notes:
    ◦ DONE: Can’t join the server again if I leave
       ◦ DONE: Reset the server on game end instead of closing it
    ◦ TODO: When you try to connect to an already running server, the timeout doesn’t work, it’ll wait the end of the game
-      ◦ TODO: Send a `ClientKo` instead of letting the client wait for `ServerOk`
+      ◦ TODO: Send a `ClientRefused` instead of letting the client wait for `ClientOk`
 • TODO: Documentation
    ◦ TODO: *MANDATORY:* Binary protocol (RFC, ascii format, printed)
    ◦ TODO: *MANDATORY:* UML class + sequence diagram (printed)
@@ -124,7 +129,7 @@ Notes:
       ◦ DONE: Add network-based movement
       ◦ DONE: Handle collisions with screen borders
       ◦ DONE: Handle movement animation
-      ◦ TODO: Handle player color
+      ◦ DONE: Handle player color
       ◦ TODO: Die animation
    ◦ WIP: Enemy implementation
       ◦ DONE: Add movement
