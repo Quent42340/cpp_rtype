@@ -20,4 +20,5 @@
 	<texture folder="spaceship" name="player2"/>
 	<texture folder="spaceship" name="player3"/>
 	<texture folder="spaceship" name="player4"/>
+	<texture folder="spaceship" name="player5"/>
 </textures>

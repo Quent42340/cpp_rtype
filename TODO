@@ -2,8 +2,8 @@ TODO
 
 # High priority
 
-• TODO: *MANDATORY:* Limit game to 5 players (blue, red, green, cyan, magenta)
-• TODO: *MANDATORY:* Send `ClientRefused` when a client tries to join an already started game
+• DONE: *MANDATORY:* Limit game to 5 players (blue, red, green, cyan, magenta)
+• DONE: *MANDATORY:* Send `ClientRefused` when a client tries to join an already started game
 • TODO: *MANDATORY:* Add a HUD with score + health + time
 • TODO: *MANDATORY:* Do a very basic lobby system without GUI
 • TODO: Test multiplayer on LAN and on the Internet, on the same platform and between Win and Linux

@@ -23,6 +23,7 @@ namespace Network {
 		// Client commands
 		ClientConnect,     // <TCP> [NetworkCommand][u16 udp port]
 		ClientOk,          // <TCP> [NetworkCommand][u16 client id]
+		ClientRefused,     // <TCP> [NetworkCommand]
 		ClientReady,       // <TCP> [NetworkCommand][u16 client id]
 		ClientDisconnect,  // <TCP> [NetworkCommand]
 

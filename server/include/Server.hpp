@@ -37,6 +37,9 @@ class Server {
 		sf::UdpSocket &udpSocket() { return m_udpSocket; }
 
 	private:
+		void handleNewConnections(Scene &scene);
+		void handleClientMessages();
+
 		bool m_isRunning = true;
 		bool m_hasGameStarted = false;
 

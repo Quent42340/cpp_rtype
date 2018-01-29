@@ -99,4 +99,18 @@
 			<frame id="4"/>
 		</animation>
 	</sprite>
+
+	<sprite name="spaceship-player5" width="33" height="15">
+		<animation delay="1" loop="0">
+			<frame id="2"/>
+		</animation>
+		<animation delay="150" loop="0">
+			<frame id="1"/>
+			<frame id="0"/>
+		</animation>
+		<animation delay="150" loop="0">
+			<frame id="3"/>
+			<frame id="4"/>
+		</animation>
+	</sprite>
 </animations>

@@ -19,6 +19,7 @@ std::string Network::commandToString(Network::Command command) {
 	std::map<Network::Command, std::string> commandNames = {
 		{Network::Command::ClientConnect,    "ClientConnect"},
 		{Network::Command::ClientOk,         "ClientOk"},
+		{Network::Command::ClientRefused,    "ClientRefused"},
 		{Network::Command::ClientReady,      "ClientReady"},
 		{Network::Command::ClientDisconnect, "ClientDisconnect"},
 		{Network::Command::GameStart,        "GameStart"},
