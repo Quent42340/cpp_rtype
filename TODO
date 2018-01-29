@@ -74,7 +74,9 @@ Notes:
    ◦ DONE: Faire un dossier /resources pour les ressources
       ◦ DONE: Déplacer /audio /fonts et /graphics dans /resources
       ◦ DONE: Déplacer /data/config dans /resources
-   ◦ TODO: En attendant le système de lobby réutiliser les sockets du serveur pour toutes les games
+   ◦ DONE: En attendant le système de lobby réutiliser les sockets du serveur pour toutes les games
+       ▸ DONE: Déplacer `Server` dans le main
+       ▸ DONE: Régler les problèmes d’animation du joueur sur sa deuxième partie
    ◦ TODO: Faire un controlleur pour les explosions au lieu de gérer ça à la main
       → Penser au fait que les bullets utiliseront probablement ce controlleur pour les hit
    ◦ TODO: Améliorer le formatage des animations dans le fichier XML

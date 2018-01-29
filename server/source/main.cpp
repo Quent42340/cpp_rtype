@@ -14,13 +14,28 @@
 #include "ServerApplication.hpp"
 
 int main() {
-	bool isRunning = true;
-	while (isRunning) {
-		ServerApplication app;
-		if (app.run())
-			isRunning = false;
-		else
-			sf::sleep(sf::seconds(4));
+	Server server;
+	try {
+		server.init();
+
+		while (true) {
+			server.setRunning(true);
+			server.setGameStarted(false);
+			ServerApplication app{server};
+			app.run();
+		}
+	}
+	catch(const Exception &e) {
+		std::cerr << "Fatal error " << e.what() << std::endl;
+		return 1;
+	}
+	catch(const std::exception &e) {
+		std::cerr << "Exception caught: " << e.what() << std::endl;
+		return 1;
+	}
+	catch(...) {
+		std::cerr << "Fatal error: Unknown error." << std::endl;
+		return 1;
 	}
 }
 

@@ -136,10 +136,11 @@ void Client::handleEntityStateMessage(Scene &scene, sf::Packet &packet) {
 	sf::Vector2f v;
 	packet >> timestamp >> entityName >> pos.x >> pos.y >> v.x >> v.y;
 
-	// std::cout << "New entity state at " << timestamp << ": " << entityName << " (" << pos.x << ";" << pos.y << ")" << std::endl;
+	// std::cout << "New entity state at " << timestamp << ": " << entityName << " (" << pos.x << ";" << pos.y << ") moving at (" << v.x << ";" << v.y << ")" << std::endl;
 
 	SceneObject *object = scene.objects().findByName(entityName);
 	if (object) {
+
 		auto &networkComponent = object->get<NetworkComponent>();
 		if (networkComponent.lastUpdateTimestamp < timestamp) {
 			networkComponent.lastUpdateTimestamp = timestamp;
@@ -206,7 +207,7 @@ void Client::handleEntitySpawnMessage(Scene &scene, sf::Packet &packet) {
 	else
 		object.set<Image>(textureName);
 
-	if (entityName == "Player" + std::to_string(m_id))
+	if (entityType == "Player")
 		object.set<PlayerComponent>(m_id);
 
 	if (entityType == "PlayerBullet")

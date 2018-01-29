@@ -13,9 +13,10 @@
  */
 #include "BehaviourComponent.hpp"
 #include "BehaviourController.hpp"
+#include "LifetimeComponent.hpp"
 
 void BehaviourController::update(SceneObject &object) {
-	if(object.has<BehaviourComponent>()) {
+	if(object.has<BehaviourComponent>() && (!object.has<LifetimeComponent>() || !object.get<LifetimeComponent>().dead(object))) {
 		object.get<BehaviourComponent>().update(object);
 	}
 }

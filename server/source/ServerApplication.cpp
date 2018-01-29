@@ -27,7 +27,7 @@ void ServerApplication::init() {
 
 	m_resourceHandler.loadConfigFile<EnemyInfoLoader>("resources/config/enemies.xml");
 
-	m_server.init();
+	// m_server.init();
 
 	m_scene.addController<LifetimeController>();
 	m_scene.addController<GamePadController>(m_server.info());
@@ -36,26 +36,9 @@ void ServerApplication::init() {
 	m_scene.addController<NetworkController>(m_server.info(), m_server.udpSocket());
 }
 
-int ServerApplication::run() {
-	int returnValue = 0;
-	try {
-		init();
-		mainLoop();
-	}
-	catch(const Exception &e) {
-		std::cerr << "Fatal error " << e.what() << std::endl;
-		returnValue = 1;
-	}
-	catch(const std::exception &e) {
-		std::cerr << "Exception caught: " << e.what() << std::endl;
-		returnValue = 1;
-	}
-	catch(...) {
-		std::cerr << "Fatal error: Unknown error." << std::endl;
-		return 1;
-	}
-
-	return returnValue;
+void ServerApplication::run() {
+	init();
+	mainLoop();
 }
 
 void ServerApplication::mainLoop() {

@@ -128,7 +128,7 @@ void Server::handleClientMessages() {
 					m_info.removeClient(client.id);
 
 					if (m_info.clients().size() == 0) {
-						m_tcpListener.close();
+						// m_tcpListener.close();
 						m_isRunning = false;
 						m_hasGameStarted = false;
 					}

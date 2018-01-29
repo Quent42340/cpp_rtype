@@ -22,9 +22,11 @@
 
 class ServerApplication {
 	public:
+		ServerApplication(Server &server) : m_server(server) {}
+
 		void init();
 
-		int run();
+		void run();
 		void mainLoop();
 
 	private:
@@ -33,7 +35,7 @@ class ServerApplication {
 		Scene m_scene;
 		SpawnController m_spawnController;
 
-		Server m_server;
+		Server &m_server;
 
 		ResourceHandler m_resourceHandler;
 };
