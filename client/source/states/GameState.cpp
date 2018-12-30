@@ -35,8 +35,7 @@ GameState::GameState(const sf::IpAddress &serverAddress, u16 serverPort) {
 	m_readyText.setString("Press Start when you're ready");
 	m_readyText.setCharacterSize(30);
 	m_readyText.setColor(gk::Color::White);
-	// FIXME
-	// m_readyText.setStyle(sf::Text::Bold);
+	m_readyText.setStyle(gk::Text::Bold);
 	m_readyText.setPosition(Config::screenWidth / 2.0f - m_readyText.getLocalBounds().width / 2.0f,
 	                        Config::screenHeight / 2.0f - m_readyText.getLocalBounds().height / 2.0f);
 

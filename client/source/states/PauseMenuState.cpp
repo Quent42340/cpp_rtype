@@ -24,8 +24,7 @@ PauseMenuState::PauseMenuState() {
 	m_text.setString("PAUSE");
 	m_text.setCharacterSize(60);
 	m_text.setColor(gk::Color::White);
-	// FIXME
-	// m_text.setStyle(sf::Text::Bold);
+	m_text.setStyle(gk::Text::Bold);
 
 	m_text.setPosition(Config::screenWidth / 2.0f - m_text.getLocalBounds().width / 2.0f + 5, 40);
 

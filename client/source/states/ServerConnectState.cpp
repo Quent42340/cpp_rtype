@@ -24,15 +24,13 @@ ServerConnectState::ServerConnectState() {
 	m_text.setFont(gk::ResourceHandler::getInstance().get<gk::Font>("font-pdark"));
 	m_text.setCharacterSize(60);
 	m_text.setColor(gk::Color::White);
-	// FIXME
-	// m_text.setStyle(sf::Text::Bold);
+	m_text.setStyle(gk::Text::Bold);
 	m_text.setString("Server address");
 	m_text.setPosition(Config::screenWidth / 2.0f - m_text.getLocalBounds().width / 2.0f + 5, 70);
 
 	m_errorText.setFont(gk::ResourceHandler::getInstance().get<gk::Font>("font-pdark"));
 	m_errorText.setCharacterSize(20);
-	// FIXME
-	// m_errorText.setStyle(sf::Text::Bold);
+	m_errorText.setStyle(gk::Text::Bold);
 
 	m_serverAddressInput.setCharacterLimit(15);
 	m_serverAddressInput.setSize(400, 50);

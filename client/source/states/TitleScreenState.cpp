@@ -24,8 +24,7 @@ TitleScreenState::TitleScreenState() {
 	m_rtype.setString("RType");
 	m_rtype.setCharacterSize(60);
 	m_rtype.setColor(gk::Color::Cyan);
-	// FIXME
-	// m_rtype.setStyle(sf::Text::Bold);
+	m_rtype.setStyle(gk::Text::Bold);
 	m_rtype.setPosition(Config::screenWidth / 2.0f - m_rtype.getLocalBounds().width / 2.0f + 5, 70);
 
 	m_play.setPosition(Config::screenWidth / 2.0f - m_play.width() / 2.0, 240);
