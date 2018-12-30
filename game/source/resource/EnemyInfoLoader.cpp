@@ -11,12 +11,14 @@
  *
  * =====================================================================================
  */
+#include <gk/core/XMLFile.hpp>
+#include <gk/resource/ResourceHandler.hpp>
+
 #include "EnemyInfo.hpp"
 #include "EnemyInfoLoader.hpp"
-#include "XMLFile.hpp"
 
-void EnemyInfoLoader::load(const char *xmlFilename, ResourceHandler &handler) {
-	XMLFile doc(xmlFilename);
+void EnemyInfoLoader::load(const char *xmlFilename, gk::ResourceHandler &handler) {
+	gk::XMLFile doc(xmlFilename);
 
 	tinyxml2::XMLElement *enemyElement = doc.FirstChildElement("enemies").FirstChildElement("enemy").ToElement();
 	while (enemyElement) {

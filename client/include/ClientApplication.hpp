@@ -14,34 +14,23 @@
 #ifndef CLIENTAPPLICATION_HPP_
 #define CLIENTAPPLICATION_HPP_
 
-#include <SFML/Graphics.hpp>
+#include <gk/core/CoreApplication.hpp>
+#include <gk/gl/Shader.hpp>
 
-#include "ApplicationStateStack.hpp"
-#include "GameClock.hpp"
 #include "KeyboardHandler.hpp"
-#include "ResourceHandler.hpp"
 
-class ClientApplication {
+class ClientApplication : public gk::CoreApplication {
 	public:
-		ClientApplication(int argc, char **argv);
+		ClientApplication(int argc, char **argv) : CoreApplication(argc, argv) {}
 
 		void init();
 
-		void handleEvents();
-
-		int run();
-		void mainLoop();
-
 	private:
-		sf::RenderWindow m_window;
+		void onEvent(const SDL_Event &event);
 
-		ApplicationStateStack m_stateStack;
-
-		GameClock m_clock;
+		gk::Shader m_shader;
 
 		KeyboardHandler m_keyboardHandler;
-
-		ResourceHandler m_resourceHandler;
 };
 
 #endif // CLIENTAPPLICATION_HPP_

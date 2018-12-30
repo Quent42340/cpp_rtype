@@ -16,8 +16,9 @@
 
 #include <functional>
 
+#include <gk/core/Timer.hpp>
+
 #include "SceneObject.hpp"
-#include "Timer.hpp"
 
 class LifetimeComponent {
 	using DeathChecker = std::function<bool(const SceneObject &)>;
@@ -45,7 +46,7 @@ class LifetimeComponent {
 		void setClientsNotified(bool areClientsNotified) { m_areClientsNotified = areClientsNotified; }
 
 	private:
-		Timer m_timer;
+		gk::Timer m_timer;
 
 		bool m_dead = false;
 		bool m_areClientsNotified = false;

@@ -14,13 +14,11 @@
 #ifndef NETWORKINPUTHANDLER_HPP_
 #define NETWORKINPUTHANDLER_HPP_
 
-#include <SFML/Window/Keyboard.hpp>
+#include <gk/core/input/InputHandler.hpp>
 
-#include "InputHandler.hpp"
-
-class NetworkInputHandler : public InputHandler {
+class NetworkInputHandler : public gk::InputHandler {
 	public:
-		void setKeyPressed(GameKey key, bool isPressed) {
+		void setKeyPressed(gk::GameKey key, bool isPressed) {
 			m_keysPressed[key] = isPressed;
 		}
 };

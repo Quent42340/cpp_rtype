@@ -17,7 +17,7 @@
 #include <memory>
 #include <stack>
 
-#include <SFML/System/Vector2.hpp>
+#include <gk/core/Vector2.hpp>
 
 #include "Movement.hpp"
 
@@ -49,7 +49,7 @@ class MovementComponent {
 			movements.push(_movement);
 		}
 
-		sf::Vector2f v{0, 0};
+		gk::Vector2f v{0, 0};
 
 		float speed = 1.0f;
 

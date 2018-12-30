@@ -14,23 +14,24 @@
 #ifndef GAMEENDSTATE_HPP_
 #define GAMEENDSTATE_HPP_
 
-#include "ApplicationState.hpp"
+#include <gk/core/ApplicationState.hpp>
+
 #include "Button.hpp"
 
-class GameEndState : public ApplicationState {
+class GameEndState : public gk::ApplicationState {
 	public:
 		GameEndState(bool isWinner);
 
-		void onEvent(sf::Event &event) override;
+		void onEvent(const SDL_Event &event) override;
 
 		void update() override;
 
 	private:
-		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
 
-		sf::Text m_text;
+		gk::Text m_text;
 
-		Image m_background{"background-space"};
+		gk::Image m_background{"background-space"};
 
 		Button m_leave{"Leave"};
 		Button m_exit{"Exit"};

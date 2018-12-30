@@ -11,11 +11,13 @@
  *
  * =====================================================================================
  */
+#include <gk/core/input/GamePad.hpp>
+
 #include "BehaviourComponent.hpp"
 #include "CollisionComponent.hpp"
 #include "Config.hpp"
 #include "EasyBehaviour.hpp"
-#include "GamePad.hpp"
+#include "GameKey.hpp"
 #include "GamePadMovement.hpp"
 #include "HealthComponent.hpp"
 #include "HitboxComponent.hpp"
@@ -52,9 +54,9 @@ SceneObject PlayerFactory::create(u16 x, u16 y, u16 clientId) {
 
 	auto &behaviourComponent = object.set<BehaviourComponent>();
 	behaviourComponent.addBehaviour<EasyBehaviour>("Update", [] (SceneObject &object) {
-		if (GamePad::isKeyPressedWithDelay(GameKey::A, 200) && !object.get<LifetimeComponent>().dead(object)) {
+		if (gk::GamePad::isKeyPressedWithDelay(GameKey::A, 200) && !object.get<LifetimeComponent>().dead(object)) {
 			auto &hitboxComponent = object.get<HitboxComponent>();
-			sf::Vector2f bulletPosition = object.get<PositionComponent>() + sf::Vector2f{(float)hitboxComponent.currentHitbox()->width, (float)hitboxComponent.currentHitbox()->height / 2 - 4};
+			gk::Vector2f bulletPosition = object.get<PositionComponent>() + gk::Vector2f{(float)hitboxComponent.currentHitbox()->width, (float)hitboxComponent.currentHitbox()->height / 2 - 4};
 			object.get<SceneObjectList>().addObject(TestBulletFactory::create("PlayerBullet", "bullet-basic", bulletPosition, {1, 0}, 4.0f));
 		}
 	});

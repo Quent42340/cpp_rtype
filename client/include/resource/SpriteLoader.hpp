@@ -14,11 +14,11 @@
 #ifndef SPRITELOADER_HPP_
 #define SPRITELOADER_HPP_
 
-#include "ResourceLoader.hpp"
+#include <gk/resource/IResourceLoader.hpp>
 
-class SpriteLoader : public ResourceLoader {
+class SpriteLoader : public gk::IResourceLoader {
 	public:
-		void load(const char *xmlFilename, ResourceHandler &handler);
+		void load(const char *xmlFilename, gk::ResourceHandler &handler) override;
 };
 
 #endif // SPRITELOADER_HPP_

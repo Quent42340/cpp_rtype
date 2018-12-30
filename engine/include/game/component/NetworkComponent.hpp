@@ -14,7 +14,7 @@
 #ifndef NETWORKCOMPONENT_HPP_
 #define NETWORKCOMPONENT_HPP_
 
-#include "Timer.hpp"
+#include <gk/core/Timer.hpp>
 
 class NetworkComponent {
 	public:
@@ -22,7 +22,7 @@ class NetworkComponent {
 			timer.start();
 		}
 
-		Timer timer{true};
+		gk::Timer timer{true};
 		bool hasSpawned = false;
 
 		u32 lastUpdateTimestamp = 0;

@@ -17,9 +17,10 @@
 #include <SFML/Network/TcpSocket.hpp>
 #include <SFML/Network/UdpSocket.hpp>
 
-#include "ApplicationStateStack.hpp"
+#include <gk/core/ApplicationStateStack.hpp>
+#include <gk/core/Timer.hpp>
+
 #include "Scene.hpp"
-#include "Timer.hpp"
 
 class Client {
 	public:
@@ -29,13 +30,13 @@ class Client {
 		void sendReady();
 		void sendKeyState();
 
-		void update(ApplicationStateStack &stateStack, Scene &scene, bool &hasGameStarted);
+		void update(gk::ApplicationStateStack &stateStack, Scene &scene, bool &hasGameStarted);
 
 		u16 id() const { return m_id; }
 
 	private:
 		void handleEntityStateMessage(Scene &scene, sf::Packet &packet);
-		bool handleEntityDieMessage(ApplicationStateStack &stateStack, Scene &scene, sf::Packet &packet);
+		bool handleEntityDieMessage(gk::ApplicationStateStack &stateStack, Scene &scene, sf::Packet &packet);
 		void handleEntitySpawnMessage(Scene &scene, sf::Packet &packet);
 
 		u16 m_id;
@@ -47,7 +48,7 @@ class Client {
 
 		sf::UdpSocket m_socket;
 
-		Timer m_keyUpdateTimer;
+		gk::Timer m_keyUpdateTimer;
 };
 
 #endif // CLIENT_HPP_

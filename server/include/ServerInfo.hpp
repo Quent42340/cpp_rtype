@@ -20,7 +20,8 @@
 
 #include <SFML/Network.hpp>
 
-#include "Exception.hpp"
+#include <gk/system/Exception.hpp>
+
 #include "NetworkInputHandler.hpp"
 
 struct Client {

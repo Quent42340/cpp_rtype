@@ -11,12 +11,14 @@
  *
  * =====================================================================================
  */
-#include "SpriteLoader.hpp"
-#include "Sprite.hpp"
-#include "XMLFile.hpp"
+#include <gk/core/XMLFile.hpp>
+#include <gk/gui/Sprite.hpp>
+#include <gk/resource/ResourceHandler.hpp>
 
-void SpriteLoader::load(const char *xmlFilename, ResourceHandler &handler) {
-	XMLFile doc(xmlFilename);
+#include "SpriteLoader.hpp"
+
+void SpriteLoader::load(const char *xmlFilename, gk::ResourceHandler &handler) {
+	gk::XMLFile doc(xmlFilename);
 
 	tinyxml2::XMLElement *spriteElement = doc.FirstChildElement("animations").FirstChildElement("sprite").ToElement();
 	while (spriteElement) {
@@ -24,14 +26,15 @@ void SpriteLoader::load(const char *xmlFilename, ResourceHandler &handler) {
 		u16 frameWidth = spriteElement->IntAttribute("width");
 		u16 frameHeight = spriteElement->IntAttribute("height");
 
-		Sprite &sprite = handler.add<Sprite>(name + "-sprite", name, frameWidth, frameHeight);
+		gk::Sprite &sprite = handler.add<gk::Sprite>(name + "-sprite", name, frameWidth, frameHeight);
 
 		tinyxml2::XMLElement *animationElement = spriteElement->FirstChildElement("animation");
+		if (animationElement) sprite.setAnimated(true);
 		while (animationElement) {
 			u32 delay = animationElement->IntAttribute("delay");
 			bool isLoop = animationElement->IntAttribute("loop");
 
-			SpriteAnimation animation(delay, isLoop);
+			gk::SpriteAnimation animation(delay, isLoop);
 
 			tinyxml2::XMLElement *frameElement = animationElement->FirstChildElement("frame");
 			while (frameElement) {

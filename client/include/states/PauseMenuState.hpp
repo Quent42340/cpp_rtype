@@ -14,23 +14,24 @@
 #ifndef PAUSEMENUSTATE_HPP_
 #define PAUSEMENUSTATE_HPP_
 
-#include "ApplicationState.hpp"
+#include <gk/core/ApplicationState.hpp>
+
 #include "Button.hpp"
 
-class PauseMenuState : public ApplicationState {
+class PauseMenuState : public gk::ApplicationState {
 	public:
 		PauseMenuState();
 
-		void onEvent(sf::Event &event) override;
+		void onEvent(const SDL_Event &event) override;
 
 		void update() override;
 
 	private:
-		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
 
-		Image m_background{"background-space"};
+		gk::Image m_background{"background-space"};
 
-		sf::Text m_text;
+		gk::Text m_text;
 
 		Button m_resume{"Resume"};
 		Button m_leave{"Leave"};

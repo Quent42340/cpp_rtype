@@ -14,11 +14,13 @@
 #ifndef TESTBULLETFACTORY_HPP_
 #define TESTBULLETFACTORY_HPP_
 
+#include <gk/core/Vector2.hpp>
+
 #include "SceneObject.hpp"
 
 class TestBulletFactory {
 	public:
-		static SceneObject create(const std::string &type, const std::string &textureName, const sf::Vector2f &pos, const sf::Vector2f &v, float speed);
+		static SceneObject create(const std::string &type, const std::string &textureName, const gk::Vector2f &pos, const gk::Vector2f &v, float speed);
 
 	private:
 		static bool checkOutOfMap(const SceneObject &object);

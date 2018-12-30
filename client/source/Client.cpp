@@ -11,20 +11,21 @@
  *
  * =====================================================================================
  */
-#include "AudioPlayer.hpp"
+#include <gk/audio/AudioPlayer.hpp>
+#include <gk/core/input/GamePad.hpp>
+#include <gk/core/input/InputHandler.hpp>
+#include <gk/gui/Image.hpp>
+#include <gk/gui/Sprite.hpp>
+#include <gk/resource/ResourceHandler.hpp>
+#include <gk/system/GameClock.hpp>
+
 #include "Client.hpp"
-#include "GameClock.hpp"
 #include "GameEndState.hpp"
-#include "GamePad.hpp"
 #include "HitboxComponent.hpp"
-#include "Image.hpp"
-#include "InputHandler.hpp"
 #include "Network.hpp"
 #include "NetworkComponent.hpp"
 #include "PlayerComponent.hpp"
 #include "PositionComponent.hpp"
-#include "ResourceHandler.hpp"
-#include "Sprite.hpp"
 
 void Client::connect(sf::IpAddress serverAddress, u16 serverPort) {
 	m_serverAddress = serverAddress;
@@ -74,10 +75,10 @@ void Client::sendKeyState() {
 		m_keyUpdateTimer.start();
 
 	if (m_keyUpdateTimer.time() > 15) {
-		InputHandler *inputHandler = GamePad::getInputHandler();
+		gk::InputHandler *inputHandler = gk::GamePad::getInputHandler();
 		if (inputHandler) {
 			sf::Packet packet;
-			packet << Network::Command::KeyState << GameClock::getTicks() << m_id;
+			packet << Network::Command::KeyState << gk::GameClock::getTicks() << m_id;
 			for (auto &it : inputHandler->keysPressed()) {
 				packet << static_cast<u8>(it.first) << it.second;
 			}
@@ -90,7 +91,7 @@ void Client::sendKeyState() {
 	}
 }
 
-void Client::update(ApplicationStateStack &stateStack, Scene &scene, bool &hasGameStarted) {
+void Client::update(gk::ApplicationStateStack &stateStack, Scene &scene, bool &hasGameStarted) {
 	sf::Packet packet;
 	sf::IpAddress senderAddress;
 	u16 senderPort;
@@ -132,8 +133,8 @@ void Client::update(ApplicationStateStack &stateStack, Scene &scene, bool &hasGa
 void Client::handleEntityStateMessage(Scene &scene, sf::Packet &packet) {
 	u32 timestamp;
 	std::string entityName;
-	sf::Vector2f pos;
-	sf::Vector2f v;
+	gk::Vector2f pos;
+	gk::Vector2f v;
 	packet >> timestamp >> entityName >> pos.x >> pos.y >> v.x >> v.y;
 
 	// std::cout << "New entity state at " << timestamp << ": " << entityName << " (" << pos.x << ";" << pos.y << ") moving at (" << v.x << ";" << v.y << ")" << std::endl;
@@ -149,17 +150,17 @@ void Client::handleEntityStateMessage(Scene &scene, sf::Packet &packet) {
 
 			if (object->has<PlayerComponent>()) {
 				if (v.y == 0)
-					object->get<Sprite>().setCurrentAnimation(0);
+					object->get<gk::Sprite>().setCurrentAnimation(0);
 				else if (v.y < 0)
-					object->get<Sprite>().setCurrentAnimation(2);
+					object->get<gk::Sprite>().setCurrentAnimation(2);
 				else if (v.y > 0)
-					object->get<Sprite>().setCurrentAnimation(1);
+					object->get<gk::Sprite>().setCurrentAnimation(1);
 			}
 		}
 	}
 }
 
-bool Client::handleEntityDieMessage(ApplicationStateStack &stateStack, Scene &scene, sf::Packet &packet) {
+bool Client::handleEntityDieMessage(gk::ApplicationStateStack &stateStack, Scene &scene, sf::Packet &packet) {
 	std::string entityName;
 	packet >> entityName;
 
@@ -168,12 +169,12 @@ bool Client::handleEntityDieMessage(ApplicationStateStack &stateStack, Scene &sc
 	SceneObject *entity = scene.objects().findByName(entityName);
 	if (entity) {
 		if (entity->type() == "Enemy" && entity->get<PositionComponent>().x >= 0) {
-			AudioPlayer::playSound("sound-boom");
+			gk::AudioPlayer::playSound("sound-boom");
 
 			static size_t boomEffectCount = 0;
 			SceneObject boomEffect{"BoomEffect" + std::to_string(boomEffectCount++), "Effect"};
 			boomEffect.set<PositionComponent>(entity->get<PositionComponent>());
-			boomEffect.set<Sprite>(ResourceHandler::getInstance().get<Sprite>("effect-boom-sprite"));
+			boomEffect.set<gk::Sprite>().load(gk::ResourceHandler::getInstance().get<gk::Sprite>("effect-boom-sprite"));
 			scene.addObject(std::move(boomEffect));
 		}
 
@@ -194,7 +195,7 @@ bool Client::handleEntityDieMessage(ApplicationStateStack &stateStack, Scene &sc
 void Client::handleEntitySpawnMessage(Scene &scene, sf::Packet &packet) {
 	std::string entityName;
 	std::string entityType;
-	sf::Vector2f pos;
+	gk::Vector2f pos;
 	std::string textureName;
 	packet >> entityName >> entityType >> pos.x >> pos.y;
 	packet >> textureName;
@@ -202,16 +203,16 @@ void Client::handleEntitySpawnMessage(Scene &scene, sf::Packet &packet) {
 	SceneObject object{entityName, entityType};
 	object.set<PositionComponent>(pos);
 	object.set<NetworkComponent>();
-	if (ResourceHandler::getInstance().has(textureName + "-sprite"))
-		object.set<Sprite>(ResourceHandler::getInstance().get<Sprite>(textureName + "-sprite"));
+	if (gk::ResourceHandler::getInstance().has(textureName + "-sprite"))
+		object.set<gk::Sprite>().load(gk::ResourceHandler::getInstance().get<gk::Sprite>(textureName + "-sprite"));
 	else
-		object.set<Image>(textureName);
+		object.set<gk::Image>(textureName);
 
 	if (entityType == "Player")
 		object.set<PlayerComponent>(m_id);
 
 	if (entityType == "PlayerBullet")
-		AudioPlayer::playSound("sound-bullet");
+		gk::AudioPlayer::playSound("sound-bullet");
 
 	scene.addObject(std::move(object));
 }

@@ -23,7 +23,7 @@
 void ServerApplication::init() {
 	std::srand(std::time(nullptr));
 
-	ResourceHandler::setInstance(m_resourceHandler);
+	gk::ResourceHandler::setInstance(m_resourceHandler);
 
 	m_resourceHandler.loadConfigFile<EnemyInfoLoader>("resources/config/enemies.xml");
 

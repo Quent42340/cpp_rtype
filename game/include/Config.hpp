@@ -14,7 +14,7 @@
 #ifndef CONFIG_HPP_
 #define CONFIG_HPP_
 
-#include "IntTypes.hpp"
+#include <gk/core/IntTypes.hpp>
 
 namespace Config {
 	const u16 screenWidth = 864;

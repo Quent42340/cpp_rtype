@@ -12,7 +12,6 @@
  * =====================================================================================
  */
 #include "CollisionHelper.hpp"
-#include "Utils.hpp"
 
 #include "CollisionComponent.hpp"
 #include "HitboxComponent.hpp"
@@ -37,8 +36,8 @@ bool CollisionHelper::inCollision(SceneObject &object1, SceneObject &object2) {
 		auto &hitbox2 = object2.get<HitboxComponent>();
 
 		if(hitbox1.currentHitbox() && hitbox2.currentHitbox()) {
-			sf::FloatRect rect1 = *hitbox1.currentHitbox();
-			sf::FloatRect rect2 = *hitbox2.currentHitbox();
+			gk::FloatRect rect1 = *hitbox1.currentHitbox();
+			gk::FloatRect rect2 = *hitbox2.currentHitbox();
 
 			rect1 += object1.get<PositionComponent>();
 			rect2 += object2.get<PositionComponent>();

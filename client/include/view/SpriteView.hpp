@@ -18,9 +18,9 @@
 
 class SpriteView : public AbstractView {
 	public:
-		void draw(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states);
+		void draw(const SceneObject &object, gk::RenderTarget &target, gk::RenderStates states) override;
 
-		void drawHitbox(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states);
+		void drawHitbox(const SceneObject &object, gk::RenderTarget &target, gk::RenderStates states);
 };
 
 #endif // SPRITEVIEW_HPP_

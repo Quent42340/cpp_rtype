@@ -11,11 +11,12 @@
  *
  * =====================================================================================
  */
+#include <gk/resource/ResourceHandler.hpp>
+
 #include "BossFactory.hpp"
 #include "Config.hpp"
 #include "GenericEnemyFactory.hpp"
 #include "SpawnController.hpp"
-#include "ResourceHandler.hpp"
 
 SpawnController::SpawnController() {
 	m_spawnTimer.start();
@@ -32,8 +33,8 @@ void SpawnController::update(Server &server, Scene &scene) {
 			m_bossSpawnTimer.start();
 		}
 
-		sf::Vector2f pos{Config::screenWidth + 20, static_cast<float>(std::rand() % (Config::screenHeight - 40))};
-		EnemyInfo &info = ResourceHandler::getInstance().get<EnemyInfo>("info-enemy" + std::to_string(rand() % 3 + 1));
+		gk::Vector2f pos{Config::screenWidth + 20, static_cast<float>(std::rand() % (Config::screenHeight - 40))};
+		EnemyInfo &info = gk::ResourceHandler::getInstance().get<EnemyInfo>("info-enemy" + std::to_string(rand() % 3 + 1));
 		scene.addObject(GenericEnemyFactory::create(info, pos));
 	}
 

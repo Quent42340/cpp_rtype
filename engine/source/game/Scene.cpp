@@ -11,8 +11,6 @@
  *
  * =====================================================================================
  */
-#include <SFML/Network.hpp>
-
 #include "CollisionComponent.hpp"
 #include "CollisionHelper.hpp"
 #include "Scene.hpp"
@@ -51,7 +49,7 @@ void Scene::update() {
 	}
 }
 
-void Scene::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+void Scene::draw(gk::RenderTarget &target, gk::RenderStates states) const {
 	for (auto &view : m_viewList)
 		view->draw(m_objects, target, states);
 }

@@ -25,7 +25,7 @@ int main() {
 			app.run();
 		}
 	}
-	catch(const Exception &e) {
+	catch(const gk::Exception &e) {
 		std::cerr << "Fatal error " << e.what() << std::endl;
 		return 1;
 	}

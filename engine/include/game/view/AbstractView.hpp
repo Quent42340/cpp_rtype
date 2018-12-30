@@ -14,15 +14,15 @@
 #ifndef ABSTRACTVIEW_HPP_
 #define ABSTRACTVIEW_HPP_
 
-#include <SFML/Graphics/RenderTarget.hpp>
+#include <gk/gl/RenderTarget.hpp>
 
 #include "SceneObjectList.hpp"
 
 class AbstractView {
 	public:
-		virtual void draw(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states) = 0;
+		virtual void draw(const SceneObject &object, gk::RenderTarget &target, gk::RenderStates states) = 0;
 
-		virtual void draw(const SceneObjectList &objectList, sf::RenderTarget &target, sf::RenderStates states) {
+		virtual void draw(const SceneObjectList &objectList, gk::RenderTarget &target, gk::RenderStates states) {
 			for(auto &object : objectList) {
 				draw(object, target, states);
 

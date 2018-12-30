@@ -51,7 +51,7 @@ void Server::handleKeyState() {
 					bool isPressed;
 					packet >> key >> isPressed;
 
-					client->inputHandler.setKeyPressed(static_cast<GameKey>(key), isPressed);
+					client->inputHandler.setKeyPressed(key, isPressed);
 				}
 			}
 		}

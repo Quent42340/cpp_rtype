@@ -14,7 +14,7 @@
 #ifndef PLAYERCOMPONENT_HPP_
 #define PLAYERCOMPONENT_HPP_
 
-#include "IntTypes.hpp"
+#include <gk/core/IntTypes.hpp>
 
 class PlayerComponent {
 	public:

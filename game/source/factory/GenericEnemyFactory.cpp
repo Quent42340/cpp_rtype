@@ -13,6 +13,8 @@
  */
 #include <cmath>
 
+#include <gk/core/Timer.hpp>
+
 #include "BehaviourComponent.hpp"
 #include "CollisionComponent.hpp"
 #include "EasyBehaviour.hpp"
@@ -29,13 +31,13 @@
 #include "SpriteComponent.hpp"
 #include "TestBulletFactory.hpp"
 
-SceneObject GenericEnemyFactory::create(const EnemyInfo &info, const sf::Vector2f &pos) {
+SceneObject GenericEnemyFactory::create(const EnemyInfo &info, const gk::Vector2f &pos) {
 	static size_t enemyCount = 0;
 	SceneObject object{info.name + std::to_string(enemyCount++), "Enemy"};
 	object.set<PositionComponent>(pos);
 	object.set<NetworkComponent>();
 	object.set<SceneObjectList>();
-	object.set<Timer>().start();
+	object.set<gk::Timer>().start();
 	object.set<HealthComponent>(info.health);
 	object.set<LifetimeComponent>([&] (const SceneObject &object) {
 		return checkOutOfMap(object) || object.get<HealthComponent>().life() == 0;
@@ -55,9 +57,9 @@ SceneObject GenericEnemyFactory::create(const EnemyInfo &info, const sf::Vector2
 
 	auto &behaviourComponent = object.set<BehaviourComponent>();
 	behaviourComponent.addBehaviour<EasyBehaviour>("Update", [&] (SceneObject &object) {
-		Timer &timer = object.get<Timer>();
+		gk::Timer &timer = object.get<gk::Timer>();
 		if (timer.time() > 1000 && !object.get<LifetimeComponent>().dead(object)) {
-			sf::Vector2f bulletPosition = object.get<PositionComponent>() + sf::Vector2f{0, (float)object.get<HitboxComponent>().currentHitbox()->height / 2 - 4};
+			gk::Vector2f bulletPosition = object.get<PositionComponent>() + gk::Vector2f{0, (float)object.get<HitboxComponent>().currentHitbox()->height / 2 - 4};
 			for (const BulletInfo &bulletInfo : info.bulletsInfo) {
 				object.get<SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, {bulletInfo.velocity.x, bulletInfo.velocity.y}, bulletInfo.speed));
 			}

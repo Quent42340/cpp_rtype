@@ -11,7 +11,8 @@
  *
  * =====================================================================================
  */
-#include "GamePad.hpp"
+#include <gk/core/input/GamePad.hpp>
+
 #include "GamePadController.hpp"
 #include "PlayerComponent.hpp"
 #include "ServerInfo.hpp"
@@ -20,7 +21,7 @@ void GamePadController::update(SceneObject &object) {
 	if (object.has<PlayerComponent>()) {
 		Client *client = m_serverInfo.getClient(object.get<PlayerComponent>().clientId());
 		if (client)
-			GamePad::init(client->inputHandler);
+			gk::GamePad::init(client->inputHandler);
 	}
 }
 

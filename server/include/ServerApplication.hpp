@@ -14,11 +14,12 @@
 #ifndef SERVERAPPLICATION_HPP_
 #define SERVERAPPLICATION_HPP_
 
-#include "GameClock.hpp"
+#include <gk/resource/ResourceHandler.hpp>
+#include <gk/system/GameClock.hpp>
+
 #include "Server.hpp"
 #include "Scene.hpp"
 #include "SpawnController.hpp"
-#include "ResourceHandler.hpp"
 
 class ServerApplication {
 	public:
@@ -30,14 +31,14 @@ class ServerApplication {
 		void mainLoop();
 
 	private:
-		GameClock m_clock;
+		gk::GameClock m_clock;
 
 		Scene m_scene;
 		SpawnController m_spawnController;
 
 		Server &m_server;
 
-		ResourceHandler m_resourceHandler;
+		gk::ResourceHandler m_resourceHandler;
 };
 
 #endif // SERVERAPPLICATION_HPP_

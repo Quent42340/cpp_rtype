@@ -11,19 +11,21 @@
  *
  * =====================================================================================
  */
-#include "ApplicationStateStack.hpp"
+#include <gk/core/ApplicationStateStack.hpp>
+#include <gk/resource/ResourceHandler.hpp>
+
 #include "Config.hpp"
 #include "GameEndState.hpp"
 #include "PauseMenuState.hpp"
-#include "ResourceHandler.hpp"
 #include "TitleScreenState.hpp"
 
 PauseMenuState::PauseMenuState() {
-	m_text.setFont(ResourceHandler::getInstance().get<sf::Font>("font-pdark"));
+	m_text.setFont(gk::ResourceHandler::getInstance().get<gk::Font>("font-pdark"));
 	m_text.setString("PAUSE");
 	m_text.setCharacterSize(60);
-	m_text.setFillColor(sf::Color::White);
-	m_text.setStyle(sf::Text::Bold);
+	m_text.setColor(gk::Color::White);
+	// FIXME
+	// m_text.setStyle(sf::Text::Bold);
 
 	m_text.setPosition(Config::screenWidth / 2.0f - m_text.getLocalBounds().width / 2.0f + 5, 40);
 
@@ -32,7 +34,7 @@ PauseMenuState::PauseMenuState() {
 	m_exit.setPosition(Config::screenWidth / 2.0f - m_exit.width() / 2.0, 160 + m_leave.height() + m_exit.height() + 40);
 }
 
-void PauseMenuState::onEvent(sf::Event &event) {
+void PauseMenuState::onEvent(const SDL_Event &event) {
 	m_resume.onEvent(event);
 	m_leave.onEvent(event);
 	m_exit.onEvent(event);
@@ -54,7 +56,7 @@ void PauseMenuState::update() {
 			m_stateStack->pop();
 }
 
-void PauseMenuState::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+void PauseMenuState::draw(gk::RenderTarget &target, gk::RenderStates states) const {
 	target.draw(m_background, states);
 
 	target.draw(m_text, states);

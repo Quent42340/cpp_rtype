@@ -14,14 +14,16 @@
 #ifndef BUTTON_HPP_
 #define BUTTON_HPP_
 
-#include "Image.hpp"
+#include <gk/core/SDLHeaders.hpp>
+#include <gk/gui/Image.hpp>
+#include <gk/gui/Text.hpp>
 
-class Button: public sf::Drawable, public sf::Transformable {
+class Button : public gk::IDrawable, public gk::Transformable {
 	public:
 		Button(const std::string &text);
 		Button(const std::string &text, int posX, int posY);
 
-		void onEvent(sf::Event &event);
+		void onEvent(const SDL_Event &event);
 
 		void setPosition(int posX, int posY);
 
@@ -33,15 +35,15 @@ class Button: public sf::Drawable, public sf::Transformable {
 		u16 height() { return m_image.height(); }
 
 	private:
-		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
 
 		bool m_isPressed = false;
 		bool m_hasReleased = false;
 		bool m_hasMouse = false;
 
-		Image m_image;
+		gk::Image m_image;
 
-		sf::Text m_text;
+		gk::Text m_text;
 };
 
 #endif // BUTTON_HPP

@@ -17,14 +17,14 @@
 #include <functional>
 #include <list>
 
-#include <SFML/Graphics/Drawable.hpp>
+#include <gk/gl/IDrawable.hpp>
 
 #include "AbstractController.hpp"
 #include "AbstractView.hpp"
 #include "SceneObject.hpp"
 #include "SceneObjectList.hpp"
 
-class Scene : public sf::Drawable {
+class Scene : public gk::IDrawable {
 	public:
 		void reset();
 		void update();
@@ -50,7 +50,7 @@ class Scene : public sf::Drawable {
 		}
 
 	private:
-		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
 
 		SceneObjectList m_objects;
 

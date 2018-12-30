@@ -14,28 +14,29 @@
 #ifndef SERVERCONNECTSTATE_HPP_
 #define SERVERCONNECTSTATE_HPP_
 
-#include "ApplicationState.hpp"
-#include "Button.hpp"
-#include "Image.hpp"
-#include "TextInput.hpp"
-#include "Timer.hpp"
+#include <gk/core/ApplicationState.hpp>
+#include <gk/core/Timer.hpp>
+#include <gk/gui/Image.hpp>
 
-class ServerConnectState : public ApplicationState {
+#include "Button.hpp"
+#include "TextInput.hpp"
+
+class ServerConnectState : public gk::ApplicationState {
 	public:
 		ServerConnectState();
 
-		void onEvent(sf::Event &event) override;
+		void onEvent(const SDL_Event &event) override;
 
 		void update() override;
 
 	private:
-		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
 
-		Image m_background{"background-space"};
+		gk::Image m_background{"background-space"};
 
-		sf::Text m_text;
-		sf::Text m_errorText;
-		Timer m_errorTimer;
+		gk::Text m_text;
+		gk::Text m_errorText;
+		gk::Timer m_errorTimer;
 
 		TextInput m_serverAddressInput;
 

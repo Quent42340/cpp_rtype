@@ -11,44 +11,45 @@
  *
  * =====================================================================================
  */
+#include <gk/gui/Image.hpp>
+#include <gk/gui/RectangleShape.hpp>
+#include <gk/gui/Sprite.hpp>
+
 #include "HitboxComponent.hpp"
-#include "Image.hpp"
 #include "LifetimeComponent.hpp"
 #include "PositionComponent.hpp"
-#include "Sprite.hpp"
 #include "SpriteView.hpp"
 
-void SpriteView::draw(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states) {
+void SpriteView::draw(const SceneObject &object, gk::RenderTarget &target, gk::RenderStates states) {
 	if (object.has<LifetimeComponent>() && object.get<LifetimeComponent>().dead(object))
 		return;
 
 	if (object.has<PositionComponent>())
-		states.transform.translate(object.get<PositionComponent>());
+		states.transform.translate({object.get<PositionComponent>(), 0});
 
-	if(object.has<Image>()) {
-		target.draw(object.get<Image>(), states);
+	if(object.has<gk::Image>()) {
+		target.draw(object.get<gk::Image>(), states);
 	}
 
-	if(object.has<Sprite>()) {
-		target.draw(object.get<Sprite>(), states);
+	if(object.has<gk::Sprite>()) {
+		target.draw(object.get<gk::Sprite>(), states);
 	}
 
 	if(object.has<HitboxComponent>()) {
-		// drawHitbox(object, target, states);
+		drawHitbox(object, target, states);
 	}
 }
 
-void SpriteView::drawHitbox(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states) {
+void SpriteView::drawHitbox(const SceneObject &object, gk::RenderTarget &target, gk::RenderStates states) {
 	auto &hitboxComponent = object.get<HitboxComponent>();
 
-	const sf::FloatRect *hitbox = hitboxComponent.currentHitbox();
+	const gk::FloatRect *hitbox = hitboxComponent.currentHitbox();
 	if(hitbox) {
-		sf::RectangleShape rect;
-		rect.setPosition(hitbox->left, hitbox->top);
-		rect.setSize(sf::Vector2f(hitbox->width, hitbox->height));
-		rect.setOutlineThickness(2);
-		rect.setOutlineColor(sf::Color::White);
-		rect.setFillColor(sf::Color::Transparent);
+		gk::RectangleShape rect;
+		rect.setPosition(hitbox->x, hitbox->y);
+		rect.setSize(hitbox->width, hitbox->height);
+		rect.setWireframeMode(true);
+		rect.setColor(gk::Color::White);
 
 		target.draw(rect, states);
 	}

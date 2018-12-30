@@ -14,30 +14,30 @@
 #ifndef TEXTINPUT_HPP_
 #define TEXTINPUT_HPP_
 
-#include <SFML/Graphics.hpp>
+#include <gk/core/SDLHeaders.hpp>
+#include <gk/gui/RectangleShape.hpp>
+#include <gk/gui/Text.hpp>
 
-#include "IntTypes.hpp"
-
-class TextInput : public sf::Drawable, public sf::Transformable {
+class TextInput : public gk::IDrawable, public gk::Transformable {
 	public:
 		TextInput();
 
-		void onEvent(sf::Event &event);
+		void onEvent(const SDL_Event &event);
 
 		const std::string &content() const { return m_content; }
 
-		sf::Vector2f getSize() const { return m_rectText.getSize(); }
+		gk::Vector2f getSize() const { return m_rectText.getSize(); }
 
 		void setPosition(float x, float y);
 		void setSize(u16 width, u16 height);
 		void setCharacterLimit(u16 characterLimit) { m_characterLimit = characterLimit; }
 
 	private:
-		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
 
-		sf::RectangleShape m_rectText;
+		gk::RectangleShape m_rectText;
 
-		sf::Text m_text;
+		gk::Text m_text;
 		std::string m_content;
 
 		u16 m_characterLimit = 0;

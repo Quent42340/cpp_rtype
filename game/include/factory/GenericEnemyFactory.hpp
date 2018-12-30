@@ -14,14 +14,14 @@
 #ifndef GENERICENEMYFACTORY_HPP_
 #define GENERICENEMYFACTORY_HPP_
 
-#include <SFML/System/Vector2.hpp>
+#include <gk/core/Vector2.hpp>
 
 #include "EnemyInfo.hpp"
 #include "SceneObject.hpp"
 
 class GenericEnemyFactory {
 	public:
-		static SceneObject create(const EnemyInfo &info, const sf::Vector2f &pos);
+		static SceneObject create(const EnemyInfo &info, const gk::Vector2f &pos);
 
 	private:
 		static void enemyCollisionAction(SceneObject &enemy, SceneObject &object, bool inCollision);

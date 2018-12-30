@@ -11,7 +11,8 @@
  *
  * =====================================================================================
  */
-#include "GameClock.hpp"
+#include <gk/system/GameClock.hpp>
+
 #include "Network.hpp"
 #include "NetworkController.hpp"
 
@@ -52,7 +53,7 @@ void NetworkController::update(SceneObject &object) {
 			if (networkComponent.timer.time() > 20) {
 				sf::Packet packet;
 				packet << Network::Command::EntityState;
-				packet << GameClock::getTicks() << object.name();
+				packet << gk::GameClock::getTicks() << object.name();
 				packet << positionComponent.x << positionComponent.y;
 				packet << movementComponent.v.x << movementComponent.v.y;
 				for (const Client &client : m_serverInfo.clients()) {

@@ -11,7 +11,9 @@
  *
  * =====================================================================================
  */
-#include "GamePad.hpp"
+#include <gk/core/input/GamePad.hpp>
+
+#include "GameKey.hpp"
 #include "GamePadMovement.hpp"
 
 #include "MovementComponent.hpp"
@@ -19,25 +21,19 @@
 void GamePadMovement::process(SceneObject &object) {
 	auto &movementComponent = object.get<MovementComponent>();
 
-	if(GamePad::isKeyPressed(GameKey::Left)) {
+	if(gk::GamePad::isKeyPressed(GameKey::Left)) {
 		movementComponent.v.x = -1;
 	}
-	else if(GamePad::isKeyPressed(GameKey::Right)) {
+	else if(gk::GamePad::isKeyPressed(GameKey::Right)) {
 		movementComponent.v.x = 1;
 	}
 
-	if(GamePad::isKeyPressed(GameKey::Up)) {
+	if(gk::GamePad::isKeyPressed(GameKey::Up)) {
 		movementComponent.v.y = -1;
 	}
-	else if(GamePad::isKeyPressed(GameKey::Down)) {
+	else if(gk::GamePad::isKeyPressed(GameKey::Down)) {
 		movementComponent.v.y = 1;
 	}
-
-	// if((GamePad::isKeyPressed(GameKey::Left) || GamePad::isKeyPressed(GameKey::Right))
-	// && (GamePad::isKeyPressed(GameKey::Up)   || GamePad::isKeyPressed(GameKey::Down))) {
-	// 	movementComponent.v.x /= 1.4;
-	// 	movementComponent.v.y /= 1.4;
-	// }
 
 	m_isFinished = true;
 }

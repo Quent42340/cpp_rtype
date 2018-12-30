@@ -5,7 +5,7 @@
  *
  *    Description:
  *
- *        Created:  17/01/2018 19:11:06
+ *        Created:  12/02/2015 17:53:44
  *
  *         Author:  Quentin Bazin, <quent42340@gmail.com>
  *
@@ -14,17 +14,19 @@
 #ifndef GAMEKEY_HPP_
 #define GAMEKEY_HPP_
 
-enum class GameKey {
-	Left,
-	Right,
-	Up,
-	Down,
+namespace GameKey {
+	enum {
+		Left,
+		Right,
+		Up,
+		Down,
 
-	A,
-	B,
+		A,
+		B,
 
-	Start,
-	Select
-};
+		Start,
+		Select
+	};
+}
 
 #endif // GAMEKEY_HPP_

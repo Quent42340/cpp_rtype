@@ -11,24 +11,28 @@
  *
  * =====================================================================================
  */
-#include "ApplicationStateStack.hpp"
+#include <gk/core/ApplicationStateStack.hpp>
+#include <gk/core/input/GamePad.hpp>
+#include <gk/resource/ResourceHandler.hpp>
+
 #include "Config.hpp"
-#include "GamePad.hpp"
+#include "GameKey.hpp"
 #include "GameState.hpp"
-#include "ResourceHandler.hpp"
 #include "ServerConnectState.hpp"
 
 ServerConnectState::ServerConnectState() {
-	m_text.setFont(ResourceHandler::getInstance().get<sf::Font>("font-pdark"));
+	m_text.setFont(gk::ResourceHandler::getInstance().get<gk::Font>("font-pdark"));
 	m_text.setCharacterSize(60);
-	m_text.setFillColor(sf::Color::White);
-	m_text.setStyle(sf::Text::Bold);
+	m_text.setColor(gk::Color::White);
+	// FIXME
+	// m_text.setStyle(sf::Text::Bold);
 	m_text.setString("Server address");
 	m_text.setPosition(Config::screenWidth / 2.0f - m_text.getLocalBounds().width / 2.0f + 5, 70);
 
-	m_errorText.setFont(ResourceHandler::getInstance().get<sf::Font>("font-pdark"));
+	m_errorText.setFont(gk::ResourceHandler::getInstance().get<gk::Font>("font-pdark"));
 	m_errorText.setCharacterSize(20);
-	m_errorText.setStyle(sf::Text::Bold);
+	// FIXME
+	// m_errorText.setStyle(sf::Text::Bold);
 
 	m_serverAddressInput.setCharacterLimit(15);
 	m_serverAddressInput.setSize(400, 50);
@@ -37,7 +41,7 @@ ServerConnectState::ServerConnectState() {
 	m_back.setPosition(Config::screenWidth / 2.0f - m_back.width() / 2.0, 350);
 }
 
-void ServerConnectState::onEvent(sf::Event &event) {
+void ServerConnectState::onEvent(const SDL_Event &event) {
 	m_serverAddressInput.onEvent(event);
 	m_back.onEvent(event);
 }
@@ -54,10 +58,10 @@ void ServerConnectState::update() {
 		try {
 			m_stateStack->push<GameState>(m_serverAddressInput.content());
 		}
-		catch (Exception &e) {
+		catch (gk::Exception &e) {
 			std::cerr << "Error " << e.what() << std::endl;
 
-			m_errorText.setFillColor(sf::Color::Red);
+			m_errorText.setColor(gk::Color::Red);
 			m_errorText.setString("Can't connect to server!");
 			m_errorText.setPosition(Config::screenWidth / 2.0f - m_errorText.getLocalBounds().width / 2.0f + 5, 280);
 
@@ -66,8 +70,8 @@ void ServerConnectState::update() {
 		}
 	}
 
-	if (GamePad::isKeyPressedOnce(GameKey::Start)) {
-		m_errorText.setFillColor(sf::Color::White);
+	if (gk::GamePad::isKeyPressedOnce(GameKey::Start)) {
+		m_errorText.setColor(gk::Color::White);
 		m_errorText.setString("Connecting...");
 		m_errorText.setPosition(Config::screenWidth / 2.0f - m_errorText.getLocalBounds().width / 2.0f + 5, 280);
 
@@ -79,7 +83,7 @@ void ServerConnectState::update() {
 	}
 }
 
-void ServerConnectState::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+void ServerConnectState::draw(gk::RenderTarget &target, gk::RenderStates states) const {
 	target.draw(m_background, states);
 
 	target.draw(m_text, states);

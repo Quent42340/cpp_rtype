@@ -11,103 +11,49 @@
  *
  * =====================================================================================
  */
-#include <SFML/Audio/Music.hpp>
+#include <gk/audio/AudioPlayer.hpp>
+#include <gk/core/input/GamePad.hpp>
 
 #include "AudioLoader.hpp"
-#include "AudioPlayer.hpp"
 #include "ClientApplication.hpp"
 #include "Config.hpp"
-#include "GamePad.hpp"
-#include "Mouse.hpp"
+#include "GameState.hpp"
 #include "SpriteLoader.hpp"
 #include "TextureLoader.hpp"
-
-#include "GameState.hpp"
 #include "TitleScreenState.hpp"
 
-ClientApplication::ClientApplication(int argc, char **argv) {
-	if (argc > 1 && argv[1] == std::string("--no-sound"))
-		AudioPlayer::setMuteState(true);
-}
-
 void ClientApplication::init() {
-	std::srand(std::time(nullptr));
+	gk::CoreApplication::init();
 
-	m_window.create(sf::VideoMode(Config::screenWidth, Config::screenHeight), "R-Type", sf::Style::Close);
+	createWindow(Config::screenWidth, Config::screenHeight, "R-Type");
 
-	Mouse::setWindow(m_window);
+	gk::GamePad::init(m_keyboardHandler);
 
-	GamePad::init(m_keyboardHandler);
+	m_shader.loadFromFile("resources/shaders/game.v.glsl", "resources/shaders/game.f.glsl");
+	m_renderStates.shader = &m_shader;
 
-	ApplicationStateStack::setInstance(m_stateStack);
-	ResourceHandler::setInstance(m_resourceHandler);
+	m_renderStates.vertexAttributes = gk::VertexAttribute::Only2d;
+	m_renderStates.projectionMatrix = glm::ortho(0.0f, (float)Config::screenWidth, (float)Config::screenHeight, 0.0f);
 
 	m_resourceHandler.loadConfigFile<AudioLoader>("resources/config/audio.xml");
 	m_resourceHandler.loadConfigFile<TextureLoader>("resources/config/textures.xml");
 	m_resourceHandler.loadConfigFile<SpriteLoader>("resources/config/sprites.xml");
-	m_resourceHandler.add<sf::Font>("font-default").loadFromFile("resources/fonts/arial.ttf");
-	m_resourceHandler.add<sf::Font>("font-pdark").loadFromFile("resources/fonts/pdark.ttf");
+	m_resourceHandler.add<gk::Font>("font-default").loadFromFile("resources/fonts/arial.ttf");
+	m_resourceHandler.add<gk::Font>("font-pdark").loadFromFile("resources/fonts/pdark.ttf");
 
-	ApplicationStateStack::getInstance().push<TitleScreenState>();
+	gk::ApplicationStateStack::getInstance().push<TitleScreenState>();
 }
 
-void ClientApplication::handleEvents() {
-	sf::Event event;
-	while(m_window.pollEvent(event)) {
-		if (event.type == sf::Event::GainedFocus) {
-			AudioPlayer::resumeMusic();
-		}
-		else if (event.type == sf::Event::LostFocus) {
-			AudioPlayer::pauseMusic();
-		}
+void ClientApplication::onEvent(const SDL_Event &event) {
+	gk::CoreApplication::onEvent(event);
 
-		if (!m_stateStack.empty())
-			m_stateStack.top().onEvent(event);
+	m_keyboardHandler.updateState(event);
 
-		m_keyboardHandler.updateState(event);
-	}
-}
-
-int ClientApplication::run() {
-	try {
-		init();
-		mainLoop();
-	}
-	catch(const Exception &e) {
-		std::cerr << "Fatal error " << e.what() << std::endl;
-		return 1;
-	}
-	catch(const std::exception &e) {
-		std::cerr << "Exception caught: " << e.what() << std::endl;
-		return 1;
-	}
-	catch(...) {
-		std::cerr << "Fatal error: Unknown error." << std::endl;
-		return 1;
-	}
-
-	return 0;
-}
-
-void ClientApplication::mainLoop() {
-	while(m_window.isOpen() && m_stateStack.size()) {
-		handleEvents();
-
-		m_clock.updateGame([&] {
-			if (!m_stateStack.empty())
-				m_stateStack.top().update();
-
-			m_stateStack.clearDeletedStates();
-		});
-
-		m_clock.drawGame([&] {
-			m_window.clear();
-
-			if (!m_stateStack.empty())
-				m_window.draw(m_stateStack.top());
-
-			m_window.display();
-		});
-	}
+	// if (event.type == sf::Event::GainedFocus) {
+	// 	gk::AudioPlayer::resumeMusic();
+	// }
+	// else if (event.type == sf::Event::LostFocus) {
+	// 	gk::AudioPlayer::pauseMusic();
+	// }
 }
 

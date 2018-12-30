@@ -14,11 +14,11 @@
 #ifndef ENEMYINFOLOADER_HPP_
 #define ENEMYINFOLOADER_HPP_
 
-#include "ResourceLoader.hpp"
+#include <gk/resource/IResourceLoader.hpp>
 
-class EnemyInfoLoader : public ResourceLoader {
+class EnemyInfoLoader : public gk::IResourceLoader {
 	public:
-		void load(const char *xmlFilename, ResourceHandler &handler);
+		void load(const char *xmlFilename, gk::ResourceHandler &handler);
 };
 
 #endif // ENEMYINFOLOADER_HPP_

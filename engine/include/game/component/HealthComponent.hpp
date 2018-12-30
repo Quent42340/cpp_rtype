@@ -14,7 +14,7 @@
 #ifndef HEALTHCOMPONENT_HPP_
 #define HEALTHCOMPONENT_HPP_
 
-#include "Timer.hpp"
+#include <gk/core/Timer.hpp>
 
 class HealthComponent {
 	public:
@@ -37,7 +37,7 @@ class HealthComponent {
 		u16 life() const { return m_life; }
 		u16 maxLife() const { return m_maxLife; }
 
-		Timer hurtTimer() { return m_hurtTimer; }
+		gk::Timer hurtTimer() { return m_hurtTimer; }
 
 	private:
 		const u16 m_maxLife = 0;
@@ -45,7 +45,7 @@ class HealthComponent {
 
 		const u16 m_hurtTime = 0;
 
-		Timer m_hurtTimer;
+		gk::Timer m_hurtTimer;
 };
 
 #endif // HEALTHCOMPONENT_HPP_

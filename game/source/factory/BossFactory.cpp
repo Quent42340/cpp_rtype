@@ -11,6 +11,8 @@
  *
  * =====================================================================================
  */
+#include <gk/core/Timer.hpp>
+
 #include "BehaviourComponent.hpp"
 #include "BossFactory.hpp"
 #include "Config.hpp"
@@ -33,7 +35,7 @@ SceneObject BossFactory::create() {
 	object.set<PositionComponent>(Config::screenWidth, -10);
 	object.set<NetworkComponent>();
 	object.set<SceneObjectList>();
-	object.set<Timer>().start();
+	object.set<gk::Timer>().start();
 	object.set<HealthComponent>(10000);
 	object.set<LifetimeComponent>([&] (const SceneObject &object) {
 		return object.get<HealthComponent>().life() == 0;
@@ -53,9 +55,9 @@ SceneObject BossFactory::create() {
 
 	auto &behaviourComponent = object.set<BehaviourComponent>();
 	behaviourComponent.addBehaviour<EasyBehaviour>("Update", [] (SceneObject &object) {
-		Timer &timer = object.get<Timer>();
+		gk::Timer &timer = object.get<gk::Timer>();
 		if (timer.time() > 500 && !object.get<LifetimeComponent>().dead(object)) {
-			sf::Vector2f bulletPosition = object.get<PositionComponent>() + sf::Vector2f{0, (float)object.get<HitboxComponent>().currentHitbox()->height / 2};
+			gk::Vector2f bulletPosition = object.get<PositionComponent>() + gk::Vector2f{0, (float)object.get<HitboxComponent>().currentHitbox()->height / 2};
 			object.get<SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, {-1, -1}, 1.5f));
 			object.get<SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, {-1,  0}, 1.5f));
 			object.get<SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, {-1,  1}, 1.5f));
