@@ -32,7 +32,7 @@ GameState::GameState(const sf::IpAddress &serverAddress, u16 serverPort) {
 	m_background2.setPosition(m_background.width() - 2.0f, 0);
 
 	m_readyText.setFont(gk::ResourceHandler::getInstance().get<gk::Font>("font-pdark"));
-	m_readyText.setString("Press Start when you're ready");
+	m_readyText.setText("Press Start when you're ready");
 	m_readyText.setCharacterSize(30);
 	m_readyText.setColor(gk::Color::White);
 	m_readyText.setStyle(gk::Text::Bold);
@@ -82,7 +82,7 @@ void GameState::update() {
 	else if (gk::GamePad::isKeyPressedOnce(GameKey::Start)) {
 		m_client.sendReady();
 
-		m_readyText.setString("Waiting for other players...");
+		m_readyText.setText("Waiting for other players...");
 		m_readyText.setPosition(Config::screenWidth / 2.0f - m_readyText.getLocalBounds().width / 2.0f,
 		                        Config::screenHeight / 2.0f - m_readyText.getLocalBounds().height / 2.0f);
 	}

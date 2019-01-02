@@ -25,7 +25,7 @@ void SpriteView::draw(const SceneObject &object, gk::RenderTarget &target, gk::R
 		return;
 
 	if (object.has<PositionComponent>())
-		states.transform.translate({object.get<PositionComponent>(), 0});
+		states.transform.translate({object.get<PositionComponent>(), 0.f});
 
 	if(object.has<gk::Image>()) {
 		target.draw(object.get<gk::Image>(), states);

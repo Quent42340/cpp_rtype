@@ -17,15 +17,14 @@
 #include "TextInput.hpp"
 
 TextInput::TextInput() {
-	m_rectText.setColor(gk::Color::White);
-	m_rectText.setWireframeMode(true);
+	m_rectText.setColor(gk::Color::Black);
 	// FIXME
 	// m_rectText.setOutlineThickness(2);
 	// m_rectText.setOutlineColor(sf::Color::White);
 
 	m_text.setFont(gk::ResourceHandler::getInstance().get<gk::Font>("font-default"));
 	m_text.setCharacterSize(25);
-	m_text.setString("|");
+	m_text.setText("|");
 }
 
 void TextInput::setPosition(float x, float y) {
@@ -42,7 +41,7 @@ void TextInput::onEvent(const SDL_Event &event) {
 		m_content.erase(m_content.begin() + m_content.length() - 1);
 		gk::AudioPlayer::playSound("sound-keyboard");
 
-		m_text.setString(m_content + "|");
+		m_text.setText(m_content + "|");
 	}
 
   	if (event.type == SDL_TEXTINPUT) {
@@ -53,7 +52,7 @@ void TextInput::onEvent(const SDL_Event &event) {
 				gk::AudioPlayer::playSound("sound-keyboard");
 			}
 
-			m_text.setString(m_content + "|");
+			m_text.setText(m_content + "|");
 		}
 	}
 }
