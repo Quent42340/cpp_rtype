@@ -13,6 +13,8 @@
  */
 #include <map>
 
+#include <gk/core/IntTypes.hpp>
+
 #include "Network.hpp"
 
 std::string Network::commandToString(Network::Command command) {

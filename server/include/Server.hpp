@@ -18,7 +18,8 @@
 #include <SFML/Network/TcpListener.hpp>
 #include <SFML/Network/UdpSocket.hpp>
 
-#include "Scene.hpp"
+#include <gk/scene/Scene.hpp>
+
 #include "ServerInfo.hpp"
 
 class Server {
@@ -27,7 +28,7 @@ class Server {
 
 		void handleKeyState();
 
-		void handleGameEvents(Scene &scene);
+		void handleGameEvents(gk::Scene &scene);
 
 		bool isRunning() const { return m_isRunning; }
 		bool hasGameStarted() const { return m_hasGameStarted; }
@@ -40,7 +41,7 @@ class Server {
 		void setGameStarted(bool hasGameStarted) { m_hasGameStarted = hasGameStarted; }
 
 	private:
-		void handleNewConnections(Scene &scene);
+		void handleNewConnections(gk::Scene &scene);
 		void handleClientMessages();
 
 		bool m_isRunning = true;

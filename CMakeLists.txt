@@ -98,7 +98,6 @@ include_directories(${SDL2_INCLUDE_DIRS}
 #------------------------------------------------------------------------------
 # Subdirectories
 #------------------------------------------------------------------------------
-add_subdirectory(engine)
 add_subdirectory(game)
 add_subdirectory(client)
 add_subdirectory(server)

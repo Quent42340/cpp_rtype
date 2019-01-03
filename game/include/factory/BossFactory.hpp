@@ -14,15 +14,15 @@
 #ifndef BOSSFACTORY_HPP_
 #define BOSSFACTORY_HPP_
 
-#include "CollisionComponent.hpp"
-#include "SceneObject.hpp"
+#include <gk/scene/component/CollisionComponent.hpp>
+#include <gk/scene/SceneObject.hpp>
 
 class BossFactory {
 	public:
-		static SceneObject create();
+		static gk::SceneObject create();
 
 	private:
-		static void bossCollisionAction(SceneObject &enemy, SceneObject &object, bool inCollision);
+		static void bossCollisionAction(gk::SceneObject &enemy, gk::SceneObject &object, bool inCollision);
 
 		// static bool checkOutOfMap(const SceneObject &object);
 };

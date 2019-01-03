@@ -12,7 +12,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Get source files
 #------------------------------------------------------------------------------
 file(GLOB_RECURSE SOURCE_FILES source/*.cpp)
-file(GLOB_RECURSE HEADER_FILES include/*.hpp ../engine/*.hpp ../game/*.hpp)
+file(GLOB_RECURSE HEADER_FILES include/*.hpp ../game/*.hpp)
 
 foreach(HEADER_FILE ${HEADER_FILES})
 	get_filename_component(HEADER_DIRECTORY ${HEADER_FILE} DIRECTORY)
@@ -44,6 +44,5 @@ target_link_libraries(${CMAKE_PROJECT_NAME}_server
                       ${TINYXML2_LIBRARIES}
                       ${GAMEKIT_LIBRARIES}
                       sfml-network
-                      ${CMAKE_PROJECT_NAME}_game
-                      ${CMAKE_PROJECT_NAME}_engine)
+                      ${CMAKE_PROJECT_NAME}_game)
 

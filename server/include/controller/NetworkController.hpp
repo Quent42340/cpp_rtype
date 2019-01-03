@@ -16,15 +16,16 @@
 
 #include <SFML/Network/UdpSocket.hpp>
 
-#include "AbstractController.hpp"
+#include <gk/scene/controller/AbstractController.hpp>
+
 #include "ServerInfo.hpp"
 
-class NetworkController : public AbstractController {
+class NetworkController : public gk::AbstractController {
 	public:
 		NetworkController(ServerInfo &serverInfo, sf::UdpSocket &socket)
 			: m_serverInfo(serverInfo), m_socket(socket) {}
 
-		void update(SceneObject &object) override;
+		void update(gk::SceneObject &object) override;
 
 	private:
 		ServerInfo &m_serverInfo;

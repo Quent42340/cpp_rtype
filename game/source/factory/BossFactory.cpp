@@ -12,55 +12,55 @@
  * =====================================================================================
  */
 #include <gk/core/Timer.hpp>
+#include <gk/scene/behaviour/EasyBehaviour.hpp>
+#include <gk/scene/component/BehaviourComponent.hpp>
+#include <gk/scene/component/HealthComponent.hpp>
+#include <gk/scene/component/HitboxComponent.hpp>
+#include <gk/scene/component/LifetimeComponent.hpp>
+#include <gk/scene/component/MovementComponent.hpp>
+#include <gk/scene/component/PositionComponent.hpp>
+#include <gk/scene/movement/EasyMovement.hpp>
+#include <gk/scene/SceneObjectList.hpp>
 
-#include "BehaviourComponent.hpp"
 #include "BossFactory.hpp"
 #include "Config.hpp"
-#include "EasyBehaviour.hpp"
-#include "EasyMovement.hpp"
-#include "HealthComponent.hpp"
-#include "HitboxComponent.hpp"
-#include "LifetimeComponent.hpp"
-#include "MovementComponent.hpp"
 #include "Network.hpp"
 #include "NetworkComponent.hpp"
-#include "PositionComponent.hpp"
-#include "SceneObjectList.hpp"
 #include "SpriteComponent.hpp"
 #include "TestBulletFactory.hpp"
 
-SceneObject BossFactory::create() {
+gk::SceneObject BossFactory::create() {
 	static size_t bossCount = 0;
-	SceneObject object{"Boss" + std::to_string(bossCount++), "Boss"};
-	object.set<PositionComponent>(Config::screenWidth, -10);
+	gk::SceneObject object{"Boss" + std::to_string(bossCount++), "Boss"};
+	object.set<gk::PositionComponent>(Config::screenWidth, -10);
 	object.set<NetworkComponent>();
-	object.set<SceneObjectList>();
+	object.set<gk::SceneObjectList>();
 	object.set<gk::Timer>().start();
-	object.set<HealthComponent>(10000);
-	object.set<LifetimeComponent>([&] (const SceneObject &object) {
-		return object.get<HealthComponent>().life() == 0;
+	object.set<gk::HealthComponent>(10000);
+	object.set<gk::LifetimeComponent>([&] (const gk::SceneObject &object) {
+		return object.get<gk::HealthComponent>().life() == 0;
 	});
 
-	object.set<MovementComponent>(new EasyMovement([] (SceneObject &object) {
-		if (object.get<PositionComponent>().x > Config::screenWidth - object.get<HitboxComponent>().currentHitbox()->width) {
-			object.get<MovementComponent>().v.x = -1;
+	object.set<gk::MovementComponent>(new gk::EasyMovement([] (gk::SceneObject &object) {
+		if (object.get<gk::PositionComponent>().x > Config::screenWidth - object.get<gk::HitboxComponent>().currentHitbox()->width) {
+			object.get<gk::MovementComponent>().v.x = -1;
 		}
 	})).speed = 0.8f;
 
 	object.set<SpriteComponent>("boss-boss1");
-	object.set<HitboxComponent>(0, 0, 268, 518);
+	object.set<gk::HitboxComponent>(0, 0, 268, 518);
 
-	auto &collisionComponent = object.set<CollisionComponent>();
+	auto &collisionComponent = object.set<gk::CollisionComponent>();
 	collisionComponent.addAction(&BossFactory::bossCollisionAction);
 
-	auto &behaviourComponent = object.set<BehaviourComponent>();
-	behaviourComponent.addBehaviour<EasyBehaviour>("Update", [] (SceneObject &object) {
+	auto &behaviourComponent = object.set<gk::BehaviourComponent>();
+	behaviourComponent.addBehaviour<gk::EasyBehaviour>("Update", [] (gk::SceneObject &object) {
 		gk::Timer &timer = object.get<gk::Timer>();
-		if (timer.time() > 500 && !object.get<LifetimeComponent>().dead(object)) {
-			gk::Vector2f bulletPosition = object.get<PositionComponent>() + gk::Vector2f{0, (float)object.get<HitboxComponent>().currentHitbox()->height / 2};
-			object.get<SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, {-1, -1}, 1.5f));
-			object.get<SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, {-1,  0}, 1.5f));
-			object.get<SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, {-1,  1}, 1.5f));
+		if (timer.time() > 500 && !object.get<gk::LifetimeComponent>().dead(object)) {
+			gk::Vector2f bulletPosition = object.get<gk::PositionComponent>() + gk::Vector2f{0, (float)object.get<gk::HitboxComponent>().currentHitbox()->height / 2};
+			object.get<gk::SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, {-1, -1}, 1.5f));
+			object.get<gk::SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, {-1,  0}, 1.5f));
+			object.get<gk::SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, {-1,  1}, 1.5f));
 
 			timer.reset();
 			timer.start();
@@ -70,14 +70,13 @@ SceneObject BossFactory::create() {
 	return object;
 }
 
-void BossFactory::bossCollisionAction(SceneObject &enemy, SceneObject &object, bool inCollision) {
-	// FIXME: WARNING NAME CHECK
+void BossFactory::bossCollisionAction(gk::SceneObject &enemy, gk::SceneObject &object, bool inCollision) {
 	if (inCollision && object.type() == "PlayerBullet"
-	 && !enemy.get<LifetimeComponent>().dead(enemy)
-	 && !object.get<LifetimeComponent>().dead(object)) {
+	 && !enemy.get<gk::LifetimeComponent>().dead(enemy)
+	 && !object.get<gk::LifetimeComponent>().dead(object)) {
 		// TODO: Create BulletComponent with damage
-		enemy.get<HealthComponent>().removeLife(100);
-		object.get<LifetimeComponent>().kill();
+		enemy.get<gk::HealthComponent>().removeLife(100);
+		object.get<gk::LifetimeComponent>().kill();
 	}
 }
 

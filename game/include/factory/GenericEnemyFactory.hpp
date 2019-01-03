@@ -15,18 +15,18 @@
 #define GENERICENEMYFACTORY_HPP_
 
 #include <gk/core/Vector2.hpp>
+#include <gk/scene/SceneObject.hpp>
 
 #include "EnemyInfo.hpp"
-#include "SceneObject.hpp"
 
 class GenericEnemyFactory {
 	public:
-		static SceneObject create(const EnemyInfo &info, const gk::Vector2f &pos);
+		static gk::SceneObject create(const EnemyInfo &info, const gk::Vector2f &pos);
 
 	private:
-		static void enemyCollisionAction(SceneObject &enemy, SceneObject &object, bool inCollision);
+		static void enemyCollisionAction(gk::SceneObject &enemy, gk::SceneObject &object, bool inCollision);
 
-		static bool checkOutOfMap(const SceneObject &object);
+		static bool checkOutOfMap(const gk::SceneObject &object);
 };
 
 #endif // GENERICENEMYFACTORY_HPP_

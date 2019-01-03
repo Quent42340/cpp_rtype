@@ -16,8 +16,6 @@
 
 #include <SFML/Network/Packet.hpp>
 
-#include "Scene.hpp"
-
 namespace Network {
 	enum class Command {
 		// Client commands

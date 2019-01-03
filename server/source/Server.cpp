@@ -59,7 +59,7 @@ void Server::handleKeyState() {
 }
 
 // FIXME: Refactor this function
-void Server::handleGameEvents(Scene &scene) {
+void Server::handleGameEvents(gk::Scene &scene) {
 	if (m_selector.wait(sf::milliseconds(10))) {
 		if (m_selector.isReady(m_tcpListener)) {
 			handleNewConnections(scene);
@@ -70,7 +70,7 @@ void Server::handleGameEvents(Scene &scene) {
 	}
 }
 
-void Server::handleNewConnections(Scene &scene) {
+void Server::handleNewConnections(gk::Scene &scene) {
 	std::shared_ptr<sf::TcpSocket> clientSocket = std::make_shared<sf::TcpSocket>();
 	if (m_tcpListener.accept(*clientSocket) == sf::Socket::Done) {
 		sf::Packet packet;

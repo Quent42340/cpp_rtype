@@ -17,7 +17,7 @@
 #include "PlayerComponent.hpp"
 #include "ServerInfo.hpp"
 
-void GamePadController::update(SceneObject &object) {
+void GamePadController::update(gk::SceneObject &object) {
 	if (object.has<PlayerComponent>()) {
 		Client *client = m_serverInfo.getClient(object.get<PlayerComponent>().clientId());
 		if (client)

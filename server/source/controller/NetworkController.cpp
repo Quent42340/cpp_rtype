@@ -13,19 +13,19 @@
  */
 #include <gk/system/GameClock.hpp>
 
+#include <gk/scene/component/LifetimeComponent.hpp>
+#include <gk/scene/component/MovementComponent.hpp>
+#include <gk/scene/component/PositionComponent.hpp>
+
 #include "Network.hpp"
 #include "NetworkController.hpp"
-
-#include "LifetimeComponent.hpp"
-#include "MovementComponent.hpp"
 #include "NetworkComponent.hpp"
 #include "SpriteComponent.hpp"
-#include "PositionComponent.hpp"
 
-void NetworkController::update(SceneObject &object) {
+void NetworkController::update(gk::SceneObject &object) {
 	if (object.has<NetworkComponent>()) {
 		auto &networkComponent = object.get<NetworkComponent>();
-		auto &positionComponent = object.get<PositionComponent>();
+		auto &positionComponent = object.get<gk::PositionComponent>();
 
 		bool hasGameStarted = true;
 		for (Client &client : m_serverInfo.clients()) {
@@ -48,8 +48,8 @@ void NetworkController::update(SceneObject &object) {
 			networkComponent.hasSpawned = true;
 		}
 
-		if (object.has<MovementComponent>()) {
-			auto &movementComponent = object.get<MovementComponent>();
+		if (object.has<gk::MovementComponent>()) {
+			auto &movementComponent = object.get<gk::MovementComponent>();
 			if (networkComponent.timer.time() > 20) {
 				sf::Packet packet;
 				packet << Network::Command::EntityState;
@@ -66,8 +66,8 @@ void NetworkController::update(SceneObject &object) {
 			}
 		}
 
-		if (object.has<LifetimeComponent>()) {
-			auto &lifetimeComponent = object.get<LifetimeComponent>();
+		if (object.has<gk::LifetimeComponent>()) {
+			auto &lifetimeComponent = object.get<gk::LifetimeComponent>();
 			if (lifetimeComponent.dead(object) && !lifetimeComponent.areClientsNotified()) {
 				sf::Packet packet;
 				packet << (object.type() != "Boss" ? Network::Command::EntityDie : Network::Command::GameWin) << object.name();

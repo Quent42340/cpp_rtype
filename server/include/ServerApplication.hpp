@@ -15,10 +15,10 @@
 #define SERVERAPPLICATION_HPP_
 
 #include <gk/resource/ResourceHandler.hpp>
+#include <gk/scene/Scene.hpp>
 #include <gk/system/GameClock.hpp>
 
 #include "Server.hpp"
-#include "Scene.hpp"
 #include "SpawnController.hpp"
 
 class ServerApplication {
@@ -33,7 +33,7 @@ class ServerApplication {
 	private:
 		gk::GameClock m_clock;
 
-		Scene m_scene;
+		gk::Scene m_scene;
 		SpawnController m_spawnController;
 
 		Server &m_server;

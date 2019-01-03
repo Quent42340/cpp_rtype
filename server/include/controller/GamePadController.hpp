@@ -14,14 +14,15 @@
 #ifndef GAMEPADCONTROLLER_HPP_
 #define GAMEPADCONTROLLER_HPP_
 
-#include "AbstractController.hpp"
+#include <gk/scene/controller/AbstractController.hpp>
+
 #include "ServerInfo.hpp"
 
-class GamePadController : public AbstractController {
+class GamePadController : public gk::AbstractController {
 	public:
 		GamePadController(ServerInfo &serverInfo) : m_serverInfo(serverInfo) {}
 
-		void update(SceneObject &object) override;
+		void update(gk::SceneObject &object) override;
 
 	private:
 		ServerInfo &m_serverInfo;

@@ -14,15 +14,15 @@
 #ifndef PLAYERFACTORY_HPP_
 #define PLAYERFACTORY_HPP_
 
-#include "SceneObject.hpp"
+#include <gk/scene/SceneObject.hpp>
 
 class PlayerFactory {
 	public:
-		static SceneObject create(u16 x, u16 y, u16 clientId);
+		static gk::SceneObject create(u16 x, u16 y, u16 clientId);
 
-		static void playerCollisionAction(SceneObject &player, SceneObject &object, bool inCollision);
+		static void playerCollisionAction(gk::SceneObject &player, gk::SceneObject &object, bool inCollision);
 
-		static void checkOutOfMap(SceneObject &object);
+		static void checkOutOfMap(gk::SceneObject &object);
 };
 
 #endif // PLAYERFACTORY_HPP_

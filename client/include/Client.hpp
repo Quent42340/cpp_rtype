@@ -19,8 +19,7 @@
 
 #include <gk/core/ApplicationStateStack.hpp>
 #include <gk/core/Timer.hpp>
-
-#include "Scene.hpp"
+#include <gk/scene/Scene.hpp>
 
 class Client {
 	public:
@@ -30,14 +29,14 @@ class Client {
 		void sendReady();
 		void sendKeyState();
 
-		void update(gk::ApplicationStateStack &stateStack, Scene &scene, bool &hasGameStarted);
+		void update(gk::ApplicationStateStack &stateStack, gk::Scene &scene, bool &hasGameStarted);
 
 		u16 id() const { return m_id; }
 
 	private:
-		void handleEntityStateMessage(Scene &scene, sf::Packet &packet);
-		bool handleEntityDieMessage(gk::ApplicationStateStack &stateStack, Scene &scene, sf::Packet &packet);
-		void handleEntitySpawnMessage(Scene &scene, sf::Packet &packet);
+		void handleEntityStateMessage(gk::Scene &scene, sf::Packet &packet);
+		bool handleEntityDieMessage(gk::ApplicationStateStack &stateStack, gk::Scene &scene, sf::Packet &packet);
+		void handleEntitySpawnMessage(gk::Scene &scene, sf::Packet &packet);
 
 		u16 m_id;
 

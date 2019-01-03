@@ -15,15 +15,15 @@
 #define SPAWNCONTROLLER_HPP_
 
 #include <gk/core/Timer.hpp>
+#include <gk/scene/Scene.hpp>
 
-#include "Scene.hpp"
 #include "Server.hpp"
 
 class SpawnController {
 	public:
 		SpawnController();
 
-		void update(Server &server, Scene &scene);
+		void update(Server &server, gk::Scene &scene);
 
 	private:
 		gk::Timer m_spawnTimer;

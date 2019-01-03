@@ -17,15 +17,15 @@
 #include <gk/gui/Image.hpp>
 #include <gk/gui/Sprite.hpp>
 #include <gk/resource/ResourceHandler.hpp>
+#include <gk/scene/component/HitboxComponent.hpp>
+#include <gk/scene/component/PositionComponent.hpp>
 #include <gk/system/GameClock.hpp>
 
 #include "Client.hpp"
 #include "GameEndState.hpp"
-#include "HitboxComponent.hpp"
 #include "Network.hpp"
 #include "NetworkComponent.hpp"
 #include "PlayerComponent.hpp"
-#include "PositionComponent.hpp"
 
 void Client::connect(sf::IpAddress serverAddress, u16 serverPort) {
 	m_serverAddress = serverAddress;
@@ -91,7 +91,7 @@ void Client::sendKeyState() {
 	}
 }
 
-void Client::update(gk::ApplicationStateStack &stateStack, Scene &scene, bool &hasGameStarted) {
+void Client::update(gk::ApplicationStateStack &stateStack, gk::Scene &scene, bool &hasGameStarted) {
 	sf::Packet packet;
 	sf::IpAddress senderAddress;
 	u16 senderPort;
@@ -130,7 +130,7 @@ void Client::update(gk::ApplicationStateStack &stateStack, Scene &scene, bool &h
 	}
 }
 
-void Client::handleEntityStateMessage(Scene &scene, sf::Packet &packet) {
+void Client::handleEntityStateMessage(gk::Scene &scene, sf::Packet &packet) {
 	u32 timestamp;
 	std::string entityName;
 	gk::Vector2f pos;
@@ -139,14 +139,14 @@ void Client::handleEntityStateMessage(Scene &scene, sf::Packet &packet) {
 
 	// std::cout << "New entity state at " << timestamp << ": " << entityName << " (" << pos.x << ";" << pos.y << ") moving at (" << v.x << ";" << v.y << ")" << std::endl;
 
-	SceneObject *object = scene.objects().findByName(entityName);
+	gk::SceneObject *object = scene.objects().findByName(entityName);
 	if (object) {
 
 		auto &networkComponent = object->get<NetworkComponent>();
 		if (networkComponent.lastUpdateTimestamp < timestamp) {
 			networkComponent.lastUpdateTimestamp = timestamp;
 
-			object->set<PositionComponent>(pos);
+			object->set<gk::PositionComponent>(pos);
 
 			if (object->has<PlayerComponent>()) {
 				if (v.y == 0)
@@ -160,20 +160,20 @@ void Client::handleEntityStateMessage(Scene &scene, sf::Packet &packet) {
 	}
 }
 
-bool Client::handleEntityDieMessage(gk::ApplicationStateStack &stateStack, Scene &scene, sf::Packet &packet) {
+bool Client::handleEntityDieMessage(gk::ApplicationStateStack &stateStack, gk::Scene &scene, sf::Packet &packet) {
 	std::string entityName;
 	packet >> entityName;
 
 	// std::cout << "Entity die: " << entityName << std::endl;
 
-	SceneObject *entity = scene.objects().findByName(entityName);
+	gk::SceneObject *entity = scene.objects().findByName(entityName);
 	if (entity) {
-		if (entity->type() == "Enemy" && entity->get<PositionComponent>().x >= 0) {
+		if (entity->type() == "Enemy" && entity->get<gk::PositionComponent>().x >= 0) {
 			gk::AudioPlayer::playSound("sound-boom");
 
 			static size_t boomEffectCount = 0;
-			SceneObject boomEffect{"BoomEffect" + std::to_string(boomEffectCount++), "Effect"};
-			boomEffect.set<PositionComponent>(entity->get<PositionComponent>());
+			gk::SceneObject boomEffect{"BoomEffect" + std::to_string(boomEffectCount++), "Effect"};
+			boomEffect.set<gk::PositionComponent>(entity->get<gk::PositionComponent>());
 			boomEffect.set<gk::Sprite>().load(gk::ResourceHandler::getInstance().get<gk::Sprite>("effect-boom-sprite"));
 			scene.addObject(std::move(boomEffect));
 		}
@@ -192,7 +192,7 @@ bool Client::handleEntityDieMessage(gk::ApplicationStateStack &stateStack, Scene
 	return true;
 }
 
-void Client::handleEntitySpawnMessage(Scene &scene, sf::Packet &packet) {
+void Client::handleEntitySpawnMessage(gk::Scene &scene, sf::Packet &packet) {
 	std::string entityName;
 	std::string entityType;
 	gk::Vector2f pos;
@@ -200,8 +200,8 @@ void Client::handleEntitySpawnMessage(Scene &scene, sf::Packet &packet) {
 	packet >> entityName >> entityType >> pos.x >> pos.y;
 	packet >> textureName;
 
-	SceneObject object{entityName, entityType};
-	object.set<PositionComponent>(pos);
+	gk::SceneObject object{entityName, entityType};
+	object.set<gk::PositionComponent>(pos);
 	object.set<NetworkComponent>();
 	if (gk::ResourceHandler::getInstance().has(textureName + "-sprite"))
 		object.set<gk::Sprite>().load(gk::ResourceHandler::getInstance().get<gk::Sprite>(textureName + "-sprite"));

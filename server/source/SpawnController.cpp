@@ -22,7 +22,7 @@ SpawnController::SpawnController() {
 	m_spawnTimer.start();
 }
 
-void SpawnController::update(Server &server, Scene &scene) {
+void SpawnController::update(Server &server, gk::Scene &scene) {
 	if ((!m_hasBoss && m_spawnTimer.time() > 2150 - 150 * server.info().clients().size())
 	 || (m_hasBoss && m_spawnTimer.time() > 3000 - 200 * server.info().clients().size())) {
 		m_spawnTimer.reset();

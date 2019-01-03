@@ -19,9 +19,9 @@
 #include <gk/core/ApplicationState.hpp>
 #include <gk/gui/Image.hpp>
 #include <gk/gui/Text.hpp>
+#include <gk/scene/Scene.hpp>
 
 #include "Client.hpp"
-#include "Scene.hpp"
 
 class GameState : public gk::ApplicationState {
 	public:
@@ -39,7 +39,7 @@ class GameState : public gk::ApplicationState {
 		gk::Image m_background{"background-space"};
 		gk::Image m_background2{"background-space"};
 
-		Scene m_scene;
+		gk::Scene m_scene;
 
 		gk::Text m_readyText;
 

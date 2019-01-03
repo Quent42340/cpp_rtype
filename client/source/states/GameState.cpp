@@ -16,13 +16,13 @@
 #include <gk/core/ApplicationStateStack.hpp>
 #include <gk/gui/Sprite.hpp>
 #include <gk/resource/ResourceHandler.hpp>
+#include <gk/scene/controller/LifetimeController.hpp>
+#include <gk/scene/view/SpriteView.hpp>
 
 #include "Config.hpp"
 #include "GameKey.hpp"
 #include "GameState.hpp"
-#include "LifetimeController.hpp"
 #include "Network.hpp"
-#include "SpriteView.hpp"
 
 GameState::GameState(const sf::IpAddress &serverAddress, u16 serverPort) {
 	m_client.connect(serverAddress, serverPort);
@@ -39,8 +39,8 @@ GameState::GameState(const sf::IpAddress &serverAddress, u16 serverPort) {
 	m_readyText.setPosition(Config::screenWidth / 2.0f - m_readyText.getLocalBounds().width / 2.0f,
 	                        Config::screenHeight / 2.0f - m_readyText.getLocalBounds().height / 2.0f);
 
-	m_scene.addController<LifetimeController>();
-	m_scene.addView<SpriteView>();
+	m_scene.addController<gk::LifetimeController>();
+	m_scene.addView<gk::SpriteView>();
 }
 
 void GameState::onEvent(const SDL_Event &event) {
@@ -66,7 +66,7 @@ void GameState::update() {
 
 		// FIXME: Use LifetimeController
 		for (size_t i = 0 ; i < m_scene.objects().size() ; ++i) {
-			SceneObject &object = m_scene.objects()[i];
+			gk::SceneObject &object = m_scene.objects()[i];
 			if (object.has<gk::Sprite>()) {
 				auto &sprite = object.get<gk::Sprite>();
 				sprite.updateAnimations();

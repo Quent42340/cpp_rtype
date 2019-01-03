@@ -11,14 +11,14 @@
  *
  * =====================================================================================
  */
-#include "EnemyInfoLoader.hpp"
-#include "ServerApplication.hpp"
+#include <gk/scene/controller/BehaviourController.hpp>
+#include <gk/scene/controller/LifetimeController.hpp>
+#include <gk/scene/controller/MovementController.hpp>
 
-#include "BehaviourController.hpp"
+#include "EnemyInfoLoader.hpp"
 #include "GamePadController.hpp"
-#include "LifetimeController.hpp"
-#include "MovementController.hpp"
 #include "NetworkController.hpp"
+#include "ServerApplication.hpp"
 
 void ServerApplication::init() {
 	std::srand(std::time(nullptr));
@@ -29,10 +29,10 @@ void ServerApplication::init() {
 
 	// m_server.init();
 
-	m_scene.addController<LifetimeController>();
+	m_scene.addController<gk::LifetimeController>();
 	m_scene.addController<GamePadController>(m_server.info());
-	m_scene.addController<BehaviourController>();
-	m_scene.addController<MovementController>();
+	m_scene.addController<gk::BehaviourController>();
+	m_scene.addController<gk::MovementController>();
 	m_scene.addController<NetworkController>(m_server.info(), m_server.udpSocket());
 }
 
