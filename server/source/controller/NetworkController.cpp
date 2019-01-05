@@ -11,7 +11,7 @@
  *
  * =====================================================================================
  */
-#include <gk/system/GameClock.hpp>
+#include <gk/core/GameClock.hpp>
 
 #include <gk/scene/component/LifetimeComponent.hpp>
 #include <gk/scene/component/MovementComponent.hpp>

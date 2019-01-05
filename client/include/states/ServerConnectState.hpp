@@ -16,7 +16,7 @@
 
 #include <gk/core/ApplicationState.hpp>
 #include <gk/core/Timer.hpp>
-#include <gk/gui/Image.hpp>
+#include <gk/graphics/Image.hpp>
 
 #include "Button.hpp"
 #include "TextInput.hpp"

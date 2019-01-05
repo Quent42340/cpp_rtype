@@ -14,7 +14,7 @@
 #include <gk/audio/AudioPlayer.hpp>
 #include <gk/core/input/GamePad.hpp>
 #include <gk/core/ApplicationStateStack.hpp>
-#include <gk/gui/Sprite.hpp>
+#include <gk/graphics/Sprite.hpp>
 #include <gk/resource/ResourceHandler.hpp>
 #include <gk/scene/controller/LifetimeController.hpp>
 #include <gk/scene/view/SpriteView.hpp>

@@ -17,8 +17,8 @@
 #include <SFML/Network/IpAddress.hpp>
 
 #include <gk/core/ApplicationState.hpp>
-#include <gk/gui/Image.hpp>
-#include <gk/gui/Text.hpp>
+#include <gk/graphics/Image.hpp>
+#include <gk/graphics/Text.hpp>
 #include <gk/scene/Scene.hpp>
 
 #include "Client.hpp"

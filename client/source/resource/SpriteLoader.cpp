@@ -12,7 +12,7 @@
  * =====================================================================================
  */
 #include <gk/core/XMLFile.hpp>
-#include <gk/gui/Sprite.hpp>
+#include <gk/graphics/Sprite.hpp>
 #include <gk/resource/ResourceHandler.hpp>
 
 #include "SpriteLoader.hpp"

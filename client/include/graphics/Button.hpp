@@ -15,8 +15,8 @@
 #define BUTTON_HPP_
 
 #include <gk/core/SDLHeaders.hpp>
-#include <gk/gui/Image.hpp>
-#include <gk/gui/Text.hpp>
+#include <gk/graphics/Image.hpp>
+#include <gk/graphics/Text.hpp>
 
 class Button : public gk::IDrawable, public gk::Transformable {
 	public:

@@ -16,7 +16,7 @@
 
 #include <gk/resource/ResourceHandler.hpp>
 #include <gk/scene/Scene.hpp>
-#include <gk/system/GameClock.hpp>
+#include <gk/core/GameClock.hpp>
 
 #include "Server.hpp"
 #include "SpawnController.hpp"

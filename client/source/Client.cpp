@@ -14,12 +14,12 @@
 #include <gk/audio/AudioPlayer.hpp>
 #include <gk/core/input/GamePad.hpp>
 #include <gk/core/input/InputHandler.hpp>
-#include <gk/gui/Image.hpp>
-#include <gk/gui/Sprite.hpp>
+#include <gk/graphics/Image.hpp>
+#include <gk/graphics/Sprite.hpp>
 #include <gk/resource/ResourceHandler.hpp>
 #include <gk/scene/component/HitboxComponent.hpp>
 #include <gk/scene/component/PositionComponent.hpp>
-#include <gk/system/GameClock.hpp>
+#include <gk/core/GameClock.hpp>
 
 #include "Client.hpp"
 #include "GameEndState.hpp"
