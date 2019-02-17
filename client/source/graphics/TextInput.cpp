@@ -18,9 +18,8 @@
 
 TextInput::TextInput() {
 	m_rectText.setColor(gk::Color::Black);
-	// FIXME
-	// m_rectText.setOutlineThickness(2);
-	// m_rectText.setOutlineColor(sf::Color::White);
+	m_rectText.setOutlineThickness(2);
+	m_rectText.setOutlineColor(gk::Color::White);
 
 	m_text.setFont(gk::ResourceHandler::getInstance().get<gk::Font>("font-default"));
 	m_text.setCharacterSize(25);
