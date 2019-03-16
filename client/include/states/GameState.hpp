@@ -36,8 +36,8 @@ class GameState : public gk::ApplicationState {
 
 		Client m_client;
 
-		gk::Image m_background{"background-space"};
-		gk::Image m_background2{"background-space"};
+		gk::Image m_background{"texture-background-space"};
+		gk::Image m_background2{"texture-background-space"};
 
 		gk::Scene m_scene;
 

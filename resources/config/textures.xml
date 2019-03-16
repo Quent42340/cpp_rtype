@@ -1,24 +1,24 @@
 <textures>
-	<texture folder="background" name="space"/>
+	<texture name="background-space" path="resources/graphics/background/space.png"/>
 
-	<texture folder="boss" name="boss1"/>
+	<texture name="boss-boss1" path="resources/graphics/boss/boss1.png"/>
 
-	<texture folder="bullet" name="basic"/>
-	<texture folder="bullet" name="small"/>
+	<texture name="bullet-basic" path="resources/graphics/bullet/basic.png"/>
+	<texture name="bullet-small" path="resources/graphics/bullet/small.png"/>
 
-	<texture folder="effect" name="boom"/>
+	<texture name="effect-boom" path="resources/graphics/effect/boom.png"/>
 
-	<texture folder="gui" name="button"/>
-	<texture folder="gui" name="button1"/>
-	<texture folder="gui" name="button2"/>
+	<texture name="gui-button" path="resources/graphics/gui/button.png"/>
+	<texture name="gui-button1" path="resources/graphics/gui/button1.png"/>
+	<texture name="gui-button2" path="resources/graphics/gui/button2.png"/>
 
-	<texture folder="spaceship" name="enemy1"/>
-	<texture folder="spaceship" name="enemy2"/>
-	<texture folder="spaceship" name="enemy3"/>
+	<texture name="spaceship-enemy1" path="resources/graphics/spaceship/enemy1.png"/>
+	<texture name="spaceship-enemy2" path="resources/graphics/spaceship/enemy2.png"/>
+	<texture name="spaceship-enemy3" path="resources/graphics/spaceship/enemy3.png"/>
 
-	<texture folder="spaceship" name="player1"/>
-	<texture folder="spaceship" name="player2"/>
-	<texture folder="spaceship" name="player3"/>
-	<texture folder="spaceship" name="player4"/>
-	<texture folder="spaceship" name="player5"/>
+	<texture name="spaceship-player1" path="resources/graphics/spaceship/player1.png"/>
+	<texture name="spaceship-player2" path="resources/graphics/spaceship/player2.png"/>
+	<texture name="spaceship-player3" path="resources/graphics/spaceship/player3.png"/>
+	<texture name="spaceship-player4" path="resources/graphics/spaceship/player4.png"/>
+	<texture name="spaceship-player5" path="resources/graphics/spaceship/player5.png"/>
 </textures>

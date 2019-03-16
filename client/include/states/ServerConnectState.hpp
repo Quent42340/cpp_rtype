@@ -32,7 +32,7 @@ class ServerConnectState : public gk::ApplicationState {
 	private:
 		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
 
-		gk::Image m_background{"background-space"};
+		gk::Image m_background{"texture-background-space"};
 
 		gk::Text m_text;
 		gk::Text m_errorText;

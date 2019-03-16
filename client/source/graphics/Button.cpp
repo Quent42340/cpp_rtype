@@ -18,7 +18,7 @@
 #include "Button.hpp"
 
 Button::Button(const std::string &text) {
-	m_image.load("gui-button");
+	m_image.load("texture-gui-button");
 	m_image.setScale(0.75f, 0.75f);
 
 	m_text.setFont(gk::ResourceHandler::getInstance().get<gk::Font>("font-pdark"));

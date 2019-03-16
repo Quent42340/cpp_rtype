@@ -31,7 +31,7 @@ class GameEndState : public gk::ApplicationState {
 
 		gk::Text m_text;
 
-		gk::Image m_background{"background-space"};
+		gk::Image m_background{"texture-background-space"};
 
 		Button m_leave{"Leave"};
 		Button m_exit{"Exit"};

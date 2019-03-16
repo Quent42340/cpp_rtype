@@ -13,13 +13,13 @@
  */
 #include <gk/audio/AudioPlayer.hpp>
 #include <gk/core/input/GamePad.hpp>
+#include <gk/resource/TextureLoader.hpp>
 
 #include "AudioLoader.hpp"
 #include "ClientApplication.hpp"
 #include "Config.hpp"
 #include "GameState.hpp"
 #include "SpriteLoader.hpp"
-#include "TextureLoader.hpp"
 #include "TitleScreenState.hpp"
 
 void ClientApplication::init() {
@@ -36,7 +36,7 @@ void ClientApplication::init() {
 	m_renderStates.projectionMatrix = glm::ortho(0.0f, (float)Config::screenWidth, (float)Config::screenHeight, 0.0f);
 
 	m_resourceHandler.loadConfigFile<AudioLoader>("resources/config/audio.xml");
-	m_resourceHandler.loadConfigFile<TextureLoader>("resources/config/textures.xml");
+	m_resourceHandler.loadConfigFile<gk::TextureLoader>("resources/config/textures.xml");
 	m_resourceHandler.loadConfigFile<SpriteLoader>("resources/config/sprites.xml");
 	m_resourceHandler.add<gk::Font>("font-default").loadFromFile("resources/fonts/arial.ttf");
 	m_resourceHandler.add<gk::Font>("font-pdark").loadFromFile("resources/fonts/pdark.ttf");

@@ -26,7 +26,7 @@ void SpriteLoader::load(const char *xmlFilename, gk::ResourceHandler &handler) {
 		u16 frameWidth = spriteElement->IntAttribute("width");
 		u16 frameHeight = spriteElement->IntAttribute("height");
 
-		gk::Sprite &sprite = handler.add<gk::Sprite>(name + "-sprite", name, frameWidth, frameHeight);
+		gk::Sprite &sprite = handler.add<gk::Sprite>(name + "-sprite", "texture-" + name, frameWidth, frameHeight);
 
 		tinyxml2::XMLElement *animationElement = spriteElement->FirstChildElement("animation");
 		if (animationElement) sprite.setAnimated(true);

@@ -141,7 +141,6 @@ void Client::handleEntityStateMessage(gk::Scene &scene, sf::Packet &packet) {
 
 	gk::SceneObject *object = scene.objects().findByName(entityName);
 	if (object) {
-
 		auto &networkComponent = object->get<NetworkComponent>();
 		if (networkComponent.lastUpdateTimestamp < timestamp) {
 			networkComponent.lastUpdateTimestamp = timestamp;
@@ -206,7 +205,7 @@ void Client::handleEntitySpawnMessage(gk::Scene &scene, sf::Packet &packet) {
 	if (gk::ResourceHandler::getInstance().has(textureName + "-sprite"))
 		object.set<gk::Sprite>().load(gk::ResourceHandler::getInstance().get<gk::Sprite>(textureName + "-sprite"));
 	else
-		object.set<gk::Image>(textureName);
+		object.set<gk::Image>("texture-" + textureName);
 
 	if (entityType == "Player")
 		object.set<PlayerComponent>(m_id);
