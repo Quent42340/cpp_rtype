@@ -36,13 +36,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DDEBUG_ENABLED")
 # Link options
 #------------------------------------------------------------------------------
 target_link_libraries(${CMAKE_PROJECT_NAME}_server
-                      ${OPENGL_LIBRARIES}
-                      ${SDL2_LIBRARIES}
-                      ${SDL2IMAGE_LIBRARIES}
-                      ${SDL2MIXER_LIBRARIES}
-                      ${SDL2TTF_LIBRARIES}
+                      ${CMAKE_PROJECT_NAME}_game
                       ${TINYXML2_LIBRARIES}
                       ${GAMEKIT_LIBRARIES}
-                      sfml-network
-                      ${CMAKE_PROJECT_NAME}_game)
+                      sfml-system
+                      sfml-network)
 

@@ -14,11 +14,11 @@
 #ifndef GAMESTATE_HPP_
 #define GAMESTATE_HPP_
 
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/Network/IpAddress.hpp>
 
 #include <gk/core/ApplicationState.hpp>
 #include <gk/graphics/Image.hpp>
-#include <gk/graphics/Text.hpp>
 #include <gk/scene/Scene.hpp>
 
 #include "Client.hpp"
@@ -27,12 +27,12 @@ class GameState : public gk::ApplicationState {
 	public:
 		GameState(const sf::IpAddress &serverAddress, u16 serverPort = 4242);
 
-		void onEvent(const SDL_Event &event) override;
+		void onEvent(const sf::Event &event) override;
 
 		void update() override;
 
 	private:
-		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
+		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 		Client m_client;
 
@@ -41,7 +41,7 @@ class GameState : public gk::ApplicationState {
 
 		gk::Scene m_scene;
 
-		gk::Text m_readyText;
+		sf::Text m_readyText;
 
 		bool m_hasGameStarted = false;
 };

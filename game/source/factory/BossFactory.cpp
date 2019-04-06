@@ -57,7 +57,7 @@ gk::SceneObject BossFactory::create() {
 	behaviourComponent.addBehaviour<gk::EasyBehaviour>("Update", [] (gk::SceneObject &object) {
 		gk::Timer &timer = object.get<gk::Timer>();
 		if (timer.time() > 500 && !object.get<gk::LifetimeComponent>().dead(object)) {
-			gk::Vector2f bulletPosition = object.get<gk::PositionComponent>() + gk::Vector2f{0, (float)object.get<gk::HitboxComponent>().currentHitbox()->height / 2};
+			sf::Vector2f bulletPosition = object.get<gk::PositionComponent>() + sf::Vector2f{0, (float)object.get<gk::HitboxComponent>().currentHitbox()->height / 2};
 			object.get<gk::SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, {-1, -1}, 1.5f));
 			object.get<gk::SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, {-1,  0}, 1.5f));
 			object.get<gk::SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, {-1,  1}, 1.5f));

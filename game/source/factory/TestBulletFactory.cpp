@@ -25,7 +25,7 @@
 #include "SpriteComponent.hpp"
 #include "TestBulletFactory.hpp"
 
-gk::SceneObject TestBulletFactory::create(const std::string &type, const std::string &textureName, const gk::Vector2f &pos, const gk::Vector2f &v, float speed) {
+gk::SceneObject TestBulletFactory::create(const std::string &type, const std::string &textureName, const sf::Vector2f &pos, const sf::Vector2f &v, float speed) {
 	static size_t bulletCount = 0;
 	gk::SceneObject object{"BasicBullet" + std::to_string(bulletCount++), type};
 	object.set<gk::PositionComponent>(pos);

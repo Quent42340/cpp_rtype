@@ -11,11 +11,11 @@
  *
  * =====================================================================================
  */
-#include <gk/audio/AudioPlayer.hpp>
 #include <gk/core/input/GamePad.hpp>
 #include <gk/core/input/InputHandler.hpp>
 #include <gk/graphics/Image.hpp>
 #include <gk/graphics/Sprite.hpp>
+#include <gk/resource/AudioPlayer.hpp>
 #include <gk/resource/ResourceHandler.hpp>
 #include <gk/scene/component/HitboxComponent.hpp>
 #include <gk/scene/component/PositionComponent.hpp>
@@ -133,8 +133,8 @@ void Client::update(gk::ApplicationStateStack &stateStack, gk::Scene &scene, boo
 void Client::handleEntityStateMessage(gk::Scene &scene, sf::Packet &packet) {
 	u32 timestamp;
 	std::string entityName;
-	gk::Vector2f pos;
-	gk::Vector2f v;
+	sf::Vector2f pos;
+	sf::Vector2f v;
 	packet >> timestamp >> entityName >> pos.x >> pos.y >> v.x >> v.y;
 
 	// std::cout << "New entity state at " << timestamp << ": " << entityName << " (" << pos.x << ";" << pos.y << ") moving at (" << v.x << ";" << v.y << ")" << std::endl;
@@ -194,7 +194,7 @@ bool Client::handleEntityDieMessage(gk::ApplicationStateStack &stateStack, gk::S
 void Client::handleEntitySpawnMessage(gk::Scene &scene, sf::Packet &packet) {
 	std::string entityName;
 	std::string entityType;
-	gk::Vector2f pos;
+	sf::Vector2f pos;
 	std::string textureName;
 	packet >> entityName >> entityType >> pos.x >> pos.y;
 	packet >> textureName;

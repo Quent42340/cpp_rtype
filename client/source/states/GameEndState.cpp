@@ -13,8 +13,8 @@
  */
 #include <iostream>
 
-#include <gk/audio/AudioPlayer.hpp>
 #include <gk/core/ApplicationStateStack.hpp>
+#include <gk/resource/AudioPlayer.hpp>
 #include <gk/resource/ResourceHandler.hpp>
 
 #include "Config.hpp"
@@ -22,11 +22,11 @@
 #include "TitleScreenState.hpp"
 
 GameEndState::GameEndState(bool isWinner) {
-	m_text.setFont(gk::ResourceHandler::getInstance().get<gk::Font>("font-pdark"));
+	m_text.setFont(gk::ResourceHandler::getInstance().get<sf::Font>("font-pdark"));
 	m_text.setCharacterSize(60);
-	m_text.setColor(gk::Color::White);
-	m_text.setStyle(gk::Text::Bold);
-	m_text.setText(isWinner ? "LEVEL CLEARED" : "GAME OVER");
+	m_text.setFillColor(sf::Color::White);
+	m_text.setStyle(sf::Text::Bold);
+	m_text.setString(isWinner ? "LEVEL CLEARED" : "GAME OVER");
 	m_text.setPosition(Config::screenWidth / 2.0f - m_text.getLocalBounds().width / 2.0f + 5, 70);
 
 	m_leave.setPosition(Config::screenWidth / 2.0f - m_leave.width() / 2.0, 240);
@@ -35,7 +35,7 @@ GameEndState::GameEndState(bool isWinner) {
 	gk::AudioPlayer::playMusic(isWinner ? "music-victory" : "music-gameover");
 }
 
-void GameEndState::onEvent(const SDL_Event &event) {
+void GameEndState::onEvent(const sf::Event &event) {
 	m_leave.onEvent(event);
 	m_exit.onEvent(event);
 }
@@ -54,7 +54,7 @@ void GameEndState::update() {
 
 }
 
-void GameEndState::draw(gk::RenderTarget &target, gk::RenderStates states) const {
+void GameEndState::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	target.draw(m_background, states);
 
 	target.draw(m_text, states);

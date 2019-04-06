@@ -32,7 +32,7 @@
 #include "SpriteComponent.hpp"
 #include "TestBulletFactory.hpp"
 
-gk::SceneObject GenericEnemyFactory::create(const EnemyInfo &info, const gk::Vector2f &pos) {
+gk::SceneObject GenericEnemyFactory::create(const EnemyInfo &info, const sf::Vector2f &pos) {
 	static size_t enemyCount = 0;
 	gk::SceneObject object{info.name + std::to_string(enemyCount++), "Enemy"};
 	object.set<gk::PositionComponent>(pos);
@@ -60,7 +60,7 @@ gk::SceneObject GenericEnemyFactory::create(const EnemyInfo &info, const gk::Vec
 	behaviourComponent.addBehaviour<gk::EasyBehaviour>("Update", [&] (gk::SceneObject &object) {
 		gk::Timer &timer = object.get<gk::Timer>();
 		if (timer.time() > 1000 && !object.get<gk::LifetimeComponent>().dead(object)) {
-			gk::Vector2f bulletPosition = object.get<gk::PositionComponent>() + gk::Vector2f{0, (float)object.get<gk::HitboxComponent>().currentHitbox()->height / 2 - 4};
+			sf::Vector2f bulletPosition = object.get<gk::PositionComponent>() + sf::Vector2f{0, (float)object.get<gk::HitboxComponent>().currentHitbox()->height / 2 - 4};
 			for (const BulletInfo &bulletInfo : info.bulletsInfo) {
 				object.get<gk::SceneObjectList>().addObject(TestBulletFactory::create("EnemyBullet", "bullet-small", bulletPosition, {bulletInfo.velocity.x, bulletInfo.velocity.y}, bulletInfo.speed));
 			}

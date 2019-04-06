@@ -22,19 +22,19 @@ class TitleScreenState : public gk::ApplicationState {
 	public:
 		TitleScreenState();
 
-		void onEvent(const SDL_Event &event) override;
+		void onEvent(const sf::Event &event) override;
 
 		void update() override;
 
 	private:
-		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
+		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 		gk::Image m_background{"texture-background-space"};
 
 		Button m_play{"Play"};
 		Button m_exit{"Exit"};
 
-		gk::Text m_rtype;
+		sf::Text m_rtype;
 };
 
 #endif // TITLESCREENSTATE_HPP_

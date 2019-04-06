@@ -15,9 +15,7 @@
 #define CLIENTAPPLICATION_HPP_
 
 #include <gk/core/CoreApplication.hpp>
-#include <gk/gl/Shader.hpp>
-
-#include "KeyboardHandler.hpp"
+#include <gk/core/input/KeyboardHandler.hpp>
 
 class ClientApplication : public gk::CoreApplication {
 	public:
@@ -26,11 +24,9 @@ class ClientApplication : public gk::CoreApplication {
 		void init();
 
 	private:
-		void onEvent(const SDL_Event &event);
+		void onEvent(const sf::Event &event);
 
-		gk::Shader m_shader;
-
-		KeyboardHandler m_keyboardHandler;
+		gk::KeyboardHandler m_keyboardHandler;
 };
 
 #endif // CLIENTAPPLICATION_HPP_

@@ -17,12 +17,14 @@
 #include <string>
 #include <vector>
 
-#include <gk/core/Vector2.hpp>
+#include <SFML/System/Vector2.hpp>
+
+#include <gk/core/IntTypes.hpp>
 
 struct BulletInfo {
 	std::string type;
 
-	gk::Vector2f velocity;
+	sf::Vector2f velocity;
 	float speed;
 };
 
@@ -31,8 +33,8 @@ struct EnemyInfo {
 	std::string texture;
 	u16 health;
 
-	gk::Vector2i hitboxPosition;
-	gk::Vector2i hitboxSize;
+	sf::Vector2i hitboxPosition;
+	sf::Vector2i hitboxSize;
 
 	std::string movementType;
 	float movementSpeed;

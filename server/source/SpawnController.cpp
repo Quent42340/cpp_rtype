@@ -33,7 +33,7 @@ void SpawnController::update(Server &server, gk::Scene &scene) {
 			m_bossSpawnTimer.start();
 		}
 
-		gk::Vector2f pos{Config::screenWidth + 20, static_cast<float>(std::rand() % (Config::screenHeight - 40))};
+		sf::Vector2f pos{Config::screenWidth + 20, static_cast<float>(std::rand() % (Config::screenHeight - 40))};
 		EnemyInfo &info = gk::ResourceHandler::getInstance().get<EnemyInfo>("info-enemy" + std::to_string(rand() % 3 + 1));
 		scene.addObject(GenericEnemyFactory::create(info, pos));
 	}

@@ -21,16 +21,16 @@
 #include "ServerConnectState.hpp"
 
 ServerConnectState::ServerConnectState() {
-	m_text.setFont(gk::ResourceHandler::getInstance().get<gk::Font>("font-pdark"));
+	m_text.setFont(gk::ResourceHandler::getInstance().get<sf::Font>("font-pdark"));
 	m_text.setCharacterSize(60);
-	m_text.setColor(gk::Color::White);
-	m_text.setStyle(gk::Text::Bold);
-	m_text.setText("Server address");
+	m_text.setFillColor(sf::Color::White);
+	m_text.setStyle(sf::Text::Bold);
+	m_text.setString("Server address");
 	m_text.setPosition(Config::screenWidth / 2.0f - m_text.getLocalBounds().width / 2.0f + 5, 70);
 
-	m_errorText.setFont(gk::ResourceHandler::getInstance().get<gk::Font>("font-pdark"));
+	m_errorText.setFont(gk::ResourceHandler::getInstance().get<sf::Font>("font-pdark"));
 	m_errorText.setCharacterSize(20);
-	m_errorText.setStyle(gk::Text::Bold);
+	m_errorText.setStyle(sf::Text::Bold);
 
 	m_serverAddressInput.setCharacterLimit(15);
 	m_serverAddressInput.setSize(400, 50);
@@ -39,7 +39,7 @@ ServerConnectState::ServerConnectState() {
 	m_back.setPosition(Config::screenWidth / 2.0f - m_back.width() / 2.0, 350);
 }
 
-void ServerConnectState::onEvent(const SDL_Event &event) {
+void ServerConnectState::onEvent(const sf::Event &event) {
 	m_serverAddressInput.onEvent(event);
 	m_back.onEvent(event);
 }
@@ -47,7 +47,7 @@ void ServerConnectState::onEvent(const SDL_Event &event) {
 void ServerConnectState::update() {
 	if (m_errorTimer.time() > 3000) {
 		m_errorTimer.reset();
-		m_errorText.setText("");
+		m_errorText.setString("");
 	}
 
 	if (m_isConnecting) {
@@ -59,8 +59,8 @@ void ServerConnectState::update() {
 		catch (gk::Exception &e) {
 			std::cerr << "Error " << e.what() << std::endl;
 
-			m_errorText.setColor(gk::Color::Red);
-			m_errorText.setText("Can't connect to server!");
+			m_errorText.setFillColor(sf::Color::Red);
+			m_errorText.setString("Can't connect to server!");
 			m_errorText.setPosition(Config::screenWidth / 2.0f - m_errorText.getLocalBounds().width / 2.0f + 5, 280);
 
 			m_errorTimer.reset();
@@ -69,8 +69,8 @@ void ServerConnectState::update() {
 	}
 
 	if (gk::GamePad::isKeyPressedOnce(GameKey::Start)) {
-		m_errorText.setColor(gk::Color::White);
-		m_errorText.setText("Connecting...");
+		m_errorText.setFillColor(sf::Color::White);
+		m_errorText.setString("Connecting...");
 		m_errorText.setPosition(Config::screenWidth / 2.0f - m_errorText.getLocalBounds().width / 2.0f + 5, 280);
 
 		m_isConnecting = true;
@@ -81,7 +81,7 @@ void ServerConnectState::update() {
 	}
 }
 
-void ServerConnectState::draw(gk::RenderTarget &target, gk::RenderStates states) const {
+void ServerConnectState::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	target.draw(m_background, states);
 
 	target.draw(m_text, states);

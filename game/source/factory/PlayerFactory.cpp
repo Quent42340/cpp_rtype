@@ -60,7 +60,7 @@ gk::SceneObject PlayerFactory::create(u16 x, u16 y, u16 clientId) {
 	behaviourComponent.addBehaviour<gk::EasyBehaviour>("Update", [] (gk::SceneObject &object) {
 		if (gk::GamePad::isKeyPressedWithDelay(GameKey::A, 200) && !object.get<gk::LifetimeComponent>().dead(object)) {
 			auto &hitboxComponent = object.get<gk::HitboxComponent>();
-			gk::Vector2f bulletPosition = object.get<gk::PositionComponent>() + gk::Vector2f{(float)hitboxComponent.currentHitbox()->width, (float)hitboxComponent.currentHitbox()->height / 2 - 4};
+			sf::Vector2f bulletPosition = object.get<gk::PositionComponent>() + sf::Vector2f{(float)hitboxComponent.currentHitbox()->width, (float)hitboxComponent.currentHitbox()->height / 2 - 4};
 			object.get<gk::SceneObjectList>().addObject(TestBulletFactory::create("PlayerBullet", "bullet-basic", bulletPosition, {1, 0}, 4.0f));
 		}
 	});

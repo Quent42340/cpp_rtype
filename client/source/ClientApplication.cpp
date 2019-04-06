@@ -11,8 +11,8 @@
  *
  * =====================================================================================
  */
-#include <gk/audio/AudioPlayer.hpp>
 #include <gk/core/input/GamePad.hpp>
+#include <gk/resource/AudioPlayer.hpp>
 #include <gk/resource/TextureLoader.hpp>
 
 #include "AudioLoader.hpp"
@@ -25,29 +25,21 @@
 void ClientApplication::init() {
 	gk::CoreApplication::init();
 
-	createWindow(Config::screenWidth, Config::screenHeight, "R-Type");
+	m_window.create(sf::VideoMode(Config::screenWidth, Config::screenHeight), "R-Type", sf::Style::Close);
 
 	gk::GamePad::init(m_keyboardHandler);
-
-	m_shader.loadFromFile("resources/shaders/game.v.glsl", "resources/shaders/game.f.glsl");
-	m_renderStates.shader = &m_shader;
-
-	m_renderStates.vertexAttributes = gk::VertexAttribute::Only2d;
-	m_renderStates.projectionMatrix = glm::ortho(0.0f, (float)Config::screenWidth, (float)Config::screenHeight, 0.0f);
 
 	m_resourceHandler.loadConfigFile<AudioLoader>("resources/config/audio.xml");
 	m_resourceHandler.loadConfigFile<gk::TextureLoader>("resources/config/textures.xml");
 	m_resourceHandler.loadConfigFile<SpriteLoader>("resources/config/sprites.xml");
-	m_resourceHandler.add<gk::Font>("font-default").loadFromFile("resources/fonts/arial.ttf");
-	m_resourceHandler.add<gk::Font>("font-pdark").loadFromFile("resources/fonts/pdark.ttf");
+	m_resourceHandler.add<sf::Font>("font-default").loadFromFile("resources/fonts/arial.ttf");
+	m_resourceHandler.add<sf::Font>("font-pdark").loadFromFile("resources/fonts/pdark.ttf");
 
 	gk::ApplicationStateStack::getInstance().push<TitleScreenState>();
 }
 
-void ClientApplication::onEvent(const SDL_Event &event) {
+void ClientApplication::onEvent(const sf::Event &event) {
 	gk::CoreApplication::onEvent(event);
-
-	m_keyboardHandler.updateState(event);
 
 	// if (event.type == sf::Event::GainedFocus) {
 	// 	gk::AudioPlayer::resumeMusic();

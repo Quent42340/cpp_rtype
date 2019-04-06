@@ -11,8 +11,10 @@
  *
  * =====================================================================================
  */
-#include <gk/audio/Music.hpp>
-#include <gk/audio/Sound.hpp>
+#include <SFML/Audio/Music.hpp>
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
+
 #include <gk/core/XMLFile.hpp>
 #include <gk/resource/ResourceHandler.hpp>
 
@@ -27,7 +29,7 @@ void AudioLoader::load(const char *xmlFilename, gk::ResourceHandler &handler) {
 		std::string name = musicElement->Attribute("name");
 		int volume = musicElement->IntAttribute("volume");
 
-		gk::Music &music = handler.add<gk::Music>("music-" + name);
+		sf::Music &music = handler.add<sf::Music>("music-" + name);
 		music.openFromFile("resources/audio/music/" + name + ".ogg");
 		music.setVolume(volume);
 
@@ -39,8 +41,10 @@ void AudioLoader::load(const char *xmlFilename, gk::ResourceHandler &handler) {
 		std::string name = soundElement->Attribute("name");
 		int volume = soundElement->IntAttribute("volume");
 
-		gk::Sound &sound = handler.add<gk::Sound>("sound-" + name);
-		sound.openFromFile("resources/audio/sound/" + name + ".wav");
+		sf::SoundBuffer &buffer = handler.add<sf::SoundBuffer>("soundbuffer-" + name);
+		buffer.loadFromFile("resources/audio/sound/" + name + ".wav");
+
+		sf::Sound &sound = handler.add<sf::Sound>("sound-" + name, buffer);
 		sound.setVolume(volume);
 
 		soundElement = soundElement->NextSiblingElement("sound");
