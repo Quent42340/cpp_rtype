@@ -27,6 +27,7 @@
 GameState::GameState(const sf::IpAddress &serverAddress, u16 serverPort) {
 	m_client.connect(serverAddress, serverPort);
 
+	gk::AudioPlayer::pauseMusic();
 	gk::AudioPlayer::playMusic("music-game");
 
 	m_background2.setPosition(m_background.width() - 2.0f, 0);

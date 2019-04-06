@@ -32,6 +32,7 @@ TitleScreenState::TitleScreenState() {
 	m_play.setPosition(Config::screenWidth / 2.0f - m_play.width() / 2.0, 240);
 	m_exit.setPosition(Config::screenWidth / 2.0f - m_exit.width() / 2.0, 240 + m_exit.height() + 20);
 
+	gk::AudioPlayer::pauseMusic();
 	gk::AudioPlayer::playMusic("music-theme");
 }
 

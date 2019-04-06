@@ -32,6 +32,7 @@ GameEndState::GameEndState(bool isWinner) {
 	m_leave.setPosition(Config::screenWidth / 2.0f - m_leave.width() / 2.0, 240);
 	m_exit.setPosition(Config::screenWidth / 2.0f - m_exit.width() / 2.0, 240 + m_exit.height() + 20);
 
+	gk::AudioPlayer::pauseMusic();
 	gk::AudioPlayer::playMusic(isWinner ? "music-victory" : "music-gameover");
 }
 

@@ -38,12 +38,12 @@ void TextInput::setSize(u16 width, u16 height) {
 }
 
 void TextInput::onEvent(const sf::Event &event) {
-	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Backspace && !m_content.empty()) {
-		m_content.erase(m_content.begin() + m_content.length() - 1);
-		gk::AudioPlayer::playSound("sound-keyboard");
-
-		m_text.setString(m_content + "|");
-	}
+	// if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Backspace && !m_content.empty()) {
+	// 	m_content.erase(m_content.begin() + m_content.length() - 1);
+	// 	gk::AudioPlayer::playSound("sound-keyboard");
+    //
+	// 	m_text.setString(m_content + "|");
+	// }
 
   	// if (event.type == SDL_TEXTINPUT) {
 	// 	std::string text = event.text.text;
