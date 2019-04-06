@@ -25,7 +25,7 @@
 void ClientApplication::init() {
 	gk::CoreApplication::init();
 
-	m_window.create(sf::VideoMode(Config::screenWidth, Config::screenHeight), "R-Type", sf::Style::Close);
+	createWindow(sf::VideoMode(Config::screenWidth, Config::screenHeight), "R-Type", sf::Style::Close);
 
 	m_keyboardHandler.loadKeysFromFile("resources/config/keys.xml");
 	gk::GamePad::init(m_keyboardHandler);
