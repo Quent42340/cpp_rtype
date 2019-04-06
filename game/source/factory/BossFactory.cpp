@@ -45,6 +45,9 @@ gk::SceneObject BossFactory::create() {
 		if (object.get<gk::PositionComponent>().x > Config::screenWidth - object.get<gk::HitboxComponent>().currentHitbox()->width) {
 			object.get<gk::MovementComponent>().v.x = -1;
 		}
+		else {
+			object.get<gk::MovementComponent>().v.x = 0;
+		}
 	})).speed = 0.8f;
 
 	object.set<SpriteComponent>("boss-boss1");

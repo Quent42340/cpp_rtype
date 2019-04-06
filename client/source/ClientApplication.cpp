@@ -42,11 +42,11 @@ void ClientApplication::init() {
 void ClientApplication::onEvent(const sf::Event &event) {
 	gk::CoreApplication::onEvent(event);
 
-	// if (event.type == sf::Event::GainedFocus) {
-	// 	gk::AudioPlayer::resumeMusic();
-	// }
-	// else if (event.type == sf::Event::LostFocus) {
-	// 	gk::AudioPlayer::pauseMusic();
-	// }
+	if (event.type == sf::Event::GainedFocus) {
+		gk::AudioPlayer::resumeMusic();
+	}
+	else if (event.type == sf::Event::LostFocus) {
+		gk::AudioPlayer::pauseMusic();
+	}
 }
 
