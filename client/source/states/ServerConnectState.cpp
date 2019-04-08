@@ -35,6 +35,7 @@ ServerConnectState::ServerConnectState() {
 	m_serverAddressInput.setCharacterLimit(15);
 	m_serverAddressInput.setSize(400, 50);
 	m_serverAddressInput.setPosition(Config::screenWidth / 2.0f - m_serverAddressInput.getSize().x / 2.0f, 200);
+	m_serverAddressInput.setKeyboardSound("sound-keyboard");
 
 	m_back.setPosition(Config::screenWidth / 2.0f - m_back.width() / 2.0, 350);
 }

@@ -17,9 +17,9 @@
 #include <gk/core/ApplicationState.hpp>
 #include <gk/core/Timer.hpp>
 #include <gk/graphics/Image.hpp>
+#include <gk/graphics/TextInput.hpp>
 
 #include "Button.hpp"
-#include "TextInput.hpp"
 
 class ServerConnectState : public gk::ApplicationState {
 	public:
@@ -37,8 +37,7 @@ class ServerConnectState : public gk::ApplicationState {
 		gk::Text m_text;
 		gk::Text m_errorText;
 		gk::Timer m_errorTimer;
-
-		TextInput m_serverAddressInput;
+		gk::TextInput m_serverAddressInput;
 
 		bool m_isConnecting = false;
 
