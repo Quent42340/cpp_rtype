@@ -14,19 +14,13 @@
 #ifndef KEYBOARDHANDLER_HPP_
 #define KEYBOARDHANDLER_HPP_
 
-#include <map>
+#include <gk/core/input/KeyboardHandler.hpp>
 
-#include <gk/core/input/InputHandler.hpp>
-#include <gk/core/SDLHeaders.hpp>
-
-class KeyboardHandler : public gk::InputHandler {
+class KeyboardHandler : public gk::KeyboardHandler {
 	public:
-		KeyboardHandler();
+		KeyboardHandler() : gk::KeyboardHandler() {}
 
 		void updateState(const SDL_Event &event);
-
-	private:
-		std::map<gk::GameKey, SDL_Keycode> m_keys;
 };
 
 #endif // KEYBOARDHANDLER_HPP_
