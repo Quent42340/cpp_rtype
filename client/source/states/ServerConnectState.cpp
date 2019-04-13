@@ -25,7 +25,7 @@ ServerConnectState::ServerConnectState() {
 	m_text.setCharacterSize(60);
 	m_text.setColor(gk::Color::White);
 	m_text.setStyle(gk::Text::Bold);
-	m_text.setText("Server address");
+	m_text.setString("Server address");
 	m_text.setPosition(Config::screenWidth / 2.0f - m_text.getLocalBounds().width / 2.0f + 5, 70);
 
 	m_errorText.setFont(gk::ResourceHandler::getInstance().get<gk::Font>("font-pdark"));
@@ -48,7 +48,7 @@ void ServerConnectState::onEvent(const SDL_Event &event) {
 void ServerConnectState::update() {
 	if (m_errorTimer.time() > 3000) {
 		m_errorTimer.reset();
-		m_errorText.setText("");
+		m_errorText.setString("");
 	}
 
 	if (m_isConnecting) {
@@ -61,7 +61,7 @@ void ServerConnectState::update() {
 			std::cerr << "Error " << e.what() << std::endl;
 
 			m_errorText.setColor(gk::Color::Red);
-			m_errorText.setText("Can't connect to server!");
+			m_errorText.setString("Can't connect to server!");
 			m_errorText.setPosition(Config::screenWidth / 2.0f - m_errorText.getLocalBounds().width / 2.0f + 5, 280);
 
 			m_errorTimer.reset();
@@ -71,7 +71,7 @@ void ServerConnectState::update() {
 
 	if (gk::GamePad::isKeyPressedOnce(GameKey::Start)) {
 		m_errorText.setColor(gk::Color::White);
-		m_errorText.setText("Connecting...");
+		m_errorText.setString("Connecting...");
 		m_errorText.setPosition(Config::screenWidth / 2.0f - m_errorText.getLocalBounds().width / 2.0f + 5, 280);
 
 		m_isConnecting = true;

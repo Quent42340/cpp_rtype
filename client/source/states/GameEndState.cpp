@@ -26,7 +26,7 @@ GameEndState::GameEndState(bool isWinner) {
 	m_text.setCharacterSize(60);
 	m_text.setColor(gk::Color::White);
 	m_text.setStyle(gk::Text::Bold);
-	m_text.setText(isWinner ? "LEVEL CLEARED" : "GAME OVER");
+	m_text.setString(isWinner ? "LEVEL CLEARED" : "GAME OVER");
 	m_text.setPosition(Config::screenWidth / 2.0f - m_text.getLocalBounds().width / 2.0f + 5, 70);
 
 	m_leave.setPosition(Config::screenWidth / 2.0f - m_leave.width() / 2.0, 240);

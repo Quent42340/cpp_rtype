@@ -21,7 +21,7 @@
 
 PauseMenuState::PauseMenuState() {
 	m_text.setFont(gk::ResourceHandler::getInstance().get<gk::Font>("font-pdark"));
-	m_text.setText("PAUSE");
+	m_text.setString("PAUSE");
 	m_text.setCharacterSize(60);
 	m_text.setColor(gk::Color::White);
 	m_text.setStyle(gk::Text::Bold);

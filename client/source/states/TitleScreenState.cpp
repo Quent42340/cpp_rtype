@@ -21,7 +21,7 @@
 
 TitleScreenState::TitleScreenState() {
 	m_rtype.setFont(gk::ResourceHandler::getInstance().get<gk::Font>("font-pdark"));
-	m_rtype.setText("RType");
+	m_rtype.setString("RType");
 	m_rtype.setCharacterSize(60);
 	m_rtype.setColor(gk::Color::Cyan);
 	m_rtype.setStyle(gk::Text::Bold);

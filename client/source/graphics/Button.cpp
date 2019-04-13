@@ -23,7 +23,7 @@ Button::Button(const std::string &text) {
 
 	m_text.setFont(gk::ResourceHandler::getInstance().get<gk::Font>("font-pdark"));
 	m_text.setCharacterSize(25);
-	m_text.setText(text);
+	m_text.setString(text);
 	m_text.setPosition(m_image.width() / 2.0f - m_text.getLocalBounds().width / 2.0f,
 	                   m_image.height() / 2.0f - m_text.getLocalBounds().height / 2.0f);
 }

@@ -18,7 +18,7 @@
 #include <gk/graphics/Image.hpp>
 #include <gk/graphics/Text.hpp>
 
-class Button : public gk::IDrawable, public gk::Transformable {
+class Button : public gk::Drawable, public gk::Transformable {
 	public:
 		Button(const std::string &text);
 		Button(const std::string &text, int posX, int posY);
